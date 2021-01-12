@@ -39,6 +39,7 @@ Partial Class FrontFace
         Me.lblInput = New System.Windows.Forms.Label()
         Me.pnlResult = New DevExpress.XtraEditors.PanelControl()
         Me.lblResultMsg = New System.Windows.Forms.Label()
+        Me.lblDeviceInfo = New System.Windows.Forms.Label()
         Me.lbCardOnFile = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.peDevice = New DevExpress.XtraEditors.PictureEdit()
@@ -516,6 +517,7 @@ Partial Class FrontFace
         Me.pnlResult.Appearance.Options.UseBackColor = True
         Me.pnlResult.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.pnlResult.Controls.Add(Me.lblResultMsg)
+        Me.pnlResult.Controls.Add(Me.lblDeviceInfo)
         Me.pnlResult.Controls.Add(Me.lbCardOnFile)
         Me.pnlResult.Controls.Add(Me.Panel1)
         Me.pnlResult.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -530,12 +532,25 @@ Partial Class FrontFace
         Me.lblResultMsg.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.lblResultMsg.Font = New System.Drawing.Font("Open Sans", 8.0!)
         Me.lblResultMsg.ForeColor = System.Drawing.Color.Red
-        Me.lblResultMsg.Location = New System.Drawing.Point(77, 30)
+        Me.lblResultMsg.Location = New System.Drawing.Point(77, 23)
         Me.lblResultMsg.Name = "lblResultMsg"
         Me.lblResultMsg.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
-        Me.lblResultMsg.Size = New System.Drawing.Size(429, 53)
+        Me.lblResultMsg.Size = New System.Drawing.Size(429, 39)
         Me.lblResultMsg.TabIndex = 2
         Me.lblResultMsg.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
+        'lblDeviceInfo
+        '
+        Me.lblDeviceInfo.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.lblDeviceInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.lblDeviceInfo.Font = New System.Drawing.Font("Open Sans", 8.0!)
+        Me.lblDeviceInfo.ForeColor = System.Drawing.Color.Red
+        Me.lblDeviceInfo.Location = New System.Drawing.Point(77, 62)
+        Me.lblDeviceInfo.Name = "lblDeviceInfo"
+        Me.lblDeviceInfo.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
+        Me.lblDeviceInfo.Size = New System.Drawing.Size(429, 21)
+        Me.lblDeviceInfo.TabIndex = 2
+        Me.lblDeviceInfo.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
         'lbCardOnFile
         '
@@ -545,7 +560,7 @@ Partial Class FrontFace
         Me.lbCardOnFile.ForeColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
         Me.lbCardOnFile.Location = New System.Drawing.Point(77, 0)
         Me.lbCardOnFile.Name = "lbCardOnFile"
-        Me.lbCardOnFile.Size = New System.Drawing.Size(429, 30)
+        Me.lbCardOnFile.Size = New System.Drawing.Size(429, 23)
         Me.lbCardOnFile.TabIndex = 1
         Me.lbCardOnFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -611,9 +626,9 @@ Partial Class FrontFace
         Me.pnlBack.Appearance.BackColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(252, Byte), Integer))
         Me.pnlBack.Appearance.Options.UseBackColor = True
         Me.pnlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.pnlBack.Controls.Add(Me.pnlParm)
         Me.pnlBack.Controls.Add(Me.pnlCard)
         Me.pnlBack.Controls.Add(Me.PanelControl2)
+        Me.pnlBack.Controls.Add(Me.pnlParm)
         Me.pnlBack.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlBack.Location = New System.Drawing.Point(0, 75)
         Me.pnlBack.Name = "pnlBack"
@@ -637,7 +652,6 @@ Partial Class FrontFace
         Me.PanelControl2.Padding = New System.Windows.Forms.Padding(15, 12, 15, 12)
         Me.PanelControl2.Size = New System.Drawing.Size(446, 66)
         Me.PanelControl2.TabIndex = 18
-        Me.PanelControl2.Visible = False
         '
         'btnProcess
         '
@@ -651,6 +665,7 @@ Partial Class FrontFace
         Me.btnProcess.Appearance.Options.UseForeColor = True
         Me.btnProcess.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat
         Me.btnProcess.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnProcess.Enabled = False
         Me.btnProcess.Location = New System.Drawing.Point(15, 12)
         Me.btnProcess.Name = "btnProcess"
         Me.btnProcess.Size = New System.Drawing.Size(416, 42)
@@ -721,4 +736,5 @@ End Sub
     Public WithEvents lblStatus As System.Windows.Forms.Label
     Public WithEvents lblDeclined As System.Windows.Forms.Label
     Public WithEvents lblCaptured As System.Windows.Forms.Label
+    Public WithEvents lblDeviceInfo As System.Windows.Forms.Label
 End Class

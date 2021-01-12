@@ -74,6 +74,11 @@ Friend Class FrontFace
         End If
     End Sub
 
+    Private Sub ProcessCardOnline()
+        Dim req As New ePayRequest With {.CreditCardNo = ""}
+        Dim res = sm.ChargeCardOnline(req)
+    End Sub
+
     Protected Sub ReallyCenterToScreen()
         Dim screen__1 As Screen = Screen.FromControl(Me)
         Dim workingArea As Rectangle = screen__1.WorkingArea
@@ -90,9 +95,12 @@ Friend Class FrontFace
 
     End Sub
     Private Sub EscapePressed()
-        SetDescription("Please press the red cancel button on the terminal")
+        'SetDescription("Please press the red cancel button on the terminal")
         btnCancel.Enabled = False
-        ePay.CancelTrans()
+        Try
+            ePay.CancelTrans()
+        Catch ex As Exception
+        End Try
     End Sub
     Private Sub ShowMessagePanel(Caption As String, lblCaptr As Boolean, lblstat As Boolean, lbldeclin As Boolean)
         pnlCard.Dock = DockStyle.None
@@ -183,10 +191,12 @@ Friend Class FrontFace
     Private Sub SetDeviceStatus()
         If ePay.DeviceConnected Then
             peDevice.Image = Global.ePay.My.Resources.PinPadConnected
-            ' lblResultMsg.ForeColor = lblCaptured.ForeColor
+            lblDeviceInfo.ForeColor = lblCaptured.ForeColor
+            lblDeviceInfo.Text = "Connected! ~" & ePay.DeviceInfo
         Else
             peDevice.Image = Global.ePay.My.Resources.PinPadDisconnected
-            ' lblResultMsg.ForeColor = lblDeclined.ForeColor
+            lblDeviceInfo.ForeColor = lblDeclined.ForeColor
+            lblDeviceInfo.Text = "Disconnected"
         End If
     End Sub
 

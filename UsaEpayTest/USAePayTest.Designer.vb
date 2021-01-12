@@ -79,14 +79,14 @@ Partial Class USAePayTest
         '
         'txtAmount
         '
-        Me.txtAmount.EditValue = "$0.01"
+        Me.txtAmount.EditValue = "0.01"
         Me.txtAmount.Location = New System.Drawing.Point(73, 131)
         Me.txtAmount.Name = "txtAmount"
-        Me.txtAmount.Properties.DisplayFormat.FormatString = "c"
+        Me.txtAmount.Properties.DisplayFormat.FormatString = "n"
         Me.txtAmount.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.txtAmount.Properties.EditFormat.FormatString = "c"
+        Me.txtAmount.Properties.EditFormat.FormatString = "n"
         Me.txtAmount.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.txtAmount.Properties.Mask.EditMask = "c"
+        Me.txtAmount.Properties.Mask.EditMask = "n"
         Me.txtAmount.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
         Me.txtAmount.Properties.Mask.ShowPlaceHolders = False
         Me.txtAmount.Properties.Mask.UseMaskAsDisplayFormat = True

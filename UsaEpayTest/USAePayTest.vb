@@ -9,21 +9,36 @@ Public Class USAePayTest
         btnProcess.Enabled = False
         btnProcess.Text = "Please Wait..."
         Application.DoEvents()
+        Dim SaleType As String = "cc:sale"
+        Select Case cmbTranType.Text
+            Case "Sale"
+                SaleType = "cc:sale"
+            Case "Refund"
+                SaleType = "cc:credit"
+            Case "Adjust"
+                SaleType = "cc:refund:adjust"
+        End Select
 
-        Dim charge As New ePay.ePayRequest With {.TranCode = "cc:sale", .Amount = txtAmount.EditValue}
+        Dim charge As New ePay.ePayRequest With {.TranCode = SaleType, .Amount = txtAmount.EditValue}
         Dim res = gate.DoCharge(charge)
         Dim reply = res
 
         If reply Is Nothing Then Return
-        lblRes.Text = reply.CaptureStatus + _
+        lblRes.Text = reply.ResultCode + _
+        vbNewLine + reply.ResultMessage + _
         vbNewLine + reply.ApprovedAmount + _
-        vbNewLine + reply.ResultCode + _
-        vbNewLine + reply.ResultMessage
+         vbNewLine + reply.AuthCode + _
+         vbNewLine + reply.CardNumber + _
+        vbNewLine + reply.NameOnCard
 
 
 
         btnProcess.Enabled = True
         btnProcess.Text = "Process"
 
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Me.Close()
     End Sub
 End Class

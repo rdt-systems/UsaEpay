@@ -121,7 +121,6 @@
     <Compile Include="Code\ePayTransaction.vb" />
     <Compile Include="Code\Table.vb" />
     <Compile Include="Code\TransTypes.vb" />
-    <Compile Include="Code\USAePayOnline.vb" />
     <Compile Include="Code\WatermarkBox.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
