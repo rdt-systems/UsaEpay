@@ -74,11 +74,6 @@ Friend Class FrontFace
         End If
     End Sub
 
-    Private Sub ProcessCardOnline()
-        Dim req As New ePayRequest With {.CreditCardNo = ""}
-        Dim res = sm.ChargeCardOnline(req)
-    End Sub
-
     Protected Sub ReallyCenterToScreen()
         Dim screen__1 As Screen = Screen.FromControl(Me)
         Dim workingArea As Rectangle = screen__1.WorkingArea
@@ -88,11 +83,14 @@ Friend Class FrontFace
 
     Private Sub txCCNo_KeyDown(sender As Object, e As KeyEventArgs) Handles TxZip.KeyDown, TxNameOnCard.KeyDown, txExpDate.KeyDown, txCvv2.KeyDown, txCCNo.KeyDown, txStreet.KeyDown
         If e.KeyCode = Keys.F2 Then
-
+            If locker IsNot Nothing Then
+                If CType(locker, ILocker).HasCardOnFile Then CType(locker, ILocker).IsF2 = True
+            End If
         ElseIf e.KeyCode = Keys.Escape Then
             btnCancel.PerformClick()
+        ElseIf e.KeyCode = Keys.Enter Then
+            If btnProcess.Enabled Then btnProcess.PerformClick()
         End If
-
     End Sub
     Private Sub EscapePressed()
         'SetDescription("Please press the red cancel button on the terminal")
@@ -135,6 +133,12 @@ Friend Class FrontFace
         pnlCard.BringToFront()
         pnlCard.Dock = DockStyle.Fill
         lblResultMsg.ForeColor = lblStatus.ForeColor
+        If locker IsNot Nothing Then
+            If CType(locker, ILocker).HasCardOnFile Then Me.lbCardOnFile.Text = "Press F2 to Process Card on File" Else Me.lbCardOnFile.Text = ""
+        Else
+            Me.lbCardOnFile.Text = ""
+        End If
+        txCCNo.Focus()
         MyBase.Refresh()
         Application.DoEvents()
     End Sub
@@ -227,6 +231,52 @@ Friend Class FrontFace
         ReallyCenterToScreen()
         SetDeviceStatus()
         ShowCardpnl("")
+    End Sub
+
+    Private Sub pnlCard_VisibleChanged(sender As Object, e As EventArgs) Handles pnlCard.VisibleChanged
+        pnlParm.Visible = (Not pnlCard.Visible)
+    End Sub
+
+    Private Sub txCCNo_Properties_KeyUp(sender As Object, e As KeyEventArgs) Handles txCCNo.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            e.Handled = True
+            SetCaption(Captions.Processing.ToString)
+            CheckCardLenth()
+        End If
+    End Sub
+
+    Private Sub CheckCardLenth()
+        ePay.MagString = txCCNo.Text
+        If ePay.MagString.Where(Function(c) c = "?").Count = 2 Then
+            ParseCard()
+            Exit Sub
+        Else
+        End If
+    End Sub
+
+    Private Sub ParseCard()
+        Dim ParsedData = ePay.MagString
+        Dim tracks = ParsedData.Split("?")
+        Try
+            ePay.Req.MagStrip = ParsedData
+            ePay.ProcessOnlline = True
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub btnProcess_Click(sender As Object, e As EventArgs) Handles btnProcess.Click
+        ePay.Req.CreditCardNo = txCCNo.EditValue
+        ePay.Req.ExpDate = txExpDate.EditValue
+        ePay.Req.ccv2 = txCvv2.EditValue
+        ePay.Req.ZipCode = TxZip.EditValue
+        ePay.Req.NameOnCard = TxNameOnCard.EditValue
+        SetCaption(Captions.Processing.ToString)
+        ePay.ProcessOnlline = True
+    End Sub
+
+    Private Sub txCCNo_EditValueChanged(sender As Object, e As EventArgs) Handles txExpDate.EditValueChanged, txCCNo.EditValueChanged
+        btnProcess.Enabled = (txCCNo.Text.ToString.Length >= 15 AndAlso txExpDate.Text.ToString.Length >= 4)
     End Sub
 End Class
 

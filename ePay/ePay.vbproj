@@ -115,12 +115,8 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Code\Logs.vb" />
-    <Compile Include="Code\POSData.vb" />
-    <Compile Include="Code\Result.vb" />
     <Compile Include="Code\ePay.vb" />
-    <Compile Include="Code\ePayTransaction.vb" />
     <Compile Include="Code\Table.vb" />
-    <Compile Include="Code\TransTypes.vb" />
     <Compile Include="Code\WatermarkBox.vb">
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

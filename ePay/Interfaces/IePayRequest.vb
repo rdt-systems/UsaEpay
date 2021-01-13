@@ -12,4 +12,5 @@
     Property APIKey As String
     Property ApiPIN As String
     Property RefNum As String
+    Property MagStrip As String
 End Interface

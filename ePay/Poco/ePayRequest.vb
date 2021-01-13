@@ -2,7 +2,7 @@
 Public Class ePayRequest
     Implements IePayRequest
 
-    Dim _GatewayUrl, _TransNumber, _xAmount, _TransCode, _CardNo, _Exp, _Zip, _ccv, _Name_OnCard, _APIKey, _ApiPIN, _DeviceID, _RefNum As String
+    Dim _GatewayUrl, _TransNumber, _xAmount, _TransCode, _CardNo, _Exp, _Zip, _ccv, _Name_OnCard, _APIKey, _ApiPIN, _DeviceID, _RefNum, _MagStrip As String
     Public Property Amount As String Implements IePayRequest.Amount
         Get
             Return _xAmount
@@ -105,6 +105,14 @@ Public Class ePayRequest
         End Get
         Set(value As String)
             _RefNum = value
+        End Set
+    End Property
+    Property MagStrip As String Implements IePayRequest.MagStrip
+        Get
+            Return _MagStrip
+        End Get
+        Set(value As String)
+            _MagStrip = value
         End Set
     End Property
 End Class

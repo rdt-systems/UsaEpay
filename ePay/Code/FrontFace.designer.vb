@@ -115,8 +115,6 @@ Partial Class FrontFace
         Me.txCvv2.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.txCvv2.Properties.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat
         Me.txCvv2.Properties.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.txCvv2.Properties.Mask.EditMask = "\d?\d?\d?\d?\d?"
-        Me.txCvv2.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Regular
         Me.txCvv2.Properties.MaxLength = 4
         Me.txCvv2.Size = New System.Drawing.Size(62, 48)
         Me.txCvv2.TabIndex = 12
@@ -166,8 +164,7 @@ Partial Class FrontFace
         Me.TxZip.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.TxZip.Properties.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat
         Me.TxZip.Properties.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.TxZip.Properties.Mask.EditMask = "\d\d\d\d\d"
-        Me.TxZip.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Regular
+        Me.TxZip.Properties.Mask.ShowPlaceHolders = False
         Me.TxZip.Properties.MaxLength = 5
         Me.TxZip.Size = New System.Drawing.Size(110, 48)
         Me.TxZip.TabIndex = 13
@@ -266,8 +263,6 @@ Partial Class FrontFace
         Me.txExpDate.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.txExpDate.Properties.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat
         Me.txExpDate.Properties.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.txExpDate.Properties.Mask.EditMask = "\d?\d?/\d\d"
-        Me.txExpDate.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Regular
         Me.txExpDate.Properties.MaxLength = 16
         Me.txExpDate.Size = New System.Drawing.Size(62, 48)
         Me.txExpDate.TabIndex = 16
@@ -277,7 +272,7 @@ Partial Class FrontFace
         '
         Me.txCCNo.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.txCCNo.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txCCNo.EditValue = "Card number"
+        Me.txCCNo.EditValue = ""
         Me.txCCNo.Location = New System.Drawing.Point(22, 45)
         Me.txCCNo.Name = "txCCNo"
         Me.txCCNo.Properties.AllowMouseWheel = False
@@ -317,10 +312,6 @@ Partial Class FrontFace
         Me.txCCNo.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple
         Me.txCCNo.Properties.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat
         Me.txCCNo.Properties.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.txCCNo.Properties.Mask.EditMask = "\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d"
-        Me.txCCNo.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx
-        Me.txCCNo.Properties.Mask.UseMaskAsDisplayFormat = True
-        Me.txCCNo.Properties.MaxLength = 16
         Me.txCCNo.Size = New System.Drawing.Size(221, 48)
         Me.txCCNo.TabIndex = 17
         Me.txCCNo.Watermark = "  Card Number"
@@ -365,61 +356,63 @@ Partial Class FrontFace
         Me.pnlParm.Controls.Add(Me.lblDeclined)
         Me.pnlParm.Controls.Add(Me.lblCaptured)
         Me.pnlParm.Controls.Add(Me.lblStatus)
-        Me.pnlParm.Location = New System.Drawing.Point(81, 0)
+        Me.pnlParm.Location = New System.Drawing.Point(42, 17)
         Me.pnlParm.LookAndFeel.UseDefaultLookAndFeel = False
         Me.pnlParm.LookAndFeel.UseWindowsXPTheme = True
         Me.pnlParm.Name = "pnlParm"
+        Me.pnlParm.Padding = New System.Windows.Forms.Padding(5, 5, 5, 50)
         Me.pnlParm.Size = New System.Drawing.Size(446, 236)
         Me.pnlParm.TabIndex = 18
         Me.pnlParm.Visible = False
         '
         'peStatus
         '
+        Me.peStatus.Dock = System.Windows.Forms.DockStyle.Fill
         Me.peStatus.EditValue = Global.ePay.My.Resources.Resources.Ellips
-        Me.peStatus.Location = New System.Drawing.Point(165, 75)
+        Me.peStatus.Location = New System.Drawing.Point(8, 104)
         Me.peStatus.Name = "peStatus"
         Me.peStatus.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.peStatus.Size = New System.Drawing.Size(118, 123)
+        Me.peStatus.Size = New System.Drawing.Size(430, 79)
         Me.peStatus.TabIndex = 0
         '
         'lblDeclined
         '
-        Me.lblDeclined.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.lblDeclined.BackColor = System.Drawing.Color.Transparent
+        Me.lblDeclined.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblDeclined.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.lblDeclined.Font = New System.Drawing.Font("Open Sans Semibold", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(0, Byte))
         Me.lblDeclined.ForeColor = System.Drawing.Color.FromArgb(CType(CType(251, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(83, Byte), Integer))
-        Me.lblDeclined.Location = New System.Drawing.Point(12, 3)
+        Me.lblDeclined.Location = New System.Drawing.Point(8, 72)
         Me.lblDeclined.Name = "lblDeclined"
-        Me.lblDeclined.Size = New System.Drawing.Size(434, 32)
+        Me.lblDeclined.Size = New System.Drawing.Size(430, 32)
         Me.lblDeclined.TabIndex = 11
         Me.lblDeclined.Text = "Insert or swipe credit card"
         Me.lblDeclined.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblCaptured
         '
-        Me.lblCaptured.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.lblCaptured.BackColor = System.Drawing.Color.Transparent
+        Me.lblCaptured.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblCaptured.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.lblCaptured.Font = New System.Drawing.Font("Open Sans Semibold", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(0, Byte))
         Me.lblCaptured.ForeColor = System.Drawing.Color.FromArgb(CType(CType(36, Byte), Integer), CType(CType(161, Byte), Integer), CType(CType(72, Byte), Integer))
-        Me.lblCaptured.Location = New System.Drawing.Point(12, 3)
+        Me.lblCaptured.Location = New System.Drawing.Point(8, 40)
         Me.lblCaptured.Name = "lblCaptured"
-        Me.lblCaptured.Size = New System.Drawing.Size(434, 32)
+        Me.lblCaptured.Size = New System.Drawing.Size(430, 32)
         Me.lblCaptured.TabIndex = 11
         Me.lblCaptured.Text = "Insert or swipe credit card"
         Me.lblCaptured.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblStatus
         '
-        Me.lblStatus.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.lblStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblStatus.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.lblStatus.Font = New System.Drawing.Font("Open Sans Semibold", 22.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(0, Byte))
         Me.lblStatus.ForeColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(117, Byte), Integer), CType(CType(205, Byte), Integer))
-        Me.lblStatus.Location = New System.Drawing.Point(6, 3)
+        Me.lblStatus.Location = New System.Drawing.Point(8, 8)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(434, 32)
+        Me.lblStatus.Size = New System.Drawing.Size(430, 32)
         Me.lblStatus.TabIndex = 11
         Me.lblStatus.Text = "Insert or swipe credit card"
         Me.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -439,7 +432,7 @@ Partial Class FrontFace
         Me.pnlCard.Controls.Add(Me.TxNameOnCard)
         Me.pnlCard.Controls.Add(Me.txExpDate)
         Me.pnlCard.Controls.Add(Me.txCCNo)
-        Me.pnlCard.Location = New System.Drawing.Point(15, 35)
+        Me.pnlCard.Location = New System.Drawing.Point(15, 25)
         Me.pnlCard.LookAndFeel.UseDefaultLookAndFeel = False
         Me.pnlCard.LookAndFeel.UseWindowsXPTheme = True
         Me.pnlCard.Margin = New System.Windows.Forms.Padding(50, 0, 50, 0)
@@ -627,8 +620,8 @@ Partial Class FrontFace
         Me.pnlBack.Appearance.Options.UseBackColor = True
         Me.pnlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.pnlBack.Controls.Add(Me.pnlCard)
-        Me.pnlBack.Controls.Add(Me.PanelControl2)
         Me.pnlBack.Controls.Add(Me.pnlParm)
+        Me.pnlBack.Controls.Add(Me.PanelControl2)
         Me.pnlBack.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlBack.Location = New System.Drawing.Point(0, 75)
         Me.pnlBack.Name = "pnlBack"
