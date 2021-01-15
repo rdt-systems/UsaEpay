@@ -15,9 +15,9 @@ Public Class TestForm
     Private tran As TransactionRequest
     Private client As Middleware
     Private device As Device
-    Private ApiKey As System.String
-    Private ApiPin As System.String
-    Private DeviceKey As System.String
+    Private ApiKey As String
+    Private ApiPin As String
+    Private DeviceKey As String
 
 
     Public Sub New()
@@ -80,7 +80,7 @@ Public Class TestForm
         Me.addItem("Oatmeal", 2.25)
     End Sub
 
-    Private Sub addItem(ByVal Name As System.String, ByVal Amount As System.Double)
+    Private Sub addItem(ByVal Name As String, ByVal Amount As System.Double)
         Me.total += Amount
         listItems.Items.Add("$" & Amount & " " & Name)
         lblTotal.Text = "$" & Me.total
@@ -221,7 +221,7 @@ Public Class TestForm
         Me.ToggleConnectButton(True)
     End Sub
 
-    Private Sub OnDeviceRefresh(Optional ByVal stat As System.String = Nothing)
+    Private Sub OnDeviceRefresh(Optional ByVal stat As String = Nothing)
         Console.WriteLine("OnDeviceRefresh triggered: " & stat)
 
         If Me.device Is Nothing Then
@@ -234,7 +234,7 @@ Public Class TestForm
         setDeviceStatus(Me.device.Status)
     End Sub
 
-    Private Sub setDeviceStatus(ByVal status As System.String)
+    Private Sub setDeviceStatus(ByVal status As String)
         If lblDeviceStatus.InvokeRequired Then
             lblDeviceStatus.Invoke(New MethodInvoker(Sub() lblDeviceStatus.Text = status))
         Else
@@ -242,7 +242,7 @@ Public Class TestForm
         End If
     End Sub
 
-    Private Sub setDeviceModel(ByVal status As System.String)
+    Private Sub setDeviceModel(ByVal status As String)
         If lblDeviceModel.InvokeRequired Then
             lblDeviceModel.Invoke(New MethodInvoker(Sub() lblDeviceModel.Text = status))
         Else
@@ -250,7 +250,7 @@ Public Class TestForm
         End If
     End Sub
 
-    Private Sub startTransaction(Optional ByVal manualKey As System.Boolean = False, Optional ByVal command As System.String = "cc:sale")
+    Private Sub startTransaction(Optional ByVal manualKey As System.Boolean = False, Optional ByVal command As String = "cc:sale")
         If Me.device Is Nothing OrElse Me.client Is Nothing Then
             Me.setDeviceStatus("Take device online before starting payment")
             Return

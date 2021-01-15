@@ -1,7 +1,7 @@
 ﻿Imports System.Xml.Serialization
 
-<Serializable(), XmlRoot("table")>
-Public Class Table
+<Serializable(), XmlRoot("tables")>
+Public Class Tables
     <XmlElement("row")> Property Interfaces As New List(Of row)
 End Class
 

@@ -129,7 +129,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="PairDevice.resx">
       <DependentUpon>PairDevice.vb</DependentUpon>
     </EmbeddedResource>

@@ -21,6 +21,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>ePay.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,23 +45,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v14.2, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Printing.v14.2.Core, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Sparkline.v14.2.Core, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v14.2, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v14.2.UI, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v14.2, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraGrid.v14.2, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v14.2, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraTreeList.v14.2, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraWizard.v14.2, Version=14.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\Packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Packages\paymentengine-dotnet-sdk-1.0.9\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="PaymentEngine.Middleware">
       <HintPath>..\Packages\paymentengine-dotnet-sdk-1.0.9\PaymentEngine.Middleware.dll</HintPath>
     </Reference>
@@ -74,24 +61,11 @@
       <HintPath>..\Packages\Serilog.Sinks.Seq.1.5.36\lib\net40\Serilog.Sinks.Seq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO">
-      <HintPath>..\..\..\NewBackOffice\Back Office\Executables\BackOffice\bin\System.IO.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.WebRequest" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Threading.Tasks" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="USAePayAPI">
       <HintPath>..\Packages\USAePayAPI\USAePayAPI.dll</HintPath>
     </Reference>
@@ -101,7 +75,6 @@
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
@@ -116,11 +89,7 @@
     </Compile>
     <Compile Include="Code\Logs.vb" />
     <Compile Include="Code\ePay.vb" />
-    <Compile Include="Code\Table.vb" />
-    <Compile Include="Code\WatermarkBox.vb">
-      <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="Code\Tables.vb" />
     <Compile Include="Interfaces\ILocker.vb" />
     <Compile Include="Interfaces\IePayRequest.vb" />
     <Compile Include="Interfaces\IePayResponse.vb" />
@@ -147,7 +116,6 @@
     <EmbeddedResource Include="Code\FrontFace.resx">
       <DependentUpon>FrontFace.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -207,6 +175,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MasterCard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Background\Background.vbproj">
+      <Project>{b44333bf-e0fb-4f67-bdcb-c21c63cd1c04}</Project>
+      <Name>Background</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

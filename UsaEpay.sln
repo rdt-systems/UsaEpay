@@ -7,6 +7,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UsaEpayTest", "UsaEpayTest\
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ePay", "ePay\ePay.vbproj", "{608A383C-CF55-4960-AA77-8D57D64F77C4}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Background", "Background\Background.vbproj", "{B44333BF-E0FB-4F67-BDCB-C21C63CD1C04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{608A383C-CF55-4960-AA77-8D57D64F77C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{608A383C-CF55-4960-AA77-8D57D64F77C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{608A383C-CF55-4960-AA77-8D57D64F77C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B44333BF-E0FB-4F67-BDCB-C21C63CD1C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B44333BF-E0FB-4F67-BDCB-C21C63CD1C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B44333BF-E0FB-4F67-BDCB-C21C63CD1C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B44333BF-E0FB-4F67-BDCB-C21C63CD1C04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

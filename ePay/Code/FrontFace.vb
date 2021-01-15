@@ -109,6 +109,7 @@ Friend Class FrontFace
         lblDeclined.Visible = lbldeclin
         lblCaptured.Visible = lblCaptr
         lblStatus.Visible = lblstat
+        peStatus.Visible = True
         If lbldeclin Then
             lblDeclined.Text = Caption
             peStatus.Image = Global.ePay.My.Resources.Resources.Declined
@@ -235,12 +236,18 @@ Friend Class FrontFace
 
     Private Sub pnlCard_VisibleChanged(sender As Object, e As EventArgs) Handles pnlCard.VisibleChanged
         pnlParm.Visible = (Not pnlCard.Visible)
+        If pnlParm.Visible Then
+            lblCaptured.Visible = False
+            lblDeclined.Visible = False
+            lblStatus.Visible = False
+            peStatus.Visible = False
+        End If
     End Sub
 
     Private Sub txCCNo_Properties_KeyUp(sender As Object, e As KeyEventArgs) Handles txCCNo.KeyUp
         If e.KeyCode = Keys.Enter Then
             e.Handled = True
-            SetCaption(Captions.Processing.ToString)
+            SetCaption(ePay.Captions.Processing.ToString)
             CheckCardLenth()
         End If
     End Sub
@@ -271,7 +278,7 @@ Friend Class FrontFace
         ePay.Req.ccv2 = txCvv2.EditValue
         ePay.Req.ZipCode = TxZip.EditValue
         ePay.Req.NameOnCard = TxNameOnCard.EditValue
-        SetCaption(Captions.Processing.ToString)
+        SetCaption(ePay.Captions.Processing.ToString)
         ePay.ProcessOnlline = True
     End Sub
 

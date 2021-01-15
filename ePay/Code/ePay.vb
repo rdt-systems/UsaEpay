@@ -27,16 +27,16 @@ Public Class ePay
     Private usapay As USAePayAPI.USAePay = Nothing
     Public Shared request As PaymentRequest = Nothing
     Private Shared locker1 As New Locker()
-    Private ApiKey As System.String
-    Private ApiPin As System.String
-    Private DeviceKey As System.String
-    Private GatewayUrl As System.String
+    Private ApiKey As String
+    Private ApiPin As String
+    Private DeviceKey As String
+    Private GatewayUrl As String
     Private IsBusy As Boolean = False
     Private SaveSig As Boolean = False
     Private Shared _DeviceStatus As Boolean
-    Public Shared DeviceInfo As System.String = ""
+    Public Shared DeviceInfo As String = ""
     Public Shared IsSwiped As Boolean = False
-    Public Shared MagString As System.String = ""
+    Public Shared MagString As String = ""
     Public Shared ProcessOnlline As Boolean = False
     Public Shared WithEvents Front As DevExpress.XtraSplashScreen.SplashScreenManager = New DevExpress.XtraSplashScreen.SplashScreenManager(GetType(FrontFace), New DevExpress.XtraSplashScreen.SplashFormProperties With {.UseFadeOutEffect = False, .UseFadeInEffect = False, .AllowGlowEffect = False})
 
@@ -52,7 +52,7 @@ Public Class ePay
 #End Region
 
 #Region "Public Functions"
-    Public Function InitDevice(ByVal ApiKey As System.String, ByVal ApiPin As System.String, ByVal DeviceKey As System.String, ByVal GatewayUrl As System.String) As Boolean
+    Public Function InitDevice(ByVal ApiKey As String, ByVal ApiPin As String, ByVal DeviceKey As String, ByVal GatewayUrl As String)
         IsInit = False
         Try
             Me.ApiKey = ApiKey
@@ -260,7 +260,7 @@ Public Class ePay
         End Try
     End Sub
 
-    Private Sub OnDeviceRefresh(Optional ByVal stat As System.String = Nothing)
+    Private Sub OnDeviceRefresh(Optional ByVal stat As String = Nothing)
         Console.WriteLine("OnDeviceRefresh triggered: " & stat)
         If Me.device Is Nothing Then
             ' SetCaption(Captions.CantConnect.ToString)
@@ -364,10 +364,13 @@ Public Class ePay
                                          .ResultMessage = IIf(Res.Error Is Nothing, Res.Result, Res.Error),
                                          .IsDuplicate = Res.IsDuplicate,
                                          .Err = IIf(Res.Error Is Nothing, "", Res.Result),
-                                         .ErrorMessage = Res.Error,
-                                         .NameOnCard = ccDetail.CardHolder,
-                                         .CardNumber = ccDetail.Number,
-                                         .CardType = GetCardType(IIf(ccDetail.Type Is Nothing, "", ccDetail.Type))}
+                                         .ErrorMessage = Res.Error}
+        If Not ccDetail Is Nothing Then
+            epayres.NameOnCard = IIf(ccDetail Is Nothing, Nothing, ccDetail.CardHolder)
+            epayres.CardNumber = IIf(ccDetail Is Nothing, Nothing, ccDetail.Number)
+            epayres.CardType = IIf(ccDetail Is Nothing, Nothing, GetCardType(IIf(ccDetail.Type Is Nothing, "", ccDetail.Type)))
+
+        End If
         Return epayres
     End Function
 
@@ -434,16 +437,20 @@ Public Class ePay
                                                        .Amount = req.Amount,
                                                        .CardNumber = req.CreditCardNo,
                                                        .CardExp = req.ExpDate,
-                                                       .RefNum = req.RefNum,
                                                        .Command = req.TranCode,
                                                        .Invoice = req.TranNumber,
                                                        .Cvv2 = req.ccv2,
+                                                       .RefNum = req.RefNum,
                                                        .AvsZip = req.ZipCode,
                                                        .CardHolder = req.NameOnCard,
                                                        .MagStripe = req.MagStrip}
         If Not usapay.MagStripe Is Nothing Then usapay.CardPresent = True
         If req.TranCode = "cc:sale" Then
-            charg = usapay.Process()
+            charg = usapay.Sale()
+        ElseIf req.TranCode = "Refund" AndAlso Not String.IsNullOrEmpty(req.RefNum) Then
+            charg = usapay.Refund(req.RefNum)
+        ElseIf req.TranCode = "cc:void" AndAlso Not String.IsNullOrEmpty(req.RefNum) Then
+            charg = usapay.Void(req.RefNum)
         ElseIf req.TranCode = "cc:credit" Then
             charg = usapay.Credit()
         End If

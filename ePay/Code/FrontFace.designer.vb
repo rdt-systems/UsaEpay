@@ -22,11 +22,11 @@ Partial Class FrontFace
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.txCvv2 = New Global.ePay.AddWatermark.CueTextBox()
-        Me.TxZip = New Global.ePay.AddWatermark.CueTextBox()
-        Me.TxNameOnCard = New Global.ePay.AddWatermark.CueTextBox()
-        Me.txExpDate = New Global.ePay.AddWatermark.CueTextBox()
-        Me.txCCNo = New Global.ePay.AddWatermark.CueTextBox()
+        Me.txCvv2 = New Background.AddWatermark.CueTextBox()
+        Me.TxZip = New Background.AddWatermark.CueTextBox()
+        Me.TxNameOnCard = New Background.AddWatermark.CueTextBox()
+        Me.txExpDate = New Background.AddWatermark.CueTextBox()
+        Me.txCCNo = New Background.AddWatermark.CueTextBox()
         Me.lbAmount = New System.Windows.Forms.Label()
         Me.lbCardType = New System.Windows.Forms.Label()
         Me.pnlParm = New DevExpress.XtraEditors.PanelControl()
@@ -35,7 +35,7 @@ Partial Class FrontFace
         Me.lblCaptured = New System.Windows.Forms.Label()
         Me.lblStatus = New System.Windows.Forms.Label()
         Me.pnlCard = New DevExpress.XtraEditors.PanelControl()
-        Me.txStreet = New Global.ePay.AddWatermark.CueTextBox()
+        Me.txStreet = New Background.AddWatermark.CueTextBox()
         Me.lblInput = New System.Windows.Forms.Label()
         Me.pnlResult = New DevExpress.XtraEditors.PanelControl()
         Me.lblResultMsg = New System.Windows.Forms.Label()
@@ -356,7 +356,7 @@ Partial Class FrontFace
         Me.pnlParm.Controls.Add(Me.lblDeclined)
         Me.pnlParm.Controls.Add(Me.lblCaptured)
         Me.pnlParm.Controls.Add(Me.lblStatus)
-        Me.pnlParm.Location = New System.Drawing.Point(42, 17)
+        Me.pnlParm.Location = New System.Drawing.Point(33, 4)
         Me.pnlParm.LookAndFeel.UseDefaultLookAndFeel = False
         Me.pnlParm.LookAndFeel.UseWindowsXPTheme = True
         Me.pnlParm.Name = "pnlParm"
@@ -432,7 +432,7 @@ Partial Class FrontFace
         Me.pnlCard.Controls.Add(Me.TxNameOnCard)
         Me.pnlCard.Controls.Add(Me.txExpDate)
         Me.pnlCard.Controls.Add(Me.txCCNo)
-        Me.pnlCard.Location = New System.Drawing.Point(15, 25)
+        Me.pnlCard.Location = New System.Drawing.Point(29, 2)
         Me.pnlCard.LookAndFeel.UseDefaultLookAndFeel = False
         Me.pnlCard.LookAndFeel.UseWindowsXPTheme = True
         Me.pnlCard.Margin = New System.Windows.Forms.Padding(50, 0, 50, 0)
@@ -604,7 +604,6 @@ Partial Class FrontFace
         Me.btnCancel.Appearance.Options.UseFont = True
         Me.btnCancel.Appearance.Options.UseForeColor = True
         Me.btnCancel.Appearance.Options.UseTextOptions = True
-        Me.btnCancel.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap
         Me.btnCancel.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnCancel.Image = Global.ePay.My.Resources.Resources.Close
@@ -673,43 +672,43 @@ Partial Class FrontFace
         Me.Controls.Add(Me.pnlBack)
         Me.Controls.Add(Me.PanelControl1)
         Me.Controls.Add(Me.pnlResult)
-        Me.DoubleBuffered = true
-        Me.Font = New System.Drawing.Font("Open Sans", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.ForeColor = System.Drawing.Color.FromArgb(CType(CType(51,Byte),Integer), CType(CType(51,Byte),Integer), CType(CType(51,Byte),Integer))
-        Me.InactiveGlowColor = System.Drawing.Color.FromArgb(CType(CType(247,Byte),Integer), CType(CType(249,Byte),Integer), CType(CType(252,Byte),Integer))
+        Me.DoubleBuffered = True
+        Me.Font = New System.Drawing.Font("Open Sans", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
+        Me.InactiveGlowColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(252, Byte), Integer))
         Me.Name = "FrontFace"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Form1"
-        CType(Me.txCvv2.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.TxZip.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.TxNameOnCard.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.txExpDate.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.txCCNo.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.pnlParm,System.ComponentModel.ISupportInitialize).EndInit
-        Me.pnlParm.ResumeLayout(false)
-        CType(Me.peStatus.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.pnlCard,System.ComponentModel.ISupportInitialize).EndInit
-        Me.pnlCard.ResumeLayout(false)
-        CType(Me.txStreet.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.pnlResult,System.ComponentModel.ISupportInitialize).EndInit
-        Me.pnlResult.ResumeLayout(false)
-        Me.Panel1.ResumeLayout(false)
-        CType(Me.peDevice.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.PanelControl1,System.ComponentModel.ISupportInitialize).EndInit
-        Me.PanelControl1.ResumeLayout(false)
-        CType(Me.pnlBack,System.ComponentModel.ISupportInitialize).EndInit
-        Me.pnlBack.ResumeLayout(false)
-        CType(Me.PanelControl2,System.ComponentModel.ISupportInitialize).EndInit
-        Me.PanelControl2.ResumeLayout(false)
-        Me.ResumeLayout(false)
+        CType(Me.txCvv2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TxZip.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TxNameOnCard.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txExpDate.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txCCNo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pnlParm, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlParm.ResumeLayout(False)
+        CType(Me.peStatus.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pnlCard, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlCard.ResumeLayout(False)
+        CType(Me.txStreet.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pnlResult, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlResult.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        CType(Me.peDevice.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl1.ResumeLayout(False)
+        CType(Me.pnlBack, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlBack.ResumeLayout(False)
+        CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl2.ResumeLayout(False)
+        Me.ResumeLayout(False)
 
-End Sub
+    End Sub
     Friend WithEvents btnCancel As DevExpress.XtraEditors.SimpleButton
-    Friend WithEvents txCvv2 As Global.ePay.AddWatermark.CueTextBox
-    Friend WithEvents TxZip As Global.ePay.AddWatermark.CueTextBox
-    Friend WithEvents TxNameOnCard As Global.ePay.AddWatermark.CueTextBox
-    Friend WithEvents txExpDate As Global.ePay.AddWatermark.CueTextBox
-    Friend WithEvents txCCNo As Global.ePay.AddWatermark.CueTextBox
+    Friend WithEvents txCvv2 As Background.AddWatermark.CueTextBox
+    Friend WithEvents TxZip As Background.AddWatermark.CueTextBox
+    Friend WithEvents TxNameOnCard As Background.AddWatermark.CueTextBox
+    Friend WithEvents txExpDate As Background.AddWatermark.CueTextBox
+    Friend WithEvents txCCNo As Background.AddWatermark.CueTextBox
     Public WithEvents lbAmount As System.Windows.Forms.Label
     Public WithEvents lbCardType As System.Windows.Forms.Label
     Public WithEvents pnlParm As DevExpress.XtraEditors.PanelControl
@@ -718,7 +717,7 @@ End Sub
     Friend WithEvents PanelControl1 As DevExpress.XtraEditors.PanelControl
     Public WithEvents lbCardOnFile As System.Windows.Forms.Label
     Public WithEvents lblResultMsg As System.Windows.Forms.Label
-    Friend WithEvents txStreet As Global.ePay.AddWatermark.CueTextBox
+    Friend WithEvents txStreet As Background.AddWatermark.CueTextBox
     Public WithEvents lblInput As System.Windows.Forms.Label
     Public WithEvents pnlBack As DevExpress.XtraEditors.PanelControl
     Public WithEvents PanelControl2 As DevExpress.XtraEditors.PanelControl
