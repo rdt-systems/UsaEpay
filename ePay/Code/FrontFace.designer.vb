@@ -80,6 +80,7 @@ Partial Class FrontFace
         Me.txCvv2.Name = "txCvv2"
         Me.txCvv2.Properties.AllowMouseWheel = False
         Me.txCvv2.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.txCvv2.Properties.Appearance.BackColor2 = System.Drawing.Color.White
         Me.txCvv2.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(216, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(226, Byte), Integer))
         Me.txCvv2.Properties.Appearance.Font = New System.Drawing.Font("Open Sans", 12.0!)
         Me.txCvv2.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -88,6 +89,7 @@ Partial Class FrontFace
         Me.txCvv2.Properties.Appearance.Options.UseFont = True
         Me.txCvv2.Properties.Appearance.Options.UseForeColor = True
         Me.txCvv2.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.White
+        Me.txCvv2.Properties.AppearanceDisabled.BackColor2 = System.Drawing.Color.White
         Me.txCvv2.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.LightGray
         Me.txCvv2.Properties.AppearanceDisabled.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txCvv2.Properties.AppearanceDisabled.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -95,7 +97,8 @@ Partial Class FrontFace
         Me.txCvv2.Properties.AppearanceDisabled.Options.UseBorderColor = True
         Me.txCvv2.Properties.AppearanceDisabled.Options.UseFont = True
         Me.txCvv2.Properties.AppearanceDisabled.Options.UseForeColor = True
-        Me.txCvv2.Properties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent
+        Me.txCvv2.Properties.AppearanceFocused.BackColor = System.Drawing.Color.White
+        Me.txCvv2.Properties.AppearanceFocused.BackColor2 = System.Drawing.Color.White
         Me.txCvv2.Properties.AppearanceFocused.BorderColor = System.Drawing.Color.LightGray
         Me.txCvv2.Properties.AppearanceFocused.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txCvv2.Properties.AppearanceFocused.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -104,6 +107,7 @@ Partial Class FrontFace
         Me.txCvv2.Properties.AppearanceFocused.Options.UseFont = True
         Me.txCvv2.Properties.AppearanceFocused.Options.UseForeColor = True
         Me.txCvv2.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.txCvv2.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
         Me.txCvv2.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.LightGray
         Me.txCvv2.Properties.AppearanceReadOnly.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txCvv2.Properties.AppearanceReadOnly.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -117,7 +121,7 @@ Partial Class FrontFace
         Me.txCvv2.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.txCvv2.Properties.MaxLength = 4
         Me.txCvv2.Size = New System.Drawing.Size(62, 48)
-        Me.txCvv2.TabIndex = 12
+        Me.txCvv2.TabIndex = 2
         Me.txCvv2.Watermark = "  CVC"
         '
         'TxZip
@@ -129,6 +133,7 @@ Partial Class FrontFace
         Me.TxZip.Name = "TxZip"
         Me.TxZip.Properties.AllowMouseWheel = False
         Me.TxZip.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.TxZip.Properties.Appearance.BackColor2 = System.Drawing.Color.White
         Me.TxZip.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(216, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(226, Byte), Integer))
         Me.TxZip.Properties.Appearance.Font = New System.Drawing.Font("Open Sans", 12.0!)
         Me.TxZip.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -137,6 +142,7 @@ Partial Class FrontFace
         Me.TxZip.Properties.Appearance.Options.UseFont = True
         Me.TxZip.Properties.Appearance.Options.UseForeColor = True
         Me.TxZip.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.White
+        Me.TxZip.Properties.AppearanceDisabled.BackColor2 = System.Drawing.Color.White
         Me.TxZip.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.LightGray
         Me.TxZip.Properties.AppearanceDisabled.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.TxZip.Properties.AppearanceDisabled.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -144,7 +150,8 @@ Partial Class FrontFace
         Me.TxZip.Properties.AppearanceDisabled.Options.UseBorderColor = True
         Me.TxZip.Properties.AppearanceDisabled.Options.UseFont = True
         Me.TxZip.Properties.AppearanceDisabled.Options.UseForeColor = True
-        Me.TxZip.Properties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent
+        Me.TxZip.Properties.AppearanceFocused.BackColor = System.Drawing.Color.White
+        Me.TxZip.Properties.AppearanceFocused.BackColor2 = System.Drawing.Color.White
         Me.TxZip.Properties.AppearanceFocused.BorderColor = System.Drawing.Color.LightGray
         Me.TxZip.Properties.AppearanceFocused.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.TxZip.Properties.AppearanceFocused.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -153,6 +160,7 @@ Partial Class FrontFace
         Me.TxZip.Properties.AppearanceFocused.Options.UseFont = True
         Me.TxZip.Properties.AppearanceFocused.Options.UseForeColor = True
         Me.TxZip.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.TxZip.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
         Me.TxZip.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.LightGray
         Me.TxZip.Properties.AppearanceReadOnly.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.TxZip.Properties.AppearanceReadOnly.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -167,7 +175,7 @@ Partial Class FrontFace
         Me.TxZip.Properties.Mask.ShowPlaceHolders = False
         Me.TxZip.Properties.MaxLength = 5
         Me.TxZip.Size = New System.Drawing.Size(110, 48)
-        Me.TxZip.TabIndex = 13
+        Me.TxZip.TabIndex = 5
         Me.TxZip.Watermark = "  Zip Code"
         '
         'TxNameOnCard
@@ -179,6 +187,7 @@ Partial Class FrontFace
         Me.TxNameOnCard.Name = "TxNameOnCard"
         Me.TxNameOnCard.Properties.AllowMouseWheel = False
         Me.TxNameOnCard.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.TxNameOnCard.Properties.Appearance.BackColor2 = System.Drawing.Color.White
         Me.TxNameOnCard.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(216, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(226, Byte), Integer))
         Me.TxNameOnCard.Properties.Appearance.Font = New System.Drawing.Font("Open Sans", 12.0!)
         Me.TxNameOnCard.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -187,6 +196,7 @@ Partial Class FrontFace
         Me.TxNameOnCard.Properties.Appearance.Options.UseFont = True
         Me.TxNameOnCard.Properties.Appearance.Options.UseForeColor = True
         Me.TxNameOnCard.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.White
+        Me.TxNameOnCard.Properties.AppearanceDisabled.BackColor2 = System.Drawing.Color.White
         Me.TxNameOnCard.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.LightGray
         Me.TxNameOnCard.Properties.AppearanceDisabled.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.TxNameOnCard.Properties.AppearanceDisabled.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -194,7 +204,8 @@ Partial Class FrontFace
         Me.TxNameOnCard.Properties.AppearanceDisabled.Options.UseBorderColor = True
         Me.TxNameOnCard.Properties.AppearanceDisabled.Options.UseFont = True
         Me.TxNameOnCard.Properties.AppearanceDisabled.Options.UseForeColor = True
-        Me.TxNameOnCard.Properties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent
+        Me.TxNameOnCard.Properties.AppearanceFocused.BackColor = System.Drawing.Color.White
+        Me.TxNameOnCard.Properties.AppearanceFocused.BackColor2 = System.Drawing.Color.White
         Me.TxNameOnCard.Properties.AppearanceFocused.BorderColor = System.Drawing.Color.LightGray
         Me.TxNameOnCard.Properties.AppearanceFocused.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.TxNameOnCard.Properties.AppearanceFocused.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -203,6 +214,7 @@ Partial Class FrontFace
         Me.TxNameOnCard.Properties.AppearanceFocused.Options.UseFont = True
         Me.TxNameOnCard.Properties.AppearanceFocused.Options.UseForeColor = True
         Me.TxNameOnCard.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.TxNameOnCard.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
         Me.TxNameOnCard.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.LightGray
         Me.TxNameOnCard.Properties.AppearanceReadOnly.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.TxNameOnCard.Properties.AppearanceReadOnly.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -216,7 +228,7 @@ Partial Class FrontFace
         Me.TxNameOnCard.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.TxNameOnCard.Properties.MaxLength = 50
         Me.TxNameOnCard.Size = New System.Drawing.Size(407, 48)
-        Me.TxNameOnCard.TabIndex = 14
+        Me.TxNameOnCard.TabIndex = 3
         Me.TxNameOnCard.Watermark = "  Full Name"
         '
         'txExpDate
@@ -228,6 +240,7 @@ Partial Class FrontFace
         Me.txExpDate.Name = "txExpDate"
         Me.txExpDate.Properties.AllowMouseWheel = False
         Me.txExpDate.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.txExpDate.Properties.Appearance.BackColor2 = System.Drawing.Color.White
         Me.txExpDate.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(216, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(226, Byte), Integer))
         Me.txExpDate.Properties.Appearance.Font = New System.Drawing.Font("Open Sans", 12.0!)
         Me.txExpDate.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -236,6 +249,7 @@ Partial Class FrontFace
         Me.txExpDate.Properties.Appearance.Options.UseFont = True
         Me.txExpDate.Properties.Appearance.Options.UseForeColor = True
         Me.txExpDate.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.White
+        Me.txExpDate.Properties.AppearanceDisabled.BackColor2 = System.Drawing.Color.White
         Me.txExpDate.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.LightGray
         Me.txExpDate.Properties.AppearanceDisabled.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txExpDate.Properties.AppearanceDisabled.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -243,7 +257,8 @@ Partial Class FrontFace
         Me.txExpDate.Properties.AppearanceDisabled.Options.UseBorderColor = True
         Me.txExpDate.Properties.AppearanceDisabled.Options.UseFont = True
         Me.txExpDate.Properties.AppearanceDisabled.Options.UseForeColor = True
-        Me.txExpDate.Properties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent
+        Me.txExpDate.Properties.AppearanceFocused.BackColor = System.Drawing.Color.White
+        Me.txExpDate.Properties.AppearanceFocused.BackColor2 = System.Drawing.Color.White
         Me.txExpDate.Properties.AppearanceFocused.BorderColor = System.Drawing.Color.LightGray
         Me.txExpDate.Properties.AppearanceFocused.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txExpDate.Properties.AppearanceFocused.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -252,6 +267,7 @@ Partial Class FrontFace
         Me.txExpDate.Properties.AppearanceFocused.Options.UseFont = True
         Me.txExpDate.Properties.AppearanceFocused.Options.UseForeColor = True
         Me.txExpDate.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.txExpDate.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
         Me.txExpDate.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.LightGray
         Me.txExpDate.Properties.AppearanceReadOnly.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txExpDate.Properties.AppearanceReadOnly.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -265,7 +281,7 @@ Partial Class FrontFace
         Me.txExpDate.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.txExpDate.Properties.MaxLength = 16
         Me.txExpDate.Size = New System.Drawing.Size(62, 48)
-        Me.txExpDate.TabIndex = 16
+        Me.txExpDate.TabIndex = 1
         Me.txExpDate.Watermark = "  Exp"
         '
         'txCCNo
@@ -277,6 +293,7 @@ Partial Class FrontFace
         Me.txCCNo.Name = "txCCNo"
         Me.txCCNo.Properties.AllowMouseWheel = False
         Me.txCCNo.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.txCCNo.Properties.Appearance.BackColor2 = System.Drawing.Color.White
         Me.txCCNo.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(216, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(226, Byte), Integer))
         Me.txCCNo.Properties.Appearance.Font = New System.Drawing.Font("Open Sans", 12.0!)
         Me.txCCNo.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -292,7 +309,8 @@ Partial Class FrontFace
         Me.txCCNo.Properties.AppearanceDisabled.Options.UseBorderColor = True
         Me.txCCNo.Properties.AppearanceDisabled.Options.UseFont = True
         Me.txCCNo.Properties.AppearanceDisabled.Options.UseForeColor = True
-        Me.txCCNo.Properties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent
+        Me.txCCNo.Properties.AppearanceFocused.BackColor = System.Drawing.Color.White
+        Me.txCCNo.Properties.AppearanceFocused.BackColor2 = System.Drawing.Color.White
         Me.txCCNo.Properties.AppearanceFocused.BorderColor = System.Drawing.Color.LightGray
         Me.txCCNo.Properties.AppearanceFocused.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txCCNo.Properties.AppearanceFocused.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -301,6 +319,7 @@ Partial Class FrontFace
         Me.txCCNo.Properties.AppearanceFocused.Options.UseFont = True
         Me.txCCNo.Properties.AppearanceFocused.Options.UseForeColor = True
         Me.txCCNo.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.txCCNo.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
         Me.txCCNo.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.LightGray
         Me.txCCNo.Properties.AppearanceReadOnly.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txCCNo.Properties.AppearanceReadOnly.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -313,7 +332,7 @@ Partial Class FrontFace
         Me.txCCNo.Properties.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat
         Me.txCCNo.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.txCCNo.Size = New System.Drawing.Size(221, 48)
-        Me.txCCNo.TabIndex = 17
+        Me.txCCNo.TabIndex = 0
         Me.txCCNo.Watermark = "  Card Number"
         '
         'lbAmount
@@ -420,6 +439,7 @@ Partial Class FrontFace
         'pnlCard
         '
         Me.pnlCard.Appearance.BackColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(252, Byte), Integer))
+        Me.pnlCard.Appearance.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(252, Byte), Integer))
         Me.pnlCard.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(216, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(226, Byte), Integer))
         Me.pnlCard.Appearance.Options.UseBackColor = True
         Me.pnlCard.Appearance.Options.UseBorderColor = True
@@ -450,6 +470,7 @@ Partial Class FrontFace
         Me.txStreet.Name = "txStreet"
         Me.txStreet.Properties.AllowMouseWheel = False
         Me.txStreet.Properties.Appearance.BackColor = System.Drawing.Color.White
+        Me.txStreet.Properties.Appearance.BackColor2 = System.Drawing.Color.White
         Me.txStreet.Properties.Appearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(216, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(226, Byte), Integer))
         Me.txStreet.Properties.Appearance.Font = New System.Drawing.Font("Open Sans", 12.0!)
         Me.txStreet.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -458,6 +479,7 @@ Partial Class FrontFace
         Me.txStreet.Properties.Appearance.Options.UseFont = True
         Me.txStreet.Properties.Appearance.Options.UseForeColor = True
         Me.txStreet.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.White
+        Me.txStreet.Properties.AppearanceDisabled.BackColor2 = System.Drawing.Color.White
         Me.txStreet.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.LightGray
         Me.txStreet.Properties.AppearanceDisabled.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txStreet.Properties.AppearanceDisabled.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -465,7 +487,8 @@ Partial Class FrontFace
         Me.txStreet.Properties.AppearanceDisabled.Options.UseBorderColor = True
         Me.txStreet.Properties.AppearanceDisabled.Options.UseFont = True
         Me.txStreet.Properties.AppearanceDisabled.Options.UseForeColor = True
-        Me.txStreet.Properties.AppearanceFocused.BackColor = System.Drawing.Color.Transparent
+        Me.txStreet.Properties.AppearanceFocused.BackColor = System.Drawing.Color.White
+        Me.txStreet.Properties.AppearanceFocused.BackColor2 = System.Drawing.Color.White
         Me.txStreet.Properties.AppearanceFocused.BorderColor = System.Drawing.Color.LightGray
         Me.txStreet.Properties.AppearanceFocused.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txStreet.Properties.AppearanceFocused.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -474,6 +497,7 @@ Partial Class FrontFace
         Me.txStreet.Properties.AppearanceFocused.Options.UseFont = True
         Me.txStreet.Properties.AppearanceFocused.Options.UseForeColor = True
         Me.txStreet.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White
+        Me.txStreet.Properties.AppearanceReadOnly.BackColor2 = System.Drawing.Color.White
         Me.txStreet.Properties.AppearanceReadOnly.BorderColor = System.Drawing.Color.LightGray
         Me.txStreet.Properties.AppearanceReadOnly.Font = New System.Drawing.Font("Myanmar Text", 13.0!)
         Me.txStreet.Properties.AppearanceReadOnly.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -487,7 +511,7 @@ Partial Class FrontFace
         Me.txStreet.Properties.LookAndFeel.UseDefaultLookAndFeel = False
         Me.txStreet.Properties.MaxLength = 50
         Me.txStreet.Size = New System.Drawing.Size(273, 48)
-        Me.txStreet.TabIndex = 14
+        Me.txStreet.TabIndex = 4
         Me.txStreet.Watermark = "  Address"
         '
         'lblInput

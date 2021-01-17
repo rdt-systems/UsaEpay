@@ -59,7 +59,9 @@ Friend Class FrontFace
         SendObject
     End Enum
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        btnCancel.Enabled = False
         If locker IsNot Nothing Then
+            Logs.Logger.Verbose("Cancel button clicked.")
             EscapePressed()
             While (sw.Elapsed.TotalSeconds < 2) 'make sure the program was running for 4 sec before trying to cancel.
             End While
@@ -87,13 +89,13 @@ Friend Class FrontFace
                 If CType(locker, ILocker).HasCardOnFile Then CType(locker, ILocker).IsF2 = True
             End If
         ElseIf e.KeyCode = Keys.Escape Then
-            btnCancel.PerformClick()
+            If btnCancel.Enabled Then btnCancel.PerformClick()
         ElseIf e.KeyCode = Keys.Enter Then
             If btnProcess.Enabled Then btnProcess.PerformClick()
         End If
     End Sub
     Private Sub EscapePressed()
-        'SetDescription("Please press the red cancel button on the terminal")
+        SetDescription("Please press the red cancel button on the terminal")
         btnCancel.Enabled = False
         Try
             ePay.CancelTrans()
@@ -156,38 +158,51 @@ Friend Class FrontFace
             Case ePay.Captions.Init.ToString
                 ShowMessagePanel("Initilizing Device...", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Ellips
+                btnCancel.Enabled = True
             Case ePay.Captions.Connected.ToString
                 ' SetDeviceStatus()
                 ShowCardpnl("")
+                btnCancel.Enabled = True
             Case ePay.Captions.CantConnect.ToString
                 ' SetDeviceStatus()
                 ShowCardpnl("")
+                btnCancel.Enabled = True
             Case ePay.Captions.offline.ToString
                 ' SetDeviceStatus()
                 ShowCardpnl("")
+                btnCancel.Enabled = True
             Case ePay.Captions.Succsess.ToString
                 'SetDeviceStatus()
                 ShowCardpnl("")
+                btnCancel.Enabled = True
             Case ePay.Captions.InputCard.ToString
                 ShowCardpnl("")
+                btnCancel.Enabled = True
             Case ePay.Captions.WaitingPin.ToString
                 ShowMessagePanel("Waiting For Pin", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.calculator
+                btnCancel.Enabled = False
             Case ePay.Captions.WaitingSignutare.ToString
                 ShowMessagePanel("Waiting For Signutare", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Signutare
+                btnCancel.Enabled = False
             Case ePay.Captions.Approved.ToString
                 ShowMessagePanel("Approved!", True, False, False)
+                btnCancel.Enabled = True
             Case ePay.Captions.Processing.ToString
                 ShowMessagePanel("Processing...", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Ellips
+                btnCancel.Enabled = False
             Case ePay.Captions.Declined.ToString
                 ShowMessagePanel("Payment Declined", False, False, True)
+                btnCancel.Enabled = True
             Case ePay.Captions.Errr.ToString
                 ShowMessagePanel("Payment Error", False, False, True)
+                btnCancel.Enabled = True
             Case ePay.Captions.WaitingForDeviceCode.ToString
                 ShowMessagePanel("Waiting For Code Entry on Terminal", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.calculator
+                btnCancel.Enabled = False
         End Select
         MyBase.Refresh()
         Application.DoEvents()
@@ -278,12 +293,15 @@ Friend Class FrontFace
         ePay.Req.ccv2 = txCvv2.EditValue
         ePay.Req.ZipCode = TxZip.EditValue
         ePay.Req.NameOnCard = TxNameOnCard.EditValue
-        SetCaption(ePay.Captions.Processing.ToString)
         ePay.ProcessOnlline = True
     End Sub
 
     Private Sub txCCNo_EditValueChanged(sender As Object, e As EventArgs) Handles txExpDate.EditValueChanged, txCCNo.EditValueChanged
         btnProcess.Enabled = (txCCNo.Text.ToString.Length >= 15 AndAlso txExpDate.Text.ToString.Length >= 4)
+    End Sub
+
+    Private Sub TxZip_Leave(sender As Object, e As EventArgs) Handles TxZip.Leave
+        btnProcess.Focus()
     End Sub
 End Class
 

@@ -71,6 +71,15 @@ Public Class ePay
                 'SetDescription(ex.Message)
                 Return False
             End Try
+            If Not device Is Nothing Then
+                If device.Status = "processing transaction" Then
+                    Try
+                        device.Dispose()
+                    Catch ex As Exception
+
+                    End Try
+                End If
+            End If
             Try
                 Me.client = New Middleware(Me.ApiKey, Me.ApiPin, Me.GatewayUrl)
             Catch ex As MiddlewareException
@@ -129,15 +138,24 @@ Public Class ePay
         Dim response As ePayResponse = Nothing
         Me.Result = Nothing
         Me.tran = Nothing
-        ePay.request = Nothing
+        '  ePay.request = Nothing
         ePay.Req = Nothing
+        ePay.ProcessOnlline = False
+        locker1.IsF2 = False
+        locker1.HasCardOnFile = False
+        locker1.IsCanceled = False
         usapay = Nothing
 
         Try
+            Logs.Logger.Verbose("ePayRequest = {@Requst}", Requst)
             ePay.Req = Requst
             If Requst.CreditCardNo IsNot Nothing Then locker1.HasCardOnFile = True
 
-
+            Try
+                ShowMainScreen()
+                setHeading("")
+            Catch ex As Exception
+            End Try
             If Me.device Is Nothing OrElse Me.client Is Nothing Then
                 'If Requst.CreditCardNo <> "" Then
                 '    response = ChargeCardOnline(Requst)
@@ -158,7 +176,7 @@ Public Class ePay
             End If
             Control.CheckForIllegalCrossThreadCalls = False
             FrontFace.BigScreen = False
-            If Not Front.IsSplashFormVisible Then Front.ShowWaitForm()
+            ShowMainScreen()
             Me.tran = New TransactionRequest() With {.Command = Requst.TranCode, .ManualKey = False, .PromptSignature = False, .Amount = Requst.Amount, .Invoice = Requst.TranNumber}
 
             Front.SendCommand(FrontFace.WaitFormCommand.SendObject, locker1)
@@ -175,24 +193,32 @@ Public Class ePay
             While process1.IsAlive
                 If locker1.IsF2 Then
                     setStatus("processing payment")
+                    Logs.Logger.Verbose("Charging Card on File")
                     response = ChargeCardOnline(ePay.Req)
-                    request.CancelTransaction(Sub(x) CloseMainScreen(""))
                     process1.Abort()
+                    Try
+                        If Not Requst Is Nothing Then request.CancelTransaction(Sub(x) CloseMainScreen(""))
+                    Catch ex As Exception
+                    End Try
                 ElseIf ePay.ProcessOnlline Then
                     setStatus("processing payment")
+                    Logs.Logger.Verbose("Swiped or Keyed In")
                     response = ChargeCardOnline(ePay.Req)
-                    request.CancelTransaction(Sub(x) CloseMainScreen(""))
                     process1.Abort()
+                    Try
+                        If Not Requst Is Nothing Then request.CancelTransaction(Sub(x) CloseMainScreen(""))
+                    Catch ex As Exception
+                    End Try
                 End If
                 If locker1.IsCanceled = True Then
                     'Customer canceled transaction 
                     If Not HasBeenCanceled AndAlso Not FrontFace.IsProcessingAlready Then
-                        request.CancelTransaction(Sub(x) setStatus("Transaction cancelled"))
+                        If Not Requst Is Nothing Then request.CancelTransaction(Sub(x) setStatus("Transaction cancelled"))
                         HasBeenCanceled = True
                         Logger.Verbose("Cancled=True")
+                        Return New ePayResponse With {.ResultCode = "Canceled", .ResultMessage = "Transaction Canceled By User"}
+                        CloseMainScreen("Canceled")
                     End If
-                    Return New ePayResponse With {.ResultCode = "Canceled", .ResultMessage = "Transaction Canceled By User"}
-                    CloseMainScreen("Canceled")
                 End If
 
                 If FrontFace.CantCancel AndAlso Not FrontFace.IsProcessingAlready Then
@@ -237,7 +263,7 @@ Public Class ePay
 #Region "Private Functions"
 
     Friend Sub startRegistration(ByVal deviceRegistered As Action(Of Device))
-        Console.WriteLine("startRegistration()")
+        Logs.Logger.Verbose("startRegistration()")
 
         Try
             '  SetDescription("Sending pairing request to server")
@@ -254,14 +280,15 @@ Public Class ePay
                                                                                    '     SetCaption(Captions.connected)
                                                                                    deviceRegistered(device)
                                                                                End Sub)
-                                             End Sub, Sub(emw) Console.WriteLine("Error: " & emw.Message))
+                                             End Sub, Sub(emw) Logs.Logger.Verbose("Error: " & emw.Message))
         Catch ex As MiddlewareException
             '      SetDescription("Error: " & ex.Message)
         End Try
     End Sub
 
     Private Sub OnDeviceRefresh(Optional ByVal stat As String = Nothing)
-        Console.WriteLine("OnDeviceRefresh triggered: " & stat)
+        Logs.Logger.Verbose("OnDeviceRefresh triggered: " & stat)
+        Logs.Logger.Verbose("PaymentEngin.Device: {@device}", device)
         If Me.device Is Nothing Then
             ' SetCaption(Captions.CantConnect.ToString)
             Return
@@ -277,6 +304,12 @@ Public Class ePay
         End If
         ' SetCaption(Me.device.Status)
         '    
+    End Sub
+
+    Private Sub ShowMainScreen()
+        If Not Front.IsSplashFormVisible Then
+            Front.ShowWaitForm()
+        End If
     End Sub
 
     Private Shared Sub SetCaption(Value As String)
@@ -314,7 +347,7 @@ Public Class ePay
         device.Config.EnableEMV = True
         device.Config.TipAdjustAfterAuth = True
         request = device.StartTransaction(tran, Sub(status, result)
-                                                    Console.WriteLine("Status: " & status)
+                                                    Logs.Logger.Verbose("Status: " & status)
                                                     If result Is Nothing Then
                                                         setHeading("Transaction Failed")
                                                         setStatus(status)
@@ -333,7 +366,7 @@ Public Class ePay
                                                     End If
                                                 End Sub, Sub(status)
                                                              setStatus(status)
-                                                             Console.WriteLine("Status: " & status)
+                                                             Logs.Logger.Verbose("Status: " & status)
                                                          End Sub)
 
 
@@ -349,10 +382,12 @@ Public Class ePay
         Loop
         Dim Res = Result
         Dim epayres As ePayResponse
+        Logs.Logger.Verbose("PaymentEngin Results = {@Result}", Result)
         If Res Is Nothing Then
             epayres = New ePayResponse With {.ResultCode = "Error"}
             Return epayres
         End If
+        Logs.Logger.Verbose("PaymentEngin.CreditCard Results = {@Result.CreditCard}", Result.CreditCard)
         Dim ccDetail = Res.CreditCard
         If Res.ErrorCode = "99999" Then
             Return New ePayResponse With {.ResultMessage = Res.Error, .ResultCode = "Canceled By User!"}
@@ -364,6 +399,7 @@ Public Class ePay
                                          .ResultMessage = IIf(Res.Error Is Nothing, Res.Result, Res.Error),
                                          .IsDuplicate = Res.IsDuplicate,
                                          .Err = IIf(Res.Error Is Nothing, "", Res.Result),
+                                         .InputMethod = "EMV",
                                          .ErrorMessage = Res.Error}
         If Not ccDetail Is Nothing Then
             epayres.NameOnCard = IIf(ccDetail Is Nothing, Nothing, ccDetail.CardHolder)
@@ -371,6 +407,7 @@ Public Class ePay
             epayres.CardType = IIf(ccDetail Is Nothing, Nothing, GetCardType(IIf(ccDetail.Type Is Nothing, "", ccDetail.Type)))
 
         End If
+        Logs.Logger.Verbose("ePay Results = {@epayres}", epayres)
         Return epayres
     End Function
 
@@ -428,8 +465,16 @@ Public Class ePay
 
 
     Private Function ChargeCardOnline(req As ePayRequest) As ePayResponse
+        Dim InputMet As String = ""
         Dim charg As Boolean = False
         Dim cardType As String = ""
+        If Not locker1.IsF2 AndAlso String.IsNullOrEmpty(req.MagStrip) Then
+            InputMet = "Keyed In"
+        ElseIf locker1.IsF2 Then
+            InputMet = "Card On File"
+        ElseIf Not String.IsNullOrEmpty(req.MagStrip) AndAlso req.MagStrip.Length > 3 Then
+            InputMet = "Swiped"
+        End If
         If Not req.CreditCardNo Is Nothing Then GetCardType(IIf(req.CreditCardNo Is Nothing, "", req.CreditCardNo.Substring(0, 1)))
         usapay = New USAePayAPI.USAePay With {.SourceKey = req.APIKey,
                                                       .Pin = req.ApiPIN,
@@ -445,6 +490,7 @@ Public Class ePay
                                                        .CardHolder = req.NameOnCard,
                                                        .MagStripe = req.MagStrip}
         If Not usapay.MagStripe Is Nothing Then usapay.CardPresent = True
+        Logs.Logger.Verbose("USAePay Request = {@usapay}", usapay)
         If req.TranCode = "cc:sale" Then
             charg = usapay.Sale()
         ElseIf req.TranCode = "Refund" AndAlso Not String.IsNullOrEmpty(req.RefNum) Then
@@ -454,9 +500,11 @@ Public Class ePay
         ElseIf req.TranCode = "cc:credit" Then
             charg = usapay.Credit()
         End If
-        Do While charg = False
+
+        Do While usapay.AuthCode Is Nothing
 
         Loop
+        Logs.Logger.Verbose("USAePay Response = {@usapay}", usapay)
         Dim epayres As ePayResponse
         If usapay.AuthCode Is Nothing Or usapay.AuthCode = "" Then
             SetCaption(Captions.Errr.ToString)
@@ -464,7 +512,7 @@ Public Class ePay
             Return epayres
         End If
         setHeading(usapay.Result)
-        setStatus(usapay.Result & " ~ Auth#:" & usapay.AuthCode)
+        setStatus(String.Format("{0} ~ Auth#:{1} ~ {2}", usapay.Result, usapay.AuthCode, IIf(usapay.ErrorMesg Is Nothing, usapay.Result, usapay.ErrorMesg)))
         epayres = New ePayResponse With {.AuthCode = usapay.AuthCode,
                                          .RefNum = usapay.ResultRefNum,
                                          .ApprovedAmount = usapay.AuthAmount,
@@ -474,12 +522,13 @@ Public Class ePay
                                          .Err = IIf(usapay.ErrorMesg Is Nothing, "", usapay.Result),
                                          .ErrorMessage = usapay.ErrorMesg,
                                          .NameOnCard = usapay.BillingLastName,
-                                         .InputMethod = "",
                                          .RemainingBalance = usapay.RemainingBalance,
                                          .CardNumber = usapay.MaskedCardNum,
+                                         .InputMethod = InputMet,
                                          .CardType = cardType}
+        Logs.Logger.Verbose("ePay Results = {@epayres}", epayres)
         Return epayres
-        
+
 
     End Function
 

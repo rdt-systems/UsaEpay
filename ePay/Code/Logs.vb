@@ -16,7 +16,7 @@ Friend Class Logs
                 .Enrich.WithProperty("OSName", My.Computer.Info.OSFullName) _
                 .Enrich.WithProperty("AvailablePhysicalMemory", My.Computer.Info.AvailablePhysicalMemory.ToString("n0")) _
                 .Enrich.WithProperty("ApplicationVersion", My.Application.Info.Version) _
-                .Enrich.WithProperty("AppID", "Pax") _
+                .Enrich.WithProperty("AppID", "ePay") _
                 .Enrich.WithProperty("ApplicationPath", AppDomain.CurrentDomain.BaseDirectory) _
                 .MinimumLevel.Verbose _
                 .WriteTo.Seq("http://logs.sequelpay.com:5341", Serilog.Events.LogEventLevel.Information) _
