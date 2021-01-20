@@ -111,8 +111,6 @@ Public Class ePay
             End If
 
             Try
-                ' SetCaption(Captions.Init.ToString)
-                '  SetDescription("Connecting to device...")
                 Me.client.LoadDeviceByKey(Me.DeviceKey, Sub(dev)
 
                                                             ' store device
@@ -129,8 +127,6 @@ Public Class ePay
                                                             Me.device.OnStatusChange(AddressOf OnDeviceRefresh)
                                                         End Sub, Sub(emw)
                                                                      IsInit = False
-                                                                     '   SetCaption(Captions.CantConnect.ToString)
-                                                                     '  SetDescription("Error loading device: " & emw.Message & " [" + emw.ErrorCode & "]")
                                                                  End Sub)
                 IsInit = True
             Catch ex As MiddlewareException
@@ -166,6 +162,8 @@ Public Class ePay
             Try
                 ShowMainScreen()
                 setHeading("")
+                setStatus("")
+                Application.DoEvents()
             Catch ex As Exception
             End Try
             If Not IsInit Then
@@ -222,24 +220,42 @@ Public Class ePay
                     End Try
                 End If
                 If locker1.IsCanceled = True Then
+                    ShowMainScreen()
+                    Application.DoEvents()
                     'Customer canceled transaction
                     If Result Is Nothing Then
                         If Not HasBeenCanceled AndAlso Not FrontFace.IsProcessingAlready Then
                             If Me.device Is Nothing OrElse Me.client Is Nothing Then
-                                HasBeenCanceled = True
-                                Application.DoEvents()
-                                Logger.Verbose("Cancled=True")
-                                Return New ePayResponse With {.ResultCode = "Canceled", .ResultMessage = "Transaction Canceled By User"}
-                                Process1.Abort()
-                                Application.DoEvents()
-                                CloseMainScreen("Canceled")
+                                Try
+                                    ShowMainScreen()
+                                    HasBeenCanceled = True
+                                    Application.DoEvents()
+                                    Logger.Verbose("Cancled=True")
+                                    ShowMainScreen()
+                                    Return New ePayResponse With {.ResultCode = "Canceled", .ResultMessage = "Transaction Canceled By User"}
+                                    Process1.Abort()
+                                    Application.DoEvents()
+                                    CloseMainScreen("Canceled")
+                                Catch ex As Exception
+                                End Try
                             End If
-                            If Not Requst Is Nothing Then request.CancelTransaction(Sub(x) setStatus("Transaction cancelled"))
-                            HasBeenCanceled = True
-                            Logger.Verbose("Cancled=True")
-                            Return New ePayResponse With {.ResultCode = "Canceled", .ResultMessage = "Transaction Canceled By User"}
-                            Process1.Abort()
-                            CloseMainScreen("Canceled")
+                            If Not Requst Is Nothing Then
+                                Try
+                                    Try
+                                        request.CancelTransaction(Sub(x) setStatus("Transaction cancelled"))
+                                        ShowMainScreen()
+                                        HasBeenCanceled = True
+                                        Logger.Verbose("Cancled=True")
+                                        ShowMainScreen()
+                                        Return New ePayResponse With {.ResultCode = "Canceled", .ResultMessage = "Transaction Canceled By User"}
+                                        Process1.Abort()
+                                        CloseMainScreen("Canceled")
+                                    Catch ex As MiddlewareException
+                                        setStatus(ex.Message)
+                                    End Try
+                                Catch ex As Exception
+                                End Try
+                            End If
                         End If
                     End If
                 End If
@@ -271,6 +287,7 @@ Public Class ePay
             ePay.Req = Nothing
             locker1.IsF2 = False
             ePay.ProcessOnlline = False
+            FrontFace.IsProcessingAlready = False
             FucosRegister()
         End Try
     End Function
@@ -293,14 +310,11 @@ Public Class ePay
             client.RegisterDevice("Example", Sub(dev)
                                                  '    SetDescription("Got device key " & dev.DeviceKey)
                                                  device = dev
-                                                 '  SetCaption(Captions.WaitingForDeviceCode.ToString)
-                                                 '   SetDescription("Enter """ & device.PairingCode & """ on device...")
                                                  device.Config.EnableContactless = True
                                                  device.Config.EnableDebitMSR = False
                                                  device.Config.EnableEMV = True
                                                  device.Config.TipAdjustAfterAuth = True
                                                  device.OnRegistrationComplete(Sub()
-                                                                                   '     SetCaption(Captions.connected)
                                                                                    deviceRegistered(device)
                                                                                End Sub)
                                              End Sub, Sub(emw) Logs.Logger.Verbose("Error: " & emw.Message))
@@ -313,11 +327,9 @@ Public Class ePay
         Logs.Logger.Verbose("OnDeviceRefresh triggered: " & stat)
         Logs.Logger.Verbose("PaymentEngin.Device: {@device}", device)
         If Me.device Is Nothing Then
-            ' SetCaption(Captions.CantConnect.ToString)
             Return
         End If
         If device.Status = "processing transaction" Then
-            'SetCaption(Captions.Processing.ToString)
         ElseIf device.Status = "connected" Then
             DeviceInfo = String.Format("Model No. {0} ~ Serial:{1}", Me.device.Details.Model, Me.device.Details.Serial)
             DeviceConnected = True
@@ -325,8 +337,6 @@ Public Class ePay
             DeviceInfo = ""
             DeviceConnected = False
         End If
-        ' SetCaption(Me.device.Status)
-        '    
     End Sub
 
     Private Sub ShowMainScreen()
@@ -351,16 +361,16 @@ Public Class ePay
     Private Sub CloseMainScreen(ByVal Code As String)
         If Not Front.IsSplashFormVisible Then Exit Sub
         Try
-            'Dim a As New Stopwatch
-            'a.Start()
-            'Application.DoEvents()
-            'While a.Elapsed.TotalSeconds < 4 'wait before close
-            '    Application.DoEvents()
-            'End While
-            'locker1.IsCanceled = False
-            'locker1.IsF2 = False
-            'IsBusy = False
-            'Application.DoEvents()
+            Dim a As New Stopwatch
+            a.Start()
+            Application.DoEvents()
+            While a.Elapsed.TotalSeconds < 2 'wait before close
+                Application.DoEvents()
+            End While
+            locker1.IsCanceled = False
+            locker1.IsF2 = False
+            IsBusy = False
+            Application.DoEvents()
             If Code.ToLower <> "error" Then If Front.IsSplashFormVisible Then Front.CloseWaitForm()
         Catch ex As Exception
             'swallow that error.
@@ -368,6 +378,7 @@ Public Class ePay
     End Sub
 
     Private Function startTransaction(ByVal tran As TransactionRequest) As TransactionResult
+        FrontFace.IsProcessingAlready = False
         device.Config.EnableContactless = True
         device.Config.EnableDebitMSR = False
         device.Config.EnableEMV = True

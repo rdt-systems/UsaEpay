@@ -46,13 +46,13 @@ Friend Class FrontFace
         If tspn.Minutes = 0 AndAlso tspn.Seconds = 0 Then ParmTimer.Stop()
     End Sub
 
-    Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean
-        If keyData = Keys.Escape Then
-            If btnCancel.Enabled Then btnCancel.PerformClick()
-            Return True
-        End If
-        Return MyBase.ProcessCmdKey(msg, keyData)
-    End Function
+    'Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean
+    '    If keyData = Keys.Escape Then
+    '        If btnCancel.Enabled Then btnCancel.PerformClick()
+    '        Return True
+    '    End If
+    '    Return MyBase.ProcessCmdKey(msg, keyData)
+    'End Function
 
 #End Region
     Public Enum WaitFormCommand
@@ -287,7 +287,6 @@ Friend Class FrontFace
     Private Sub txCCNo_Properties_KeyUp(sender As Object, e As KeyEventArgs) Handles txCCNo.KeyUp
         If e.KeyCode = Keys.Enter Then
             e.Handled = True
-            SetCaption(ePay.Captions.Processing.ToString)
             CheckCardLenth()
         End If
     End Sub
@@ -296,6 +295,7 @@ Friend Class FrontFace
         ePay.MagString = txCCNo.Text
         If ePay.MagString.Where(Function(c) c = "?").Count = 2 Then
             ParseCard()
+            SetCaption(ePay.Captions.Processing.ToString)
             Exit Sub
         Else
         End If
