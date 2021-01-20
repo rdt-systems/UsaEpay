@@ -702,7 +702,7 @@ Partial Class FrontFace
         Me.InactiveGlowColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(252, Byte), Integer))
         Me.Name = "FrontFace"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Form1"
+        Me.Text = "USAePay"
         CType(Me.txCvv2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxZip.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxNameOnCard.Properties, System.ComponentModel.ISupportInitialize).EndInit()

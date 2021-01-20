@@ -61,18 +61,22 @@ Friend Class FrontFace
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         btnCancel.Enabled = False
         If locker IsNot Nothing Then
-            Logs.Logger.Verbose("Cancel button clicked.")
-            EscapePressed()
-            While (sw.Elapsed.TotalSeconds < 2) 'make sure the program was running for 4 sec before trying to cancel.
-            End While
-            sw.Stop()
-            CType(locker, ILocker).IsCanceled = True
-            sw.Restart()
-            While (sw.Elapsed.TotalSeconds < 2) 'Give  chance fr Program to cancel.
-            End While
-            EscapePressed()
-            CType(locker, ILocker).IsCanceled = True
-            CantCancel = True
+            If DevExpress.XtraEditors.XtraMessageBox.Show("Are You Sure you want to Cancel?", "Cancel Transaction?", MessageBoxButtons.YesNo) = System.Windows.Forms.DialogResult.Yes Then
+                Threading.Thread.Sleep(500)
+                Application.DoEvents()
+                Logs.Logger.Verbose("Cancel button clicked.")
+                EscapePressed()
+                While (sw.Elapsed.TotalSeconds < 2) 'make sure the program was running for 4 sec before trying to cancel.
+                End While
+                sw.Stop()
+                CType(locker, ILocker).IsCanceled = True
+                sw.Restart()
+                While (sw.Elapsed.TotalSeconds < 2) 'Give  chance fr Program to cancel.
+                End While
+                EscapePressed()
+                CType(locker, ILocker).IsCanceled = True
+                CantCancel = True
+            End If
         End If
     End Sub
 
@@ -104,14 +108,18 @@ Friend Class FrontFace
     End Sub
     Private Sub ShowMessagePanel(Caption As String, lblCaptr As Boolean, lblstat As Boolean, lbldeclin As Boolean)
         pnlCard.Dock = DockStyle.None
+        Application.DoEvents()
         pnlCard.Visible = False
         pnlParm.Visible = True
         pnlParm.BringToFront()
+        Application.DoEvents()
         pnlParm.Dock = DockStyle.Fill
         lblDeclined.Visible = lbldeclin
         lblCaptured.Visible = lblCaptr
         lblStatus.Visible = lblstat
         peStatus.Visible = True
+        btnProcess.Visible = False
+        Application.DoEvents()
         If lbldeclin Then
             lblDeclined.Text = Caption
             peStatus.Image = Global.ePay.My.Resources.Resources.Declined
@@ -126,6 +134,7 @@ Friend Class FrontFace
             lblStatus.Text = Caption
             lblResultMsg.ForeColor = lblStatus.ForeColor
         End If
+        Application.DoEvents()
         MyBase.Refresh()
         Application.DoEvents()
     End Sub
@@ -134,6 +143,8 @@ Friend Class FrontFace
         pnlParm.Visible = False
         pnlCard.Visible = True
         pnlCard.BringToFront()
+        Application.DoEvents()
+        btnProcess.Visible = True
         pnlCard.Dock = DockStyle.Fill
         lblResultMsg.ForeColor = lblStatus.ForeColor
         If locker IsNot Nothing Then
@@ -141,6 +152,7 @@ Friend Class FrontFace
         Else
             Me.lbCardOnFile.Text = ""
         End If
+        Application.DoEvents()
         txCCNo.Focus()
         MyBase.Refresh()
         Application.DoEvents()
@@ -156,53 +168,64 @@ Friend Class FrontFace
     Private Sub SettingCaption(Value As String)
         Select Case Value
             Case ePay.Captions.Init.ToString
+                IsProcessingAlready = False
                 ShowMessagePanel("Initilizing Device...", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Ellips
                 btnCancel.Enabled = True
             Case ePay.Captions.Connected.ToString
-                ' SetDeviceStatus()
+                IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
             Case ePay.Captions.CantConnect.ToString
-                ' SetDeviceStatus()
+                IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
             Case ePay.Captions.offline.ToString
-                ' SetDeviceStatus()
+                IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
             Case ePay.Captions.Succsess.ToString
-                'SetDeviceStatus()
+                IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
             Case ePay.Captions.InputCard.ToString
+                IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
             Case ePay.Captions.WaitingPin.ToString
+                IsProcessingAlready = False
                 ShowMessagePanel("Waiting For Pin", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.calculator
-                btnCancel.Enabled = False
+                btnCancel.Enabled = True
             Case ePay.Captions.WaitingSignutare.ToString
+                IsProcessingAlready = True
                 ShowMessagePanel("Waiting For Signutare", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Signutare
                 btnCancel.Enabled = False
             Case ePay.Captions.Approved.ToString
+                IsProcessingAlready = True
                 ShowMessagePanel("Approved!", True, False, False)
-                btnCancel.Enabled = True
+                btnCancel.Enabled = False
             Case ePay.Captions.Processing.ToString
+                IsProcessingAlready = True
                 ShowMessagePanel("Processing...", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Ellips
                 btnCancel.Enabled = False
             Case ePay.Captions.Declined.ToString
+                IsProcessingAlready = True
                 ShowMessagePanel("Payment Declined", False, False, True)
-                btnCancel.Enabled = True
+                btnCancel.Enabled = False
             Case ePay.Captions.Errr.ToString
+                IsProcessingAlready = True
                 ShowMessagePanel("Payment Error", False, False, True)
-                btnCancel.Enabled = True
+                btnCancel.Enabled = False
             Case ePay.Captions.WaitingForDeviceCode.ToString
+                ' IsProcessingAlready = True
                 ShowMessagePanel("Waiting For Code Entry on Terminal", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.calculator
-                btnCancel.Enabled = False
+                '  btnCancel.Enabled = False
+            Case Else
+                IsProcessingAlready = False
         End Select
         MyBase.Refresh()
         Application.DoEvents()
@@ -247,6 +270,8 @@ Friend Class FrontFace
         ReallyCenterToScreen()
         SetDeviceStatus()
         ShowCardpnl("")
+        IsProcessingAlready = False
+        lbAmount.Text = "$" & ePay.Req.Amount
     End Sub
 
     Private Sub pnlCard_VisibleChanged(sender As Object, e As EventArgs) Handles pnlCard.VisibleChanged
@@ -281,6 +306,12 @@ Friend Class FrontFace
         Dim tracks = ParsedData.Split("?")
         Try
             ePay.Req.MagStrip = ParsedData
+            ePay.Req.CreditCardNo = tracks(1).Substring(tracks(1).IndexOf(";") + (";").Length, tracks(1).LastIndexOf("=") - tracks(1).IndexOf(";") - 1)
+            Dim d = tracks(1).Substring(tracks(1).LastIndexOf("=") + 3, 2)
+            Dim y = tracks(1).Substring(tracks(1).LastIndexOf("=") + 1, 2)
+            ePay.Req.ExpDate = d & y
+            ePay.Req.NameOnCard = tracks(0).Substring(tracks(0).Substring(tracks(1).IndexOf("^") + 1, tracks(0).IndexOf("^")).Length + 1, tracks(0).IndexOf(" ") - 8)
+
             ePay.ProcessOnlline = True
         Catch ex As Exception
 

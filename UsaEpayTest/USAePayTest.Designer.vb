@@ -71,7 +71,7 @@ Partial Class USAePayTest
         '
         'txtDevice
         '
-        Me.txtDevice.EditValue = "sa_XSFhTeh656QscRZeqyRhQzKt2KUQs"
+        Me.txtDevice.EditValue = "sa_WD4JImddS74KVJqOR3ZG8d7PCYprQ"
         Me.txtDevice.Location = New System.Drawing.Point(270, 87)
         Me.txtDevice.Name = "txtDevice"
         Me.txtDevice.Size = New System.Drawing.Size(246, 20)

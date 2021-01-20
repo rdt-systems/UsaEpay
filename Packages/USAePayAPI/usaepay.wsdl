@@ -1,0 +1,2764 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- USAePay Soap Interface - v1.4 (RPC) -->
+<!-- WSDL file generated painstakingly by hand -->
+<!-- For further documentation on the USAePay API
+     Please visit http://help.usaepay.com/developer/soap
+ -->
+<definitions 
+	name="usaepay" 
+	targetNamespace="urn:usaepay" 
+	xmlns:typens="urn:usaepay" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+	<types>
+		<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:usaepay">
+			<xsd:complexType name="AccountDetails">
+				<xsd:all>
+					<xsd:element name="CardholderAuthentication" type="xsd:string"/>
+					<xsd:element name="CheckPlatform" type="xsd:string"/>
+					<xsd:element name="CreditCardPlatform" type="xsd:string"/>
+					<xsd:element name="DebitCardSupport" type="xsd:boolean"/>
+					<xsd:element name="DirectPayPlatform" type="xsd:string"/>
+					<xsd:element name="Industry" type="xsd:string"/>
+					<xsd:element name="SupportedCurrencies" type="typens:CurrencyObjectArray"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Address">
+				<xsd:all>
+					<xsd:element name="City" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Company" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Country" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Email" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Fax" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="FirstName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="LastName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Phone" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="State" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Street" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Street2" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Zip" type="xsd:string" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Bank">
+				<xsd:all>
+					<xsd:element name="Code" type="xsd:string"/>
+					<xsd:element name="Name" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="BankArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Bank[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="BatchSearchResult">
+				<xsd:all>
+					<xsd:element name="Batches" type="typens:BatchStatusArray"/>
+					<xsd:element name="BatchesMatched" type="xsd:integer"/>
+					<xsd:element name="BatchesReturned" type="xsd:integer"/>
+					<xsd:element name="Limit" type="xsd:integer"/>
+					<xsd:element name="StartIndex" type="xsd:integer"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="BatchStatus">
+				<xsd:all>
+					<xsd:element name="BatchRefNum" type="xsd:integer"/>
+					<xsd:element name="Closed" type="xsd:string"/>
+					<xsd:element name="CreditsAmount" type="xsd:double"/>
+					<xsd:element name="CreditsCount" type="xsd:integer"/>
+					<xsd:element name="NetAmount" type="xsd:double"/>
+					<xsd:element name="Opened" type="xsd:string"/>
+					<xsd:element name="SalesAmount" type="xsd:double"/>
+					<xsd:element name="SalesCount" type="xsd:integer"/>
+					<xsd:element name="Scheduled" type="xsd:string"/>
+					<xsd:element name="Sequence" type="xsd:integer"/>
+					<xsd:element name="Status" type="xsd:string"/>
+					<xsd:element name="TransactionCount" type="xsd:integer"/>
+					<xsd:element name="VoidsAmount" type="xsd:double"/>
+					<xsd:element name="VoidsCount" type="xsd:integer"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="BatchStatusArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:BatchStatus[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="BatchUploadStatus">
+				<xsd:all>
+					<xsd:element name="Approved" type="xsd:integer"/>
+					<xsd:element name="UploadRefNum" type="xsd:integer"/>
+					<xsd:element name="Declined" type="xsd:integer"/>
+					<xsd:element name="Errors" type="xsd:integer"/>
+					<xsd:element name="Finished" type="xsd:string"/>
+					<xsd:element name="Remaining" type="xsd:integer"/>
+					<xsd:element name="Started" type="xsd:string"/>
+					<xsd:element name="Status" type="xsd:string"/>
+					<xsd:element name="Transactions" type="xsd:integer"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CheckData">
+				<xsd:all>
+					<xsd:element name="Account" type="xsd:string"/>
+					<xsd:element name="AccountType" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CheckNumber" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="DriversLicense" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="DriversLicenseState" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="RecordType" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Routing" type="xsd:string"/>
+					<xsd:element name="AuxOnUS" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="EpcCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="FrontImage" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="BackImage" type="xsd:string" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CheckTrace">
+				<xsd:all>
+					<xsd:element name="Status" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="StatusCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="BankNote" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Effective" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Processed" type="xsd:string" minOccurs="0" />
+					<xsd:element name="Returned" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ReturnCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Reason" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Settled" type="xsd:string" minOccurs="0" />
+					<xsd:element name="TrackingNum" type="xsd:string" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CreditCardData">
+				<xsd:all>
+					<xsd:element name="AvsStreet" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="AvsZip" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardExpiration" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardNumber" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardPresent" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="CardType" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CAVV" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="DUKPT" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ECI" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="InternalCardAuth" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="MagStripe" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="MagSupport" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Pares" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Signature" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="TermType" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="XID" type="xsd:string" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CurrencyConversion">
+				<xsd:all>
+					<xsd:element name="Amount" type="xsd:double"/>
+					<xsd:element name="Currency" type="xsd:string"/>
+					<xsd:element name="FromAmount" type="xsd:double"/>
+					<xsd:element name="FromCurrency" type="xsd:string"/>
+					<xsd:element name="Rate" type="xsd:double"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CurrencyConversionArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:CurrencyConversion[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="CurrencyObject">
+				<xsd:all>
+					<xsd:element name="Currency" type="xsd:string"/>
+					<xsd:element name="DecimalPlaces" type="xsd:integer"/>
+					<xsd:element name="NumericCode" type="xsd:integer"/>
+					<xsd:element name="Rate" type="xsd:double"/>
+					<xsd:element name="TextCode" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CurrencyObjectArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:CurrencyObject[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="CustomerObject">
+				<xsd:all>
+					<xsd:element name="Amount" type="xsd:double" />
+					<xsd:element name="BillingAddress" type="typens:Address" />
+					<xsd:element name="Created" type="xsd:dateTime" minOccurs="0" />
+					<xsd:element name="Currency" type="xsd:string" minOccurs="0" />
+					<xsd:element name="CustNum" type="xsd:string" minOccurs="0" />
+					<xsd:element name="CustomData" type="xsd:string" minOccurs="0" />
+					<xsd:element name="CustomFields" type="typens:FieldValueArray" minOccurs="0" />
+					<xsd:element name="CustomerID" type="xsd:string" />
+					<xsd:element name="Description" type="xsd:string" />
+					<xsd:element name="Enabled" type="xsd:boolean" />
+					<xsd:element name="Failures" type="int" maxOccurs="1" minOccurs="0" />
+					<xsd:element name="LookupCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Modified" type="xsd:dateTime" minOccurs="0" />
+					<xsd:element name="Next" type="xsd:string" />
+					<xsd:element name="Notes" type="xsd:string" minOccurs="0" />
+					<xsd:element name="NumLeft" type="xsd:integer" />
+					<xsd:element name="OrderID" type="xsd:string" />
+					<xsd:element name="PaymentMethods" type="typens:PaymentMethodArray" minOccurs="0"/>
+					<xsd:element name="PriceTier" type="xsd:string" minOccurs="0" />
+					<xsd:element name="ReceiptNote" type="xsd:string" />
+					<xsd:element name="Schedule" type="xsd:string" />
+					<xsd:element name="SendReceipt" type="xsd:boolean" />
+					<xsd:element name="Source" type="xsd:string" minOccurs="0" />
+					<xsd:element name="Tax" type="xsd:double" minOccurs="0" />
+					<xsd:element name="TaxClass" type="xsd:string" minOccurs="0" />
+					<xsd:element name="User" type="xsd:string" minOccurs="0" />
+					<xsd:element name="URL" type="xsd:string" minOccurs="0" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CustomerObjectArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:CustomerObject[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="CustomerSearchResult">
+				<xsd:all>
+					<xsd:element name="Customers" type="typens:CustomerObjectArray"/>
+					<xsd:element name="CustomersMatched" type="xsd:integer"/>
+					<xsd:element name="CustomersReturned" type="xsd:integer"/>
+					<xsd:element name="Limit" type="xsd:integer"/>
+					<xsd:element name="StartIndex" type="xsd:integer"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="CustomerTransactionRequest">
+				<xsd:all>
+					<xsd:element name="Command" type="xsd:string"/>
+					<xsd:element name="CardCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ClientIP" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CustomFields" type="typens:FieldValueArray" minOccurs="0"/>
+					<xsd:element name="CustReceipt" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="CustReceiptEmail" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CustReceiptName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="MerchReceipt" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="MerchReceiptEmail" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="MerchReceiptName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Details" type="typens:TransactionDetail"/>
+					<xsd:element name="IgnoreDuplicate" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="isRecurring" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="LineItems" type="typens:LineItemArray" minOccurs="0"/>
+					<xsd:element name="Software" type="xsd:string" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="doubleArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:double[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="FieldValue">
+				<xsd:all>
+					<xsd:element name="Field" type="xsd:string"/>
+					<xsd:element name="Value" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="FieldValueArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:FieldValue[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="LineItem">
+				<xsd:all>
+					<xsd:element name="ProductRefNum" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="SKU" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ProductName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="UnitPrice" type="xsd:string"/>
+					<xsd:element name="Qty" type="xsd:string"/>
+					<xsd:element name="Taxable" type="xsd:boolean" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="LineItemArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:LineItem[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="PaymentMethod">
+				<xsd:all>
+					<xsd:element name="MethodType" type="xsd:string" minOccurs="0" />
+					<xsd:element name="MethodID" type="xsd:integer" minOccurs="0" />
+					<xsd:element name="MethodName" type="xsd:string" />
+					<xsd:element name="SecondarySort" type="xsd:integer" />
+					<xsd:element name="Created" type="xsd:dateTime" maxOccurs="1" minOccurs="0" />
+					<xsd:element name="Modified" type="xsd:dateTime" maxOccurs="1" minOccurs="0" />
+					<xsd:element name="Account" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="AccountType" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="DriversLicense" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="DriversLicenseState" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="RecordType" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Routing" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="AvsStreet" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="AvsZip" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardExpiration" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardNumber" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CardType" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Balance" type="xsd:double" minOccurs="0" />
+					<xsd:element name="MaxBalance" type="xsd:double" minOccurs="0" />
+					<xsd:element name="AutoReload" type="xsd:string" minOccurs="0" />
+					<xsd:element name="ReloadSchedule" type="xsd:string" minOccurs="0" />
+					<xsd:element name="ReloadThreshold" type="xsd:string" minOccurs="0" />
+					<xsd:element name="ReloadAmount" type="xsd:string" minOccurs="0" />
+					<xsd:element name="ReloadMethodID" type="xsd:integer" minOccurs="0" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="PaymentMethodArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:PaymentMethod[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			
+			<xsd:complexType name="PriceTier">
+				<xsd:all>
+					<xsd:element name="Qty" type="xsd:string"/>
+					<xsd:element name="Price" type="xsd:string"/>
+					<xsd:element name="CustomerTier" type="xsd:string" minOccurs="0" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="PriceTierArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:PriceTier[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="Product">
+				<xsd:all>
+					<xsd:element name="ProductRefNum" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ProductID" type="xsd:string"/>
+					<xsd:element name="SKU" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="UPC" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Category" type="xsd:string"/>
+					<xsd:element name="Enabled" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="Name" type="xsd:string"/>
+					<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Model" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Weight" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="ShipWeight" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="Price" type="xsd:double"/>
+					<xsd:element name="WholesalePrice" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="ListPrice" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="DateAvailable" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Manufacturer" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="PhysicalGood" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="TaxClass" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="MinQuantity" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ImageURL" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="URL" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Created" type="xsd:dateTime" minOccurs="0" />
+					<xsd:element name="Modified" type="xsd:dateTime" minOccurs="0" />
+					<xsd:element name="Inventory" type="typens:ProductInventoryArray" minOccurs="0" />
+					<xsd:element name="PriceTiers" type="typens:PriceTierArray" minOccurs="0" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="ProductArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Product[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="ProductCategory">
+				<xsd:all>
+					<xsd:element name="ProductCategoryRefNum" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Name" type="xsd:string"/>
+					<xsd:element name="Created" type="xsd:dateTime" minOccurs="0" />
+					<xsd:element name="Modified" type="xsd:dateTime" minOccurs="0" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="ProductCategoryArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ProductCategory[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="ProductInventory">
+				<xsd:all>
+					<xsd:element name="InventoryLocation" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="QtyOnHand" type="xsd:string"/>
+					<xsd:element name="QtyOnOrder" type="xsd:string" minOccurs="0" />
+					<xsd:element name="DateAvailable" type="xsd:string" minOccurs="0" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="ProductInventoryArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ProductInventory[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="ProductSearchResult">
+				<xsd:all>
+					<xsd:element name="Products" type="typens:ProductArray"/>
+					<xsd:element name="ProductsMatched" type="xsd:integer"/>
+					<xsd:element name="ProductsReturned" type="xsd:integer"/>
+					<xsd:element name="Limit" type="xsd:integer"/>
+					<xsd:element name="StartIndex" type="xsd:integer"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Receipt">
+				<xsd:all>
+					<xsd:element name="ReceiptRefNum" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="Name" type="xsd:string"/>
+					<xsd:element name="Subject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="FromEmail" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Target" type="xsd:string"/>
+					<xsd:element name="ContentType" type="xsd:string"/>
+					<xsd:element name="TemplateHTML" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="TemplateText" type="xsd:string" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="ReceiptArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Receipt[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="RecurringBilling">
+				<xsd:all>
+					<xsd:element name="Amount" type="xsd:double"/>
+					<xsd:element name="Enabled" type="xsd:boolean"/>
+					<xsd:element name="Expire" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Next" type="xsd:string"/>
+					<xsd:element name="NumLeft" type="xsd:integer"/>
+					<xsd:element name="Schedule" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="SearchParam">
+				<xsd:all>
+					<xsd:element name="Field" type="xsd:string"/>
+					<xsd:element name="Type" type="xsd:string"/>
+					<xsd:element name="Value" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="SearchParamArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:SearchParam[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="stringArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="SyncLog">
+				<xsd:all>
+					<xsd:element name="SyncPosition" type="xsd:integer"/>
+					<xsd:element name="ObjectName" type="xsd:string"/>
+					<xsd:element name="RefNum" type="xsd:string"/>
+					<xsd:element name="ChangeDate" type="xsd:dateTime"/>
+					<xsd:element name="Action" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="SyncLogArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:SyncLog[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="SystemInfo">
+				<xsd:all>
+					<xsd:element name="ApiVersion" type="xsd:string"/>
+					<xsd:element name="Environment" type="xsd:string"/>
+					<xsd:element name="Datacenter" type="xsd:string"/>
+					<xsd:element name="Time" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="TransactionDetail">
+				<xsd:all>
+					<xsd:element name="AllowPartialAuth" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="Amount" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="Clerk" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Currency" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Comments" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Discount" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="Invoice" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="NonTax" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="OrderID" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="PONum" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Shipping" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="Subtotal" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="Table" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Tax" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="Terminal" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Tip" type="xsd:double" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="TransactionObject">
+				<xsd:all>
+					<xsd:element name="AccountHolder" type="xsd:string"/>
+					<xsd:element name="BillingAddress" type="typens:Address"/>
+					<xsd:element name="CheckData" type="typens:CheckData"/>
+					<xsd:element name="CheckTrace" type="typens:CheckTrace"/>
+					<xsd:element name="ClientIP" type="xsd:string"/>
+					<xsd:element name="CreditCardData" type="typens:CreditCardData"/>
+					<xsd:element name="CustomerID" type="xsd:string"/>
+					<xsd:element name="CustomFields" type="typens:FieldValueArray" />
+					<xsd:element name="DateTime" type="xsd:string"/>
+					<xsd:element name="Details" type="typens:TransactionDetail"/>
+					<xsd:element name="LineItems" type="typens:LineItemArray" minOccurs="0"/>
+					<xsd:element name="Response" type="typens:TransactionResponse"/>
+					<xsd:element name="ServerIP" type="xsd:string"/>
+					<xsd:element name="ShippingAddress" type="typens:Address"/>
+					<xsd:element name="Source" type="xsd:string"/>
+					<xsd:element name="Status" type="xsd:string"/>
+					<xsd:element name="TransactionType" type="xsd:string"/>
+					<xsd:element name="User" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="TransactionObjectArray">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:TransactionObject[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="TransactionRequestObject">
+				<xsd:all>
+					<xsd:element name="AccountHolder" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="AuthCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="BillingAddress" type="typens:Address" minOccurs="0"/>
+					<xsd:element name="CheckData" type="typens:CheckData" minOccurs="0"/>
+					<xsd:element name="ClientIP" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Command" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CreditCardData" type="typens:CreditCardData" minOccurs="0"/>
+					<xsd:element name="CustomerID" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="CustomFields" type="typens:FieldValueArray" minOccurs="0"/>
+					<xsd:element name="CustReceipt" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="CustReceiptName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Details" type="typens:TransactionDetail"/>
+					<xsd:element name="IgnoreDuplicate" type="xsd:boolean" minOccurs="0"/>
+					<xsd:element name="LineItems" type="typens:LineItemArray" minOccurs="0"/>
+					<xsd:element name="RecurringBilling" type="typens:RecurringBilling" minOccurs="0"/>
+					<xsd:element name="RefNum" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ShippingAddress" type="typens:Address" minOccurs="0"/>
+					<xsd:element name="Software" type="xsd:string" minOccurs="0"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="TransactionResponse">
+				<xsd:all>
+					<xsd:element name="AcsUrl" type="xsd:string"/>
+					<xsd:element name="AuthAmount" type="xsd:double"/>
+					<xsd:element name="AuthCode" type="xsd:string"/>
+					<xsd:element name="AvsResult" type="xsd:string"/>
+					<xsd:element name="AvsResultCode" type="xsd:string"/>
+					<xsd:element name="BatchNum" type="xsd:integer"/>
+					<xsd:element name="BatchRefNum" type="xsd:integer"/>
+					<xsd:element name="CardCodeResult" type="xsd:string"/>
+					<xsd:element name="CardCodeResultCode" type="xsd:string"/>
+					<xsd:element name="CardLevelResult" type="xsd:string"/>
+					<xsd:element name="CardLevelResultCode" type="xsd:string"/>
+					<xsd:element name="ConversionRate" type="xsd:double"/>
+					<xsd:element name="ConvertedAmount" type="xsd:double"/>
+					<xsd:element name="ConvertedAmountCurrency" type="xsd:string"/>
+					<xsd:element name="CustNum" type="xsd:integer"/>
+					<xsd:element name="Error" type="xsd:string"/>
+					<xsd:element name="ErrorCode" type="xsd:integer"/>
+					<xsd:element name="isDuplicate" type="xsd:boolean"/>
+					<xsd:element name="Payload" type="xsd:string"/>
+					<xsd:element name="RefNum" type="xsd:integer"/>
+					<xsd:element name="RemainingBalance" type="xsd:double" minOccurs="0"/>
+					<xsd:element name="Result" type="xsd:string"/>
+					<xsd:element name="ResultCode" type="xsd:string"/>
+					<xsd:element name="Status" type="xsd:string"/>
+					<xsd:element name="StatusCode" type="xsd:string"/>
+					<xsd:element name="VpasResultCode" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="TransactionSearchResult">
+				<xsd:all>
+					<xsd:element name="AuthOnlyAmount" type="xsd:float"/>
+					<xsd:element name="AuthOnlyCount" type="xsd:integer"/>
+					<xsd:element name="CreditsAmount" type="xsd:float"/>
+					<xsd:element name="CreditsCount" type="xsd:integer"/>
+					<xsd:element name="DeclinesAmount" type="xsd:float"/>
+					<xsd:element name="DeclinesCount" type="xsd:integer"/>
+					<xsd:element name="ErrorsAmount" type="xsd:float"/>
+					<xsd:element name="ErrorsCount" type="xsd:integer"/>
+					<xsd:element name="Limit" type="xsd:integer"/>
+					<xsd:element name="SalesAmount" type="xsd:float"/>
+					<xsd:element name="SalesCount" type="xsd:integer"/>
+					<xsd:element name="StartIndex" type="xsd:integer"/>
+					<xsd:element name="Transactions" type="typens:TransactionObjectArray"/>
+					<xsd:element name="TransactionsMatched" type="xsd:integer"/>
+					<xsd:element name="TransactionsReturned" type="xsd:integer"/>
+					<xsd:element name="VoidsAmount" type="xsd:float"/>
+					<xsd:element name="VoidsCount" type="xsd:integer"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="ueHash">
+				<xsd:all>
+					<xsd:element name="HashValue" type="xsd:string"/>
+					<xsd:element name="Seed" type="xsd:string"/>
+					<xsd:element name="Type" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="ueSecurityToken">
+				<xsd:all>
+					<xsd:element name="ClientIP" type="xsd:string"/>
+					<xsd:element name="PinHash" type="typens:ueHash"/>
+					<xsd:element name="SourceKey" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+		</xsd:schema>
+	</types>
+	<message name="addCustomer">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustomerData" type="typens:CustomerObject"/>
+	</message>
+	<message name="addCustomerResponse">
+		<part name="addCustomerReturn" type="xsd:integer"/>
+	</message>
+	<message name="addCustomerPaymentMethod">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+		<part name="PaymentMethod" type="typens:PaymentMethod"/>
+		<part name="MakeDefault" type="xsd:boolean"/>
+		<part name="Verify" type="xsd:boolean"/>
+	</message>
+	<message name="addCustomerPaymentMethodResponse">
+		<part name="addCustomerPaymentMethodReturn" type="xsd:integer"/>
+	</message>
+	<message name="addProduct">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Product" type="typens:Product"/>
+	</message>
+	<message name="addProductResponse">
+		<part name="ProductRefNum" type="xsd:string"/>
+	</message>
+	<message name="addProductCategory">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductCategory" type="typens:ProductCategory"/>
+	</message>
+	<message name="addProductCategoryResponse">
+		<part name="ProductCategoryRefNum" type="xsd:string"/>
+	</message>
+	<message name="addReceipt">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Receipt" type="typens:Receipt"/>
+	</message>
+	<message name="addReceiptResponse">
+		<part name="addReceiptResponseReturn" type="xsd:integer"/>
+	</message>
+	<message name="adjustInventory">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductRefNum" type="xsd:string"/>
+		<part name="Inventory" type="typens:ProductInventoryArray"/>
+	</message>
+	<message name="adjustInventoryResponse">
+		<part name="adjustInventoryReturn" type="typens:ProductInventoryArray"/>
+	</message>	
+	<message name="bulkCurrencyConversion">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="FromCurrency" type="xsd:string"/>
+		<part name="ToCurrency" type="xsd:string"/>
+		<part name="Amounts" type="typens:doubleArray"/>
+	</message>
+	<message name="bulkCurrencyConversionResponse">
+		<part name="bulkCurrencyConversionReturn" type="typens:CurrencyConversionArray"/>
+	</message>
+	<message name="captureTransaction">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="Amount" type="xsd:double"/>
+	</message>
+	<message name="captureTransactionResponse">
+		<part name="captureTransactionReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="closeBatch">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="BatchRefNum" type="xsd:integer"/>
+	</message>
+	<message name="closeBatchResponse">
+		<part name="closeBatchReturn" type="xsd:boolean"/>
+	</message>
+	<message name="convertTranToCust">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="UpdateData" type="typens:FieldValueArray"/>
+	</message>
+	<message name="convertTranToCustResponse">
+		<part name="convertTranToCustReturn" type="xsd:integer"/>
+	</message>
+	<message name="copyCustomer">
+		<part name="CopyFromToken" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+		<part name="CopyToToken" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="copyCustomerResponse">
+		<part name="copyCustomerReturn" type="xsd:integer"/>
+	</message>
+	<message name="createBatchUpload">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="FileName" type="xsd:string"/>
+		<part name="AutoStart" type="xsd:boolean"/>
+		<part name="Format" type="xsd:string"/>
+		<part name="Encoding" type="xsd:string"/>
+		<part name="Fields" type="typens:stringArray"/>
+		<part name="Data" type="xsd:string"/>
+		<part name="OverrideDuplicates" type="xsd:boolean"/>
+	</message>
+	<message name="createBatchUploadResponse">
+		<part name="createBatchUploadReturn" type="typens:BatchUploadStatus"/>
+	</message>
+	<message name="currencyConversion">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="FromCurrency" type="xsd:string"/>
+		<part name="ToCurrency" type="xsd:string"/>
+		<part name="Amount" type="xsd:double"/>
+	</message>
+	<message name="currencyConversionResponse">
+		<part name="currencyConversionReturn" type="typens:CurrencyConversion"/>
+	</message>
+	<message name="deleteCustomer">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+	</message>
+	<message name="deleteCustomerResponse">
+		<part name="deleteCustomerReturn" type="xsd:boolean"/>
+	</message>
+	<message name="deleteCustomerPaymentMethod">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Custnum" type="xsd:integer"/>
+		<part name="PaymentMethodID" type="xsd:integer"/>
+	</message>
+	<message name="deleteCustomerPaymentMethodResponse">
+		<part name="deleteCustomerPaymentMethodReturn" type="xsd:boolean"/>
+	</message>
+	<message name="deleteProduct">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductRefNum" type="xsd:string"/>
+	</message>
+	<message name="deleteProductResponse">
+		<part name="deleteProductReturn" type="xsd:boolean"/>
+	</message>
+	<message name="deleteProductCategory">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductCategoryRefNum" type="xsd:string"/>
+	</message>
+	<message name="deleteProductCategoryResponse">
+		<part name="deleteProductCategoryReturn" type="xsd:boolean"/>
+	</message>
+	<message name="deleteReceipt">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ReceiptRefNum" type="xsd:integer"/>
+	</message>
+	<message name="deleteReceiptResponse">
+		<part name="deleteReceiptReturn" type="xsd:boolean"/>
+	</message>		
+	<message name="disableCustomer">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+	</message>
+	<message name="disableCustomerResponse">
+		<part name="disableCustomerReturn" type="xsd:boolean"/>
+	</message>
+	<message name="emailTransactionReceipt">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="ReceiptRefNum" type="xsd:integer"/>
+		<part name="Email" type="xsd:string"/>
+	</message>
+	<message name="emailTransactionReceiptResponse">
+		<part name="emailTransactionReceiptReturn" type="xsd:boolean"/>
+	</message>
+	<message name="emailTransactionReceiptByName">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="ReceiptName" type="xsd:string"/>
+		<part name="Email" type="xsd:string"/>
+	</message>
+	<message name="emailTransactionReceiptByNameResponse">
+		<part name="emailTransactionReceiptByNameReturn" type="xsd:boolean"/>
+	</message>
+	<message name="enableCustomer">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+	</message>
+	<message name="enableCustomerResponse">
+		<part name="enableCustomerReturn" type="xsd:boolean"/>
+	</message>
+	<message name="getAccountDetails">
+		<part name="Token" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="getAccountDetailsResponse">
+		<part name="getAccountDetailsReturn" type="typens:AccountDetails"/>
+	</message>
+	<message name="getBankList">
+		<part name="Token" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="getBankListResponse">
+		<part name="getBankListDetailsReturn" type="typens:BankArray"/>
+	</message>
+	<message name="getBatchStatus">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="BatchRefNum" type="xsd:integer"/>
+	</message>
+	<message name="getBatchStatusResponse">
+		<part name="getBatchStatusReturn" type="typens:BatchStatus"/>
+	</message>
+	<message name="getBatchTransactions">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="BatchRefNum" type="xsd:integer"/>
+	</message>
+	<message name="getBatchTransactionsResponse">
+		<part name="getBatchTransactionsReturn" type="typens:TransactionObjectArray"/>
+	</message>
+	<message name="getBatchUploadStatus">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="UploadRefNum" type="xsd:integer"/>
+	</message>
+	<message name="getBatchUploadStatusResponse">
+		<part name="getBatchUploadStatusReturn" type="typens:BatchUploadStatus"/>
+	</message>
+	<message name="getCheckTrace">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+	</message>
+	<message name="getCheckTraceResponse">
+		<part name="getCheckTraceReturn" type="typens:CheckTrace"/>
+	</message>	
+	<message name="getCustomer">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+	</message>
+	<message name="getCustomerResponse">
+		<part name="getCustomerReturn" type="typens:CustomerObject"/>
+	</message>
+	<message name="getCustomerHistory">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+	</message>
+	<message name="getCustomerHistoryResponse">
+		<part name="getCustomerHistoryReturn" type="typens:TransactionSearchResult"/>
+	</message>
+	<message name="getCustomerPaymentMethod">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+		<part name="MethodID" type="xsd:integer"/>
+	</message>
+	<message name="getCustomerPaymentMethodResponse">
+		<part name="getCustomerPaymentMethodReturn" type="typens:PaymentMethod"/>
+	</message>	
+	<message name="getCustomerPaymentMethods">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+	</message>
+	<message name="getCustomerPaymentMethodsResponse">
+		<part name="getCustomerPaymentMethodsReturn" type="typens:PaymentMethodArray"/>
+	</message>
+	<message name="getCustomerReport">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Report" type="xsd:string"/>
+		<part name="Options" type="typens:FieldValueArray"/>
+		<part name="Format" type="xsd:string"/>
+	</message>
+	<message name="getCustomerReportResponse">
+		<part name="getCustomerReportReturn" type="xsd:string"/>
+	</message>
+	<message name="getCustomFields">
+		<part name="Token" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="getCustomFieldsResponse">
+		<part name="getCustomFieldsReturn" type="typens:FieldValueArray"/>
+	</message>
+	<message name="getProduct">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductRefNum" type="xsd:string"/>
+	</message>
+	<message name="getProductResponse">
+		<part name="getProductReturn" type="typens:Product"/>
+	</message>
+	<message name="getProductCategory">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductCategoryRefNum" type="xsd:string"/>
+	</message>
+	<message name="getProductCategoryResponse">
+		<part name="getProductCategoryReturn" type="typens:ProductCategory"/>
+	</message>
+	<message name="getProductCategories">
+		<part name="Token" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="getProductCategoriesResponse">
+		<part name="getProductCategoriesReturn" type="typens:ProductCategoryArray"/>
+	</message>
+	<message name="getProductInventory">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductRefNum" type="xsd:string"/>
+	</message>
+	<message name="getProductInventoryResponse">
+		<part name="getProductInventoryReturn" type="typens:ProductInventoryArray"/>
+	</message>
+	<message name="getReceipt">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ReceiptRefNum" type="xsd:integer"/>
+	</message>
+	<message name="getReceiptResponse">
+		<part name="getReceiptReturn" type="typens:Receipt"/>
+	</message>
+	<message name="getReceiptByName">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Name" type="xsd:string"/>
+	</message>
+	<message name="getReceiptByNameResponse">
+		<part name="getReceiptByNameReturn" type="typens:Receipt"/>
+	</message>
+	<message name="getReceipts">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Target" type="xsd:string"/>
+	</message>
+	<message name="getReceiptsResponse">
+		<part name="getReceiptsReturn" type="typens:ReceiptArray"/>
+	</message>
+	<message name="getReport">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Report" type="xsd:string"/>
+		<part name="Options" type="typens:FieldValueArray"/>
+		<part name="Format" type="xsd:string"/>
+	</message>
+	<message name="getReportResponse">
+		<part name="getReportReturn" type="xsd:string"/>
+	</message>
+	<message name="getSupportedCurrencies">
+		<part name="Token" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="getSupportedCurrenciesResponse">
+		<part name="getSupportedCurrenciesReturn" type="typens:CurrencyObjectArray"/>
+	</message>
+	<message name="getSyncLog">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ObjectName" type="xsd:string"/>
+		<part name="FromPosition" type="xsd:integer"/>
+	</message>
+	<message name="getSyncLogResponse">
+		<part name="getSyncLogReturn" type="typens:SyncLogArray"/>
+	</message>
+	<message name="getSyncLogCurrentPosition">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ObjectName" type="xsd:string"/>
+	</message>
+	<message name="getSyncLogCurrentPositionResponse">
+		<part name="getSyncLogCurrentPositionReturn" type="xsd:integer"/>
+	</message>
+	<message name="getSystemInfo">
+		<part name="Token" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="getSystemInfoResponse">
+		<part name="getSystemInfoReturn" type="typens:SystemInfo"/>
+	</message>
+	<message name="getTransaction">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+	</message>
+	<message name="getTransactionResponse">
+		<part name="getTransactionReturn" type="typens:TransactionObject"/>
+	</message>
+	<message name="getTransactionCustom">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="Fields" type="typens:stringArray"/>
+	</message>
+	<message name="getTransactionCustomResponse">
+		<part name="getTransactionCustomReturn" type="typens:FieldValueArray"/>
+	</message>
+	<message name="getTransactionReport">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="StartDate" type="xsd:string"/>
+		<part name="EndDate" type="xsd:string"/>
+		<part name="Report" type="xsd:string"/>
+		<part name="Format" type="xsd:string"/>
+	</message>
+	<message name="getTransactionReportResponse">
+		<part name="getTransactionReportReturn" type="xsd:string"/>
+	</message>
+	<message name="getTransactionStatus">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+	</message>
+	<message name="getTransactionStatusResponse">
+		<part name="getTransactionStatusReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="moveCustomer">
+		<part name="MoveFromToken" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+		<part name="MoveToToken" type="typens:ueSecurityToken"/>
+	</message>
+	<message name="moveCustomerResponse">
+		<part name="moveCustomerReturn" type="xsd:integer"/>
+	</message>
+	<message name="pauseBatchUpload">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="UploadRefNum" type="xsd:integer"/>
+	</message>
+	<message name="pauseBatchUploadResponse">
+		<part name="pauseBatchUploadReturn" type="xsd:boolean"/>
+	</message>
+	<message name="postAuth">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Params" type="typens:TransactionRequestObject"/>
+	</message>
+	<message name="postAuthResponse">
+		<part name="postAuthReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="quickUpdateCustomer">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+		<part name="UpdateData" type="typens:FieldValueArray"/>
+	</message>
+	<message name="quickUpdateCustomerResponse">
+		<part name="quickUpdateCustomerReturn" type="xsd:boolean"/>
+	</message>
+	<message name="quickUpdateProduct">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductRefNum" type="xsd:string"/>
+		<part name="UpdateData" type="typens:FieldValueArray"/>
+	</message>
+	<message name="quickUpdateProductResponse">
+		<part name="quickUpdateProductReturn" type="xsd:boolean"/>
+	</message>
+	<message name="refundTransaction">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="Amount" type="xsd:double"/>
+	</message>
+	<message name="refundTransactionResponse">
+		<part name="refundTransactionReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="renderReceipt">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="ReceiptRefNum" type="xsd:integer"/>
+		<part name="ContentType" type="xsd:string"/>
+	</message>
+	<message name="renderReceiptResponse">
+		<part name="renderReceiptReturn" type="xsd:string"/>
+	</message>
+	<message name="renderReceiptByName">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="ReceiptName" type="xsd:string"/>
+		<part name="ContentType" type="xsd:string"/>
+	</message>
+	<message name="renderReceiptByNameResponse">
+		<part name="renderReceiptByNameReturn" type="xsd:string"/>
+	</message>
+	<message name="runBatchUpload">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="UploadRefNum" type="xsd:integer"/>
+	</message>
+	<message name="runBatchUploadResponse">
+		<part name="runBatchUploadReturn" type="xsd:boolean"/>
+	</message>
+	<message name="runCredit">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Params" type="typens:TransactionRequestObject"/>
+	</message>
+	<message name="runCreditResponse">
+		<part name="runCreditReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="runCheckCredit">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Params" type="typens:TransactionRequestObject"/>
+	</message>
+	<message name="runCheckCreditResponse">
+		<part name="runCheckCreditReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="runCustomerTransaction">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+		<part name="PaymentMethodID" type="xsd:integer"/>
+		<part name="Parameters" type="typens:CustomerTransactionRequest"/>
+	</message>
+	<message name="runCustomerTransactionResponse">
+		<part name="runCustomerTransactionReturn" type="typens:TransactionResponse"/>
+	</message>	
+	<message name="runQuickSale">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="Details" type="typens:TransactionDetail"/>
+		<part name="AuthOnly" type="xsd:boolean"/>
+	</message>
+	<message name="runQuickSaleResponse">
+		<part name="runQuickSaleReturn" type="typens:TransactionResponse"/>
+	</message>	
+	<message name="runQuickCredit">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="Details" type="typens:TransactionDetail"/>
+	</message>
+	<message name="runQuickCreditResponse">
+		<part name="runQuickCreditReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="runAuthOnly">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Params" type="typens:TransactionRequestObject"/>
+	</message>
+	<message name="runAuthOnlyResponse">
+		<part name="runAuthOnlyReturn" type="typens:TransactionResponse"/>
+	</message>	
+	<message name="runSale">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Params" type="typens:TransactionRequestObject"/>
+	</message>
+	<message name="runSaleResponse">
+		<part name="runSaleReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="runCheckSale">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Params" type="typens:TransactionRequestObject"/>
+	</message>
+	<message name="runCheckSaleResponse">
+		<part name="runCheckSaleReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="runTransaction">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Parameters" type="typens:TransactionRequestObject"/>
+	</message>
+	<message name="runTransactionResponse">
+		<part name="runTransactionReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="runTransactionAPI">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Parameters" type="typens:FieldValueArray"/>
+	</message>
+	<message name="runTransactionAPIResponse">
+		<part name="runTransactionAPIReturn" type="typens:TransactionResponse"/>
+	</message>
+	<message name="searchBatches">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchBatchesResponse">
+		<part name="searchBatchesReturn" type="typens:BatchSearchResult"/>
+	</message>
+	<message name="searchBatchesCount">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchBatchesCountResponse">
+		<part name="searchBatchesCountReturn" type="typens:BatchSearchResult"/>
+	</message>
+	<message name="searchCustomerID">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustID" type="xsd:string"/>
+	</message>
+	<message name="searchCustomerIDResponse">
+		<part name="searchCustomerIDReturn" type="xsd:integer"/>
+	</message>
+	<message name="searchCustomers">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchCustomersResponse">
+		<part name="searchCustomersReturn" type="typens:CustomerSearchResult"/>
+	</message>
+	<message name="searchCustomersCount">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchCustomersCountResponse">
+		<part name="searchCustomersCountReturn" type="typens:CustomerSearchResult"/>
+	</message>
+	<message name="searchProducts">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchProductsResponse">
+		<part name="searchProductsReturn" type="typens:ProductSearchResult"/>
+	</message>
+	<message name="searchProductsCount">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchProductsCountResponse">
+		<part name="searchProductsCountReturn" type="typens:ProductSearchResult"/>
+	</message>
+		<message name="searchProductsCustom">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="FieldList" type="typens:stringArray"/>
+		<part name="Format" type="xsd:string"/>		
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchProductsCustomResponse">
+		<part name="searchProductsCustomReturn" type="xsd:string"/>
+	</message>
+	<message name="searchTransactions">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchTransactionsResponse">
+		<part name="searchTransactionsReturn" type="typens:TransactionSearchResult"/>
+	</message>
+	<message name="searchTransactionsCount">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchTransactionsCountResponse">
+		<part name="searchTransactionsCountReturn" type="typens:TransactionSearchResult"/>
+	</message>
+	<message name="searchTransactionsCustom">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="FieldList" type="typens:stringArray"/>
+		<part name="Format" type="xsd:string"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchTransactionsCustomResponse">
+		<part name="searchTransactionsCustomReturn" type="xsd:string"/>
+	</message>
+	<message name="searchCustomersCustom">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="Search" type="typens:SearchParamArray"/>
+		<part name="MatchAll" type="xsd:boolean"/>
+		<part name="Start" type="xsd:integer"/>
+		<part name="Limit" type="xsd:integer"/>
+		<part name="FieldList" type="typens:stringArray"/>
+		<part name="Format" type="xsd:string"/>
+		<part name="Sort" type="xsd:string"/>
+	</message>
+	<message name="searchCustomersCustomResponse">
+		<part name="searchCustomersCustomReturn" type="xsd:string"/>
+	</message>
+	<message name="updateCustomer">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="CustNum" type="xsd:integer"/>
+		<part name="CustomerData" type="typens:CustomerObject"/>
+	</message>
+	<message name="updateCustomerResponse">
+		<part name="updateCustomerReturn" type="xsd:boolean"/>
+	</message>
+	<message name="updateCustomerPaymentMethod">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="PaymentMethod" type="typens:PaymentMethod"/>
+		<part name="Verify" type="xsd:boolean"/>
+	</message>
+	<message name="updateCustomerPaymentMethodResponse">
+		<part name="updateCustomerPaymentMethodReturn" type="xsd:boolean"/>
+	</message>
+	<message name="updateProduct">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductRefNum" type="xsd:string"/>
+		<part name="Product" type="typens:Product"/>
+	</message>
+	<message name="updateProductResponse">
+		<part name="updateProductReturn" type="xsd:boolean"/>
+	</message>
+	<message name="updateProductCategory">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ProductCategoryRefNum" type="xsd:string"/>
+		<part name="ProductCategory" type="typens:ProductCategory"/>
+	</message>
+	<message name="updateProductCategoryResponse">
+		<part name="updateProductCategoryReturn" type="xsd:boolean"/>
+	</message>
+	<message name="updateReceipt">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="ReceiptRefNum" type="xsd:integer"/>
+		<part name="Receipt" type="typens:Receipt"/>
+	</message>
+	<message name="updateReceiptResponse">
+		<part name="updateReceiptResponseReturn" type="xsd:integer"/>
+	</message>
+	<message name="voidTransaction">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+	</message>
+	<message name="voidTransactionResponse">
+		<part name="voidTransactionReturn" type="xsd:boolean"/>
+	</message>
+	<message name="overrideTransaction">
+		<part name="Token" type="typens:ueSecurityToken"/>
+		<part name="RefNum" type="xsd:integer"/>
+		<part name="Reason" type="xsd:string"/>
+	</message>
+	<message name="overrideTransactionResponse">
+		<part name="overrideTransactionReturn" type="xsd:boolean"/>
+	</message>
+	<portType name="ueSoapServerPortType">
+		<documentation>
+			The USAePay Soap interface provides a collection of functions implementing
+a large portion of merchant functionality. 
+		</documentation>
+		<operation name="addCustomer">
+			<documentation>
+				Add a Stored Customer Record
+			</documentation>
+			<input message="typens:addCustomer"/>
+			<output message="typens:addCustomerResponse"/>
+		</operation>
+		<operation name="addCustomerPaymentMethod">
+			<documentation>
+				Add Payment Method For a Customer
+			</documentation>
+			<input message="typens:addCustomerPaymentMethod"/>
+			<output message="typens:addCustomerPaymentMethodResponse"/>
+		</operation>
+		<operation name="addProduct">
+			<documentation>
+				Add a new product
+			</documentation>
+			<input message="typens:addProduct"/>
+			<output message="typens:addProductResponse"/>
+		</operation>
+		<operation name="addProductCategory">
+			<documentation>
+				Add a new product category
+			</documentation>
+			<input message="typens:addProductCategory"/>
+			<output message="typens:addProductCategoryResponse"/>
+		</operation>
+		<operation name="addReceipt">
+			<documentation>
+				Add a new receipt template
+			</documentation>
+			<input message="typens:addReceipt"/>
+			<output message="typens:addReceiptResponse"/>
+		</operation>
+		<operation name="adjustInventory">
+			<documentation>
+				Adjust product inventory
+			</documentation>
+			<input message="typens:adjustInventory"/>
+			<output message="typens:adjustInventoryResponse"/>
+		</operation>
+		<operation name="bulkCurrencyConversion">
+			<documentation>
+				Convert multiple currency amounts in a single method call
+			</documentation>
+			<input message="typens:bulkCurrencyConversion"/>
+			<output message="typens:bulkCurrencyConversionResponse"/>
+		</operation>
+		<operation name="captureTransaction">
+			<documentation>
+				Capture a queued transaction
+			</documentation>
+			<input message="typens:captureTransaction"/>
+			<output message="typens:captureTransactionResponse"/>
+		</operation>
+		<operation name="closeBatch">
+			<documentation>
+				Close the batch specified by BatchRefNum
+			</documentation>
+			<input message="typens:closeBatch"/>
+			<output message="typens:closeBatchResponse"/>
+		</operation>
+		<operation name="convertTranToCust">
+			<documentation>
+				Convert existing transaction into a stored customer.
+			</documentation>
+			<input message="typens:convertTranToCust"/>
+			<output message="typens:convertTranToCustResponse"/>
+		</operation>
+		<operation name="copyCustomer">
+			<documentation>
+				Copy customer from one source key to another
+			</documentation>
+			<input message="typens:copyCustomer"/>
+			<output message="typens:copyCustomerResponse"/>
+		</operation>
+		<operation name="createBatchUpload">
+			<documentation>
+				Post a new batch of transactions to the gateway for processing.
+			</documentation>
+			<input message="typens:createBatchUpload"/>
+			<output message="typens:createBatchUploadResponse"/>
+		</operation>
+		<operation name="currencyConversion">
+			<documentation>
+				Lookup currency conversion rate for single dollar amount.
+			</documentation>
+			<input message="typens:currencyConversion"/>
+			<output message="typens:currencyConversionResponse"/>
+		</operation>
+		<operation name="deleteCustomer">
+			<documentation>
+				Delete the customer specified by CustNum
+			</documentation>
+			<input message="typens:deleteCustomer"/>
+			<output message="typens:deleteCustomerResponse"/>
+		</operation>
+		<operation name="deleteCustomerPaymentMethod">
+			<documentation>
+				Delete Payment Method
+			</documentation>
+			<input message="typens:deleteCustomerPaymentMethod"/>
+			<output message="typens:deleteCustomerPaymentMethodResponse"/>
+		</operation>
+		<operation name="deleteProduct">
+			<documentation>
+				Delete product specified by ProductRefNum.
+			</documentation>
+			<input message="typens:deleteProduct"/>
+			<output message="typens:deleteProductResponse"/>
+		</operation>
+		<operation name="deleteProductCategory">
+			<documentation>
+				Delete product category specified by ProductCategoryRefNum.
+			</documentation>
+			<input message="typens:deleteProductCategory"/>
+			<output message="typens:deleteProductCategoryResponse"/>
+		</operation>
+		<operation name="deleteReceipt">
+			<documentation>
+				Delete a customer receipt template
+			</documentation>
+			<input message="typens:deleteReceipt"/>
+			<output message="typens:deleteReceiptResponse"/>
+		</operation>
+		<operation name="disableCustomer">
+			<documentation>
+				Disable the recurring billing for the customer specified by CustNum
+			</documentation>
+			<input message="typens:disableCustomer"/>
+			<output message="typens:disableCustomerResponse"/>
+		</operation>
+		<operation name="emailTransactionReceipt">
+			<documentation>
+				Email a transaction receipt specified by ReceiptRefNum
+			</documentation>
+			<input message="typens:emailTransactionReceipt"/>
+			<output message="typens:emailTransactionReceiptResponse"/>
+		</operation>
+		<operation name="emailTransactionReceiptByName">
+			<documentation>
+				Email a transaction receipt specied by ReceiptName
+			</documentation>
+			<input message="typens:emailTransactionReceiptByName"/>
+			<output message="typens:emailTransactionReceiptByNameResponse"/>
+		</operation>
+		<operation name="enableCustomer">
+			<documentation>
+				Enable recurring billing for the customer specified by CustNum
+			</documentation>
+			<input message="typens:enableCustomer"/>
+			<output message="typens:enableCustomerResponse"/>
+		</operation>
+		<operation name="getAccountDetails">
+			<documentation>
+				Retrieves Information about Merchants account
+			</documentation>
+			<input message="typens:getAccountDetails"/>
+			<output message="typens:getAccountDetailsResponse"/>
+		</operation>
+		<operation name="getBankList">
+			<documentation>
+				Retrieves list of banks and financial institutions available for direct payment
+			</documentation>
+			<input message="typens:getBankList"/>
+			<output message="typens:getBankListResponse"/>
+		</operation>
+		<operation name="getBatchStatus">
+			<documentation>
+				Retrieve the status of the batch specified by BatchRefNum
+			</documentation>
+			<input message="typens:getBatchStatus"/>
+			<output message="typens:getBatchStatusResponse"/>
+		</operation>
+		<operation name="getBatchTransactions">
+			<documentation>
+				Retrieve transactions in the batch specified by BatchRefNum
+			</documentation>
+			<input message="typens:getBatchTransactions"/>
+			<output message="typens:getBatchTransactionsResponse"/>
+		</operation>
+		<operation name="getBatchUploadStatus">
+			<documentation>
+				Retrieve the status of the currently running batch.
+			</documentation>
+			<input message="typens:getBatchUploadStatus"/>
+			<output message="typens:getBatchUploadStatusResponse"/>
+		</operation>
+		<operation name="getCheckTrace">
+			<documentation>
+				Retreive all check status data for the transactions specified by RefNum
+			</documentation>
+			<input message="typens:getCheckTrace"/>
+			<output message="typens:getCheckTraceResponse"/>
+		</operation>
+		<operation name="getCustomer">
+			<documentation>
+				Retrieve the customer details for the given CustNum
+			</documentation>
+			<input message="typens:getCustomer"/>
+			<output message="typens:getCustomerResponse"/>
+		</operation>
+		<operation name="getCustomerHistory">
+			<documentation>
+				Pull details of all transactions run for CustNum
+			</documentation>
+			<input message="typens:getCustomerHistory"/>
+			<output message="typens:getCustomerHistoryResponse"/>
+		</operation>
+		<operation name="getCustomerPaymentMethod">
+			<documentation>
+				Retrieve a specific customer Payment Methods for the given CustNum/MethodID
+			</documentation>
+			<input message="typens:getCustomerPaymentMethod"/>
+			<output message="typens:getCustomerPaymentMethodResponse"/>
+		</operation>
+		<operation name="getCustomerPaymentMethods">
+			<documentation>
+				Retrieve the customers Payment Methods for the given CustNum
+			</documentation>
+			<input message="typens:getCustomerPaymentMethods"/>
+			<output message="typens:getCustomerPaymentMethodsResponse"/>
+		</operation>
+		<operation name="getCustomerReport">
+			<documentation>
+				Pull a customer report
+			</documentation>
+			<input message="typens:getCustomerReport"/>
+			<output message="typens:getCustomerReportResponse"/>
+		</operation>
+		<operation name="getCustomFields">
+			<documentation>
+				Retrieve the custom fields defined by merchants
+			</documentation>
+			<input message="typens:getCustomFields"/>
+			<output message="typens:getCustomFieldsResponse"/>
+		</operation>
+		<operation name="getProduct">
+			<documentation>
+				Retrieve the product details for the given ProductRefNum
+			</documentation>
+			<input message="typens:getProduct"/>
+			<output message="typens:getProductResponse"/>
+		</operation>
+		<operation name="getProductCategory">
+			<documentation>
+				Retrieve the product category details for the given ProductCategoryRefNum
+			</documentation>
+			<input message="typens:getProductCategory"/>
+			<output message="typens:getProductCategoryResponse"/>
+		</operation>
+		<operation name="getProductCategories">
+			<documentation>
+				Retreive list of product categories
+			</documentation>
+			<input message="typens:getProductCategories"/>
+			<output message="typens:getProductCategoriesResponse"/>
+		</operation>
+		<operation name="getProductInventory">
+			<documentation>
+				Retrieve the product inventory
+			</documentation>
+			<input message="typens:getProductInventory"/>
+			<output message="typens:getProductInventoryResponse"/>
+		</operation>
+		<operation name="getReceipt">
+			<documentation>
+				Retreive a receipt template by RefNum
+			</documentation>
+			<input message="typens:getReceipt"/>
+			<output message="typens:getReceiptResponse"/>
+		</operation>
+		<operation name="getReceiptByName">
+			<documentation>
+				Retreive a receipt template by receipt name
+			</documentation>
+			<input message="typens:getReceiptByName"/>
+			<output message="typens:getReceiptByNameResponse"/>
+		</operation>
+		<operation name="getReceipts">
+			<documentation>
+				Retreive list of receipt templates by target
+			</documentation>
+			<input message="typens:getReceipts"/>
+			<output message="typens:getReceiptsResponse"/>
+		</operation>
+		<operation name="getReport">
+			<documentation>
+				Pull a merchant report
+			</documentation>
+			<input message="typens:getReport"/>
+			<output message="typens:getReportResponse"/>
+		</operation>		
+		<operation name="getSupportedCurrencies">
+			<documentation>
+				Retrieve Supported Currencies
+			</documentation>
+			<input message="typens:getSupportedCurrencies"/>
+			<output message="typens:getSupportedCurrenciesResponse"/>
+		</operation>
+		<operation name="getSyncLog">
+			<documentation>
+				Retrieve changes to data objects made on the server
+			</documentation>
+			<input message="typens:getSyncLog"/>
+			<output message="typens:getSyncLogResponse"/>
+		</operation>
+		<operation name="getSyncLogCurrentPosition">
+			<documentation>
+				Returns the last position in the change log for a given object
+			</documentation>
+			<input message="typens:getSyncLogCurrentPosition"/>
+			<output message="typens:getSyncLogCurrentPositionResponse"/>
+		</operation>
+		<operation name="getSystemInfo">
+			<documentation>
+				Retreive information about service
+			</documentation>
+			<input message="typens:getSystemInfo"/>
+			<output message="typens:getSystemInfoResponse"/>
+		</operation>
+		<operation name="getTransaction">
+			<documentation>
+				Retreive all information for the transactions specified by RefNum
+			</documentation>
+			<input message="typens:getTransaction"/>
+			<output message="typens:getTransactionResponse"/>
+		</operation>
+		<operation name="getTransactionCustom">
+			<documentation>
+				Get Specific Transaction Details
+			</documentation>
+			<input message="typens:getTransactionCustom"/>
+			<output message="typens:getTransactionCustomResponse"/>
+		</operation>
+		<operation name="getTransactionReport">
+			<documentation>
+				Pull a transaction report
+			</documentation>
+			<input message="typens:getTransactionReport"/>
+			<output message="typens:getTransactionReportResponse"/>
+		</operation>
+		<operation name="getTransactionStatus">
+			<documentation>
+				Retrieve the current status of transaction specified by RefNum
+			</documentation>
+			<input message="typens:getTransactionStatus"/>
+			<output message="typens:getTransactionStatusResponse"/>
+		</operation>
+		<operation name="moveCustomer">
+			<documentation>
+				Move customer from one source key to another
+			</documentation>
+			<input message="typens:moveCustomer"/>
+			<output message="typens:moveCustomerResponse"/>
+		</operation>
+		<operation name="pauseBatchUpload">
+			<documentation>
+				Pause a Batch Upload that is already running
+			</documentation>
+			<input message="typens:pauseBatchUpload"/>
+			<output message="typens:pauseBatchUploadResponse"/>
+		</operation>
+		<operation name="postAuth">
+			<documentation>
+				Post an Offline Authorization
+			</documentation>
+			<input message="typens:postAuth"/>
+			<output message="typens:postAuthResponse"/>
+		</operation>
+		<operation name="quickUpdateCustomer">
+			<documentation>
+				Update specified data for customer specified by CustNum
+			</documentation>
+			<input message="typens:quickUpdateCustomer"/>
+			<output message="typens:quickUpdateCustomerResponse"/>
+		</operation>
+		<operation name="quickUpdateProduct">
+			<documentation>
+				Update specified data for product specified by ProductRefNum
+			</documentation>
+			<input message="typens:quickUpdateProduct"/>
+			<output message="typens:quickUpdateProductResponse"/>
+		</operation>
+		<operation name="refundTransaction">
+			<documentation>
+				Refund part or all of a transaction
+			</documentation>
+			<input message="typens:refundTransaction"/>
+			<output message="typens:refundTransactionResponse"/>
+		</operation>
+		<operation name="renderReceipt">
+			<documentation>
+				Render receipt for transaction
+			</documentation>
+			<input message="typens:renderReceipt"/>
+			<output message="typens:renderReceiptResponse"/>
+		</operation>
+		<operation name="renderReceiptByName">
+			<documentation>
+				Render receipt for transaction
+			</documentation>
+			<input message="typens:renderReceiptByName"/>
+			<output message="typens:renderReceiptByNameResponse"/>
+		</operation>
+		<operation name="runBatchUpload">
+			<documentation>
+				Start a Paused Batch Upload
+			</documentation>
+			<input message="typens:runBatchUpload"/>
+			<output message="typens:runBatchUploadResponse"/>
+		</operation>
+		<operation name="runCredit">
+			<documentation>
+				Run a Credit transaction
+			</documentation>
+			<input message="typens:runCredit"/>
+			<output message="typens:runCreditResponse"/>
+		</operation>
+		<operation name="runCheckCredit">
+			<documentation>
+				Run a Check Credit transaction
+			</documentation>
+			<input message="typens:runCheckCredit"/>
+			<output message="typens:runCheckCreditResponse"/>
+		</operation>
+		<operation name="runCustomerTransaction">
+			<documentation>
+				Run a sale for a customer stored in the customer database
+			</documentation>
+			<input message="typens:runCustomerTransaction"/>
+			<output message="typens:runCustomerTransactionResponse"/>
+		</operation>
+		<operation name="runQuickSale">
+			<documentation>
+				Run a sale based on the credit card details of a previous transaction.
+			</documentation>
+			<input message="typens:runQuickSale"/>
+			<output message="typens:runQuickSaleResponse"/>
+		</operation>
+		<operation name="runQuickCredit">
+			<documentation>
+				Run a credit based on the credit card details of a previous transaction.
+			</documentation>
+			<input message="typens:runQuickCredit"/>
+			<output message="typens:runQuickCreditResponse"/>
+		</operation>
+		<operation name="runAuthOnly">
+			<documentation>
+				Run an AuthOnly Credit Card Sale
+			</documentation>
+			<input message="typens:runAuthOnly"/>
+			<output message="typens:runAuthOnlyResponse"/>
+		</operation>
+		<operation name="runSale">
+			<documentation>
+				Run a Credit CardSale
+			</documentation>
+			<input message="typens:runSale"/>
+			<output message="typens:runSaleResponse"/>
+		</operation>
+		<operation name="runCheckSale">
+			<documentation>
+				Run a Check Sale
+			</documentation>
+			<input message="typens:runCheckSale"/>
+			<output message="typens:runCheckSaleResponse"/>
+		</operation>
+		<operation name="runTransaction">
+			<documentation>
+				Runs a Transaction using the USAePay Transaction API
+			</documentation>
+			<input message="typens:runTransaction"/>
+			<output message="typens:runTransactionResponse"/>
+		</operation>
+		<operation name="runTransactionAPI">
+			<documentation>
+				Provides a Soap wrapper for the USAePay Transaction API
+			</documentation>
+			<input message="typens:runTransactionAPI"/>
+			<output message="typens:runTransactionAPIResponse"/>
+		</operation>
+		<operation name="searchBatches">
+			<documentation>
+				Search Settled Batches
+			</documentation>
+			<input message="typens:searchBatches"/>
+			<output message="typens:searchBatchesResponse"/>
+		</operation>
+		<operation name="searchBatchesCount">
+			<documentation>
+				Search Settled Batches, return counts only
+			</documentation>
+			<input message="typens:searchBatchesCount"/>
+			<output message="typens:searchBatchesCountResponse"/>
+		</operation>
+		<operation name="searchCustomerID">
+			<documentation>
+				Find the customer refnum (CustNum) associated with the userdefined CustID
+			</documentation>
+			<input message="typens:searchCustomerID"/>
+			<output message="typens:searchCustomerIDResponse"/>
+		</operation>
+		<operation name="searchCustomers">
+			<documentation>
+				Search customer database
+			</documentation>
+			<input message="typens:searchCustomers"/>
+			<output message="typens:searchCustomersResponse"/>
+		</operation>
+		<operation name="searchCustomersCount">
+			<documentation>
+				Search customer database return only count of what was found
+			</documentation>
+			<input message="typens:searchCustomersCount"/>
+			<output message="typens:searchCustomersCountResponse"/>
+		</operation>
+		<operation name="searchProducts">
+			<documentation>
+				Search Products
+			</documentation>
+			<input message="typens:searchProducts"/>
+			<output message="typens:searchProductsResponse"/>
+		</operation>
+		<operation name="searchProductsCount">
+			<documentation>
+				Search Products, return counts only
+			</documentation>
+			<input message="typens:searchProductsCount"/>
+			<output message="typens:searchProductsCountResponse"/>
+		</operation>
+		<operation name="searchProductsCustom">
+			<documentation>
+				Search Products and return custom response
+			</documentation>
+			<input message="typens:searchProductsCustom"/>
+			<output message="typens:searchProductsCustomResponse"/>
+		</operation>
+		<operation name="searchTransactions">
+			<documentation>
+				Search transactions and return transaction records
+			</documentation>
+			<input message="typens:searchTransactions"/>
+			<output message="typens:searchTransactionsResponse"/>
+		</operation>
+		<operation name="searchTransactionsCount">
+			<documentation>
+				Search transactions and return counts,  omit tran data
+			</documentation>
+			<input message="typens:searchTransactionsCount"/>
+			<output message="typens:searchTransactionsCountResponse"/>
+		</operation>
+		<operation name="searchTransactionsCustom">
+			<documentation>
+				Search Transactions and return specified fields
+			</documentation>
+			<input message="typens:searchTransactionsCustom"/>
+			<output message="typens:searchTransactionsCustomResponse"/>
+		</operation>
+		<operation name="searchCustomersCustom">
+			<documentation>
+				Search Customers and return specified fields
+			</documentation>
+			<input message="typens:searchCustomersCustom"/>
+			<output message="typens:searchCustomersCustomResponse"/>
+		</operation>
+		<operation name="updateCustomer">
+			<documentation>
+				Replace all data for customer specified by CustNum
+			</documentation>
+			<input message="typens:updateCustomer"/>
+			<output message="typens:updateCustomerResponse"/>
+		</operation>
+		<operation name="updateCustomerPaymentMethod">
+			<documentation>
+				Update a Customer Payment Method
+			</documentation>
+			<input message="typens:updateCustomerPaymentMethod"/>
+			<output message="typens:updateCustomerPaymentMethodResponse"/>
+		</operation>
+		<operation name="updateProduct">
+			<documentation>
+				Replace all data for product specified by ProductRefNum
+			</documentation>
+			<input message="typens:updateProduct"/>
+			<output message="typens:updateProductResponse"/>
+		</operation>
+		<operation name="updateProductCategory">
+			<documentation>
+				Replace all data for product category specified by ProductCategoryRefNum
+			</documentation>
+			<input message="typens:updateProductCategory"/>
+			<output message="typens:updateProductCategoryResponse"/>
+		</operation>
+		<operation name="updateReceipt">
+			<documentation>
+				Update receipt template
+			</documentation>
+			<input message="typens:updateReceipt"/>
+			<output message="typens:updateReceiptResponse"/>
+		</operation>
+		<operation name="voidTransaction">
+			<documentation>
+				Void the transaction specified by RefNum
+			</documentation>
+			<input message="typens:voidTransaction"/>
+			<output message="typens:voidTransactionResponse"/>
+		</operation>
+		<operation name="overrideTransaction">
+			<documentation>
+				Override the transaction specified by RefNum
+			</documentation>
+			<input message="typens:overrideTransaction"/>
+			<output message="typens:overrideTransactionResponse"/>
+		</operation>
+	</portType>
+	<binding name="ueSoapServerBinding" type="typens:ueSoapServerPortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="addCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="addCustomerPaymentMethod">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="addProduct">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="addProductCategory">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="addReceipt">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="adjustInventory">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="bulkCurrencyConversion">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="captureTransaction">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="closeBatch">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="convertTranToCust">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="copyCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="createBatchUpload">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="currencyConversion">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="deleteCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="deleteCustomerPaymentMethod">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="deleteProduct">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="deleteProductCategory">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="deleteReceipt">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="disableCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="enableCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="emailTransactionReceipt">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="emailTransactionReceiptByName">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getAccountDetails">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getBankList">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getBatchStatus">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getBatchTransactions">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getBatchUploadStatus">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getCheckTrace">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getCustomerHistory">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getCustomerPaymentMethod">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getCustomerPaymentMethods">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getCustomerReport">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getCustomFields">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getProduct">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getProductCategory">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getProductCategories">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getProductInventory">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getReceipt">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getReceiptByName">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getReceipts">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getReport">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getSupportedCurrencies">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getSyncLog">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getSyncLogCurrentPosition">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getSystemInfo">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getTransaction">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getTransactionCustom">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getTransactionReport">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getTransactionStatus">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="moveCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="pauseBatchUpload">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="postAuth">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="quickUpdateCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="quickUpdateProduct">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="refundTransaction">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="renderReceipt">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="renderReceiptByName">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runBatchUpload">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runCredit">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runCheckCredit">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runCustomerTransaction">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runQuickSale">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runQuickCredit">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runCheckSale">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runSale">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runAuthOnly">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runTransaction">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="runTransactionAPI">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchBatches">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchBatchesCount">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchCustomerID">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchCustomers">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchCustomersCount">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchCustomersCustom">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchProducts">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchProductsCount">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchProductsCustom">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchTransactions">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchTransactionsCount">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="searchTransactionsCustom">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="updateCustomer">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="updateCustomerPaymentMethod">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="updateProduct">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="updateProductCategory">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="updateReceipt">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="voidTransaction">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="overrideTransaction">
+			<soap:operation soapAction="urn:ueSoapServerAction"/>
+			<input>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body namespace="urn:usaepay" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="usaepayService">
+		<port name="ueSoapServerPort" binding="typens:ueSoapServerBinding">
+			<soap:address location="https://sandbox.usaepay.com/soap/gate/1412E031"/>
+		</port>
+	</service>
+</definitions>

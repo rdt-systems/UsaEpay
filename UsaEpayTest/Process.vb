@@ -21,7 +21,7 @@ Public Class Process
                                                     Console.WriteLine("Status: " & status)
                                                     setButtonVisible(OK_Button, True)
                                                     setButtonVisible(Cancel_Button, False)
-
+                                                    setStatus(status)
                                                     If result Is Nothing Then
                                                         setHeading("Transaction Failed")
                                                         setStatus(status)
