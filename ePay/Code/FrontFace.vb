@@ -88,6 +88,9 @@ Friend Class FrontFace
 
 
     Private Sub txCCNo_KeyDown(sender As Object, e As KeyEventArgs) Handles TxZip.KeyDown, TxNameOnCard.KeyDown, txExpDate.KeyDown, txCvv2.KeyDown, txCCNo.KeyDown, txStreet.KeyDown
+        If Not String.IsNullOrEmpty(ePay.Req.MagStrip) Then
+            Exit Sub
+        End If
         If e.KeyCode = Keys.F2 Then
             If locker IsNot Nothing Then
                 If CType(locker, ILocker).HasCardOnFile Then CType(locker, ILocker).IsF2 = True
@@ -95,7 +98,7 @@ Friend Class FrontFace
         ElseIf e.KeyCode = Keys.Escape Then
             If btnCancel.Enabled Then btnCancel.PerformClick()
         ElseIf e.KeyCode = Keys.Enter Then
-            If btnProcess.Enabled Then btnProcess.PerformClick()
+            If btnProcess.Enabled AndAlso txCCNo.Text.Length > 0 AndAlso txCCNo.Text.Length < 20 Then btnProcess.PerformClick()
         End If
     End Sub
     Private Sub EscapePressed()
@@ -293,6 +296,7 @@ Friend Class FrontFace
 
     Private Sub CheckCardLenth()
         ePay.MagString = txCCNo.Text
+
         If ePay.MagString.Where(Function(c) c = "?").Count = 2 Then
             ParseCard()
             SetCaption(ePay.Captions.Processing.ToString)
@@ -310,7 +314,7 @@ Friend Class FrontFace
             Dim d = tracks(1).Substring(tracks(1).LastIndexOf("=") + 3, 2)
             Dim y = tracks(1).Substring(tracks(1).LastIndexOf("=") + 1, 2)
             ePay.Req.ExpDate = d & y
-            ePay.Req.NameOnCard = tracks(0).Substring(tracks(0).Substring(tracks(1).IndexOf("^") + 1, tracks(0).IndexOf("^")).Length + 1, tracks(0).IndexOf(" ") - 8)
+            'ePay.Req.NameOnCard = tracks(0).Substring(tracks(0).Substring(tracks(1).IndexOf("^") + 1, tracks(0).IndexOf("^")).Length + 1, tracks(0).IndexOf(" ") - 8)
 
             ePay.ProcessOnlline = True
         Catch ex As Exception
@@ -319,6 +323,7 @@ Friend Class FrontFace
     End Sub
 
     Private Sub btnProcess_Click(sender As Object, e As EventArgs) Handles btnProcess.Click
+        If IsProcessingAlready Then Exit Sub
         ePay.Req.CreditCardNo = txCCNo.EditValue
         ePay.Req.ExpDate = txExpDate.EditValue
         ePay.Req.ccv2 = txCvv2.EditValue

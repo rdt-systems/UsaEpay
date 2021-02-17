@@ -425,13 +425,13 @@ Public Class ePay
         Loop
         Dim Res = Result
         Dim epayres As ePayResponse
-        If Res.IsDuplicate = "Y" Then
-            Return New ePayResponse With {.ResultCode = "Declined", .ResultMessage = "Duplicate Transaction!"}
-        End If
         Logs.Logger.Verbose("PaymentEngin Results = {@Result}", Result)
         If Res Is Nothing Then
             epayres = New ePayResponse With {.ResultCode = "Error"}
             Return epayres
+        End If
+        If Res.IsDuplicate = "Y" Then
+            Return New ePayResponse With {.ResultCode = "Declined", .ResultMessage = "Duplicate Transaction!"}
         End If
         Logs.Logger.Verbose("PaymentEngin.CreditCard Results = {@Result.CreditCard}", Result.CreditCard)
         Dim ccDetail = Res.CreditCard
