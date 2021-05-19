@@ -39,7 +39,7 @@ Public Class ePay
     Public Shared IsSwiped As Boolean = False
     Public Shared MagString As String = ""
     Public Shared ProcessOnlline As Boolean = False
-    Public Shared WithEvents Front As DevExpress.XtraSplashScreen.SplashScreenManager = New DevExpress.XtraSplashScreen.SplashScreenManager(GetType(FrontFace), New DevExpress.XtraSplashScreen.SplashFormProperties With {.UseFadeOutEffect = False, .UseFadeInEffect = False, .AllowGlowEffect = False})
+    Public Shared WithEvents Front As DevExpress.XtraSplashScreen.SplashScreenManager = New DevExpress.XtraSplashScreen.SplashScreenManager(GetType(FrontFace), New DevExpress.XtraSplashScreen.SplashFormProperties With {.UseFadeOutEffect = True, .UseFadeInEffect = True, .AllowGlowEffect = False})
 
     Public Shared Property DeviceConnected As Boolean
         Get
@@ -173,7 +173,7 @@ Public Class ePay
 
                 End Try
             End If
-            Control.CheckForIllegalCrossThreadCalls = False
+            Control.CheckForIllegalCrossThreadCalls = True
             FrontFace.BigScreen = False
             Me.tran = New TransactionRequest() With {.Command = Requst.TranCode,
                                                      .ManualKey = False,
@@ -196,6 +196,11 @@ Public Class ePay
             Dim HasBeenCanceled = False
 
             While Process1.IsAlive
+                Try
+                    ShowMainScreen()
+                    Application.DoEvents()
+                Catch ex As Exception
+                End Try
                 If locker1.IsF2 Then
                     setStatus("processing payment")
                     Application.DoEvents()
@@ -339,13 +344,14 @@ Public Class ePay
         End If
     End Sub
 
-    Private Sub ShowMainScreen()
+    Public Shared Sub ShowMainScreen()
         If Not Front.IsSplashFormVisible Then
             Front.ShowWaitForm()
         End If
     End Sub
 
     Private Shared Sub SetCaption(Value As String)
+        Front.Properties.ParentForm.TopMost = True
         If Not Front.IsSplashFormVisible Then Front.ShowWaitForm()
         Front.SetWaitFormCaption(Value)
         Application.DoEvents()

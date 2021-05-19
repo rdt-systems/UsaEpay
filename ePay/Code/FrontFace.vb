@@ -59,9 +59,18 @@ Friend Class FrontFace
         SendObject
     End Enum
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-        btnCancel.Enabled = False
+
         If locker IsNot Nothing Then
-            If DevExpress.XtraEditors.XtraMessageBox.Show("Are You Sure you want to Cancel?", "Cancel Transaction?", MessageBoxButtons.YesNo) = System.Windows.Forms.DialogResult.Yes Then
+            Dim res = DevExpress.XtraEditors.XtraMessageBox.Show("Are You Sure you want to Cancel?", "Cancel Transaction?", MessageBoxButtons.YesNo)
+            If res = System.Windows.Forms.DialogResult.No OrElse res = System.Windows.Forms.DialogResult.Cancel Then
+                CType(locker, ILocker).IsCanceled = False
+                Threading.Thread.Sleep(500)
+                Application.DoEvents()
+                ePay.ShowMainScreen()
+                Exit Sub
+            End If
+            If res = System.Windows.Forms.DialogResult.Yes Then
+                btnCancel.Enabled = False
                 Threading.Thread.Sleep(500)
                 Application.DoEvents()
                 Logs.Logger.Verbose("Cancel button clicked.")
@@ -338,6 +347,18 @@ Friend Class FrontFace
 
     Private Sub TxZip_Leave(sender As Object, e As EventArgs) Handles TxZip.Leave
         btnProcess.Focus()
+    End Sub
+
+    Private Sub FrontFace_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Try
+            If Not locker Is Nothing Then
+                If Not CType(locker, ILocker).IsCanceled Then
+                    e.Cancel = True
+                End If
+            End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class
 
