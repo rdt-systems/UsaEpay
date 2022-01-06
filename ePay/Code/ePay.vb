@@ -351,7 +351,7 @@ Public Class ePay
     End Sub
 
     Private Shared Sub SetCaption(Value As String)
-        Front.Properties.ParentForm.TopMost = True
+        'Front.Properties.ParentForm.TopMost = True
         If Not Front.IsSplashFormVisible Then Front.ShowWaitForm()
         Front.SetWaitFormCaption(Value)
         Application.DoEvents()

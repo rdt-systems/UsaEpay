@@ -47,7 +47,7 @@ Partial Class USAePayTest
         '
         'txtApikey
         '
-        Me.txtApikey.EditValue = "9F0G7s8C1kg5lewz0o3i0GGc23AoT45x"
+        Me.txtApikey.EditValue = "D7eXTUv8S9WYuRmm2VR6954nnet1NL7W"
         Me.txtApikey.Location = New System.Drawing.Point(73, 49)
         Me.txtApikey.Name = "txtApikey"
         Me.txtApikey.Size = New System.Drawing.Size(120, 20)
@@ -71,7 +71,7 @@ Partial Class USAePayTest
         '
         'txtDevice
         '
-        Me.txtDevice.EditValue = "sa_WD4JImddS74KVJqOR3ZG8d7PCYprQ"
+        Me.txtDevice.EditValue = "sa_bxmJxQZm4EDLKdKSHj8b9LvxfyaQ9"
         Me.txtDevice.Location = New System.Drawing.Point(270, 87)
         Me.txtDevice.Name = "txtDevice"
         Me.txtDevice.Size = New System.Drawing.Size(246, 20)
