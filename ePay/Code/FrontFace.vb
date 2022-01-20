@@ -127,24 +127,30 @@ Friend Class FrontFace
         Application.DoEvents()
         pnlParm.Dock = DockStyle.Fill
         lblDeclined.Visible = lbldeclin
+        Application.DoEvents()
         lblCaptured.Visible = lblCaptr
+        Application.DoEvents()
         lblStatus.Visible = lblstat
+        Application.DoEvents()
         peStatus.Visible = True
         btnProcess.Visible = False
         Application.DoEvents()
-        If lbldeclin Then
-            lblDeclined.Text = Caption
-            peStatus.Image = Global.ePay.My.Resources.Resources.Declined
-            lblResultMsg.ForeColor = lblDeclined.ForeColor
-        End If
         If lblCaptr Then
             lblCaptured.Text = Caption
             peStatus.Image = Global.ePay.My.Resources.Resources.Approved
             lblResultMsg.ForeColor = lblCaptured.ForeColor
+            Application.DoEvents()
+        End If
+        If lbldeclin Then
+            lblDeclined.Text = Caption
+            peStatus.Image = Global.ePay.My.Resources.Resources.Declined
+            lblResultMsg.ForeColor = lblDeclined.ForeColor
+            Application.DoEvents()
         End If
         If lblstat Then
             lblStatus.Text = Caption
             lblResultMsg.ForeColor = lblStatus.ForeColor
+            Application.DoEvents()
         End If
         Application.DoEvents()
         MyBase.Refresh()
@@ -167,6 +173,11 @@ Friend Class FrontFace
         Application.DoEvents()
         txCCNo.Focus()
         MyBase.Refresh()
+        If locker IsNot Nothing Then
+            If CType(locker, ILocker).HasCardOnFile Then Me.lbCardOnFile.Text = "Press F2 to Process Card on File" Else Me.lbCardOnFile.Text = ""
+        Else
+            Me.lbCardOnFile.Text = ""
+        End If
         Application.DoEvents()
     End Sub
 
@@ -284,6 +295,12 @@ Friend Class FrontFace
         ShowCardpnl("")
         IsProcessingAlready = False
         lbAmount.Text = "$" & ePay.Req.Amount
+        If locker IsNot Nothing Then
+            If CType(locker, ILocker).HasCardOnFile Then Me.lbCardOnFile.Text = "Press F2 to Process Card on File" Else Me.lbCardOnFile.Text = ""
+        Else
+            Me.lbCardOnFile.Text = ""
+        End If
+        Application.DoEvents()
     End Sub
 
     Private Sub pnlCard_VisibleChanged(sender As Object, e As EventArgs) Handles pnlCard.VisibleChanged

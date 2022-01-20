@@ -148,19 +148,22 @@ Public Class ePay
         '  ePay.request = Nothing
         ePay.Req = Nothing
         ePay.ProcessOnlline = False
+        Logs.Logger.Verbose("CreditCardNo = {@CreditCardNo}", Requst.CreditCardNo)
+        locker1.HasCardOnFile = Not String.IsNullOrEmpty(Requst.CreditCardNo)
+        Logs.Logger.Verbose("HasCardOnFile = {@HasCardOnFile}", locker1.HasCardOnFile)
         locker1.IsF2 = False
-        locker1.HasCardOnFile = False
         locker1.IsCanceled = False
         FrontFace.IsProcessingAlready = False
         usapay = Nothing
-
+        
         Try
             Logs.Logger.Verbose("ePayRequest = {@Requst}", Requst)
             ePay.Req = Requst
-            If Requst.CreditCardNo IsNot Nothing Then locker1.HasCardOnFile = True
+            ' If Requst.CreditCardNo IsNot Nothing Then locker1.HasCardOnFile = True
 
             Try
                 ShowMainScreen()
+                Front.SendCommand(FrontFace.WaitFormCommand.SendObject, locker1)
                 setHeading("")
                 setStatus("")
                 Application.DoEvents()
@@ -482,9 +485,10 @@ Public Class ePay
             SetDescription("Waiting For Terminal...")
         ElseIf status = "sent to device" Then
             SetDescription("Waiting For Swipe/Insert On Terminal...")
-        ElseIf status = "completing payment" OrElse status = "processing payment" OrElse status = "transaction complete" OrElse status = "processing transaction" Then
+        ElseIf status = "completing payment" OrElse status = "processing payment" OrElse status = "processing transaction" Then
             SetCaption(Captions.Processing.ToString)
             SetDescription("Processing Payment...")
+        ElseIf status = "transaction complete" Then
         Else
             SetDescription(status)
         End If

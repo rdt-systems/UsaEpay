@@ -38,11 +38,11 @@ Partial Class FrontFace
         Me.txStreet = New Background.AddWatermark.CueTextBox()
         Me.lblInput = New System.Windows.Forms.Label()
         Me.pnlResult = New DevExpress.XtraEditors.PanelControl()
-        Me.lblResultMsg = New System.Windows.Forms.Label()
-        Me.lblDeviceInfo = New System.Windows.Forms.Label()
-        Me.lbCardOnFile = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.peDevice = New DevExpress.XtraEditors.PictureEdit()
+        Me.lbCardOnFile = New System.Windows.Forms.Label()
+        Me.lblResultMsg = New System.Windows.Forms.Label()
+        Me.lblDeviceInfo = New System.Windows.Forms.Label()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
         Me.btnCancel = New DevExpress.XtraEditors.SimpleButton()
         Me.pnlBack = New DevExpress.XtraEditors.PanelControl()
@@ -375,7 +375,7 @@ Partial Class FrontFace
         Me.pnlParm.Controls.Add(Me.lblDeclined)
         Me.pnlParm.Controls.Add(Me.lblCaptured)
         Me.pnlParm.Controls.Add(Me.lblStatus)
-        Me.pnlParm.Location = New System.Drawing.Point(33, 4)
+        Me.pnlParm.Location = New System.Drawing.Point(33, 7)
         Me.pnlParm.LookAndFeel.UseDefaultLookAndFeel = False
         Me.pnlParm.LookAndFeel.UseWindowsXPTheme = True
         Me.pnlParm.Name = "pnlParm"
@@ -534,14 +534,49 @@ Partial Class FrontFace
         Me.pnlResult.Appearance.Options.UseBackColor = True
         Me.pnlResult.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.pnlResult.Controls.Add(Me.lblResultMsg)
-        Me.pnlResult.Controls.Add(Me.lblDeviceInfo)
-        Me.pnlResult.Controls.Add(Me.lbCardOnFile)
         Me.pnlResult.Controls.Add(Me.Panel1)
+        Me.pnlResult.Controls.Add(Me.lbCardOnFile)
+        Me.pnlResult.Controls.Add(Me.lblDeviceInfo)
         Me.pnlResult.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pnlResult.Location = New System.Drawing.Point(0, 397)
+        Me.pnlResult.Location = New System.Drawing.Point(0, 402)
         Me.pnlResult.Name = "pnlResult"
         Me.pnlResult.Size = New System.Drawing.Size(506, 83)
         Me.pnlResult.TabIndex = 19
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.peDevice)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Panel1.Location = New System.Drawing.Point(0, 20)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(77, 42)
+        Me.Panel1.TabIndex = 8
+        '
+        'peDevice
+        '
+        Me.peDevice.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.peDevice.EditValue = Global.ePay.My.Resources.Resources.PinPadConnected
+        Me.peDevice.Location = New System.Drawing.Point(0, -7)
+        Me.peDevice.Name = "peDevice"
+        Me.peDevice.Properties.Appearance.BackColor = System.Drawing.Color.Transparent
+        Me.peDevice.Properties.Appearance.Options.UseBackColor = True
+        Me.peDevice.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.peDevice.Properties.ShowMenu = False
+        Me.peDevice.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Squeeze
+        Me.peDevice.Size = New System.Drawing.Size(77, 49)
+        Me.peDevice.TabIndex = 0
+        '
+        'lbCardOnFile
+        '
+        Me.lbCardOnFile.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lbCardOnFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.lbCardOnFile.Font = New System.Drawing.Font("Open Sans", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbCardOnFile.ForeColor = System.Drawing.Color.FromArgb(CType(CType(145, Byte), Integer), CType(CType(145, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lbCardOnFile.Location = New System.Drawing.Point(0, 0)
+        Me.lbCardOnFile.Name = "lbCardOnFile"
+        Me.lbCardOnFile.Size = New System.Drawing.Size(506, 20)
+        Me.lbCardOnFile.TabIndex = 1
+        Me.lbCardOnFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblResultMsg
         '
@@ -549,10 +584,10 @@ Partial Class FrontFace
         Me.lblResultMsg.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.lblResultMsg.Font = New System.Drawing.Font("Open Sans", 8.0!)
         Me.lblResultMsg.ForeColor = System.Drawing.Color.Red
-        Me.lblResultMsg.Location = New System.Drawing.Point(77, 23)
+        Me.lblResultMsg.Location = New System.Drawing.Point(77, 20)
         Me.lblResultMsg.Name = "lblResultMsg"
         Me.lblResultMsg.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
-        Me.lblResultMsg.Size = New System.Drawing.Size(429, 39)
+        Me.lblResultMsg.Size = New System.Drawing.Size(429, 42)
         Me.lblResultMsg.TabIndex = 2
         Me.lblResultMsg.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
@@ -562,48 +597,12 @@ Partial Class FrontFace
         Me.lblDeviceInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.lblDeviceInfo.Font = New System.Drawing.Font("Open Sans", 8.0!)
         Me.lblDeviceInfo.ForeColor = System.Drawing.Color.Red
-        Me.lblDeviceInfo.Location = New System.Drawing.Point(77, 62)
+        Me.lblDeviceInfo.Location = New System.Drawing.Point(0, 62)
         Me.lblDeviceInfo.Name = "lblDeviceInfo"
         Me.lblDeviceInfo.Padding = New System.Windows.Forms.Padding(0, 0, 0, 5)
-        Me.lblDeviceInfo.Size = New System.Drawing.Size(429, 21)
+        Me.lblDeviceInfo.Size = New System.Drawing.Size(506, 21)
         Me.lblDeviceInfo.TabIndex = 2
         Me.lblDeviceInfo.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        '
-        'lbCardOnFile
-        '
-        Me.lbCardOnFile.Dock = System.Windows.Forms.DockStyle.Top
-        Me.lbCardOnFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.lbCardOnFile.Font = New System.Drawing.Font("Open Sans", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbCardOnFile.ForeColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
-        Me.lbCardOnFile.Location = New System.Drawing.Point(77, 0)
-        Me.lbCardOnFile.Name = "lbCardOnFile"
-        Me.lbCardOnFile.Size = New System.Drawing.Size(429, 23)
-        Me.lbCardOnFile.TabIndex = 1
-        Me.lbCardOnFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.peDevice)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(77, 83)
-        Me.Panel1.TabIndex = 8
-        '
-        'peDevice
-        '
-        Me.peDevice.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.peDevice.EditValue = Global.ePay.My.Resources.Resources.PinPadConnected
-        Me.peDevice.Location = New System.Drawing.Point(0, 34)
-        Me.peDevice.Name = "peDevice"
-        Me.peDevice.Properties.Appearance.BackColor = System.Drawing.Color.Transparent
-        Me.peDevice.Properties.Appearance.Options.UseBackColor = True
-        Me.peDevice.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.peDevice.Properties.ErrorImage = Nothing
-        Me.peDevice.Properties.InitialImage = Nothing
-        Me.peDevice.Properties.ShowMenu = False
-        Me.peDevice.Size = New System.Drawing.Size(77, 49)
-        Me.peDevice.TabIndex = 0
         '
         'PanelControl1
         '
@@ -615,7 +614,7 @@ Partial Class FrontFace
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.PanelControl1.Location = New System.Drawing.Point(0, 0)
         Me.PanelControl1.Name = "PanelControl1"
-        Me.PanelControl1.Size = New System.Drawing.Size(506, 75)
+        Me.PanelControl1.Size = New System.Drawing.Size(506, 74)
         Me.PanelControl1.TabIndex = 20
         '
         'btnCancel
@@ -630,8 +629,8 @@ Partial Class FrontFace
         Me.btnCancel.Appearance.Options.UseTextOptions = True
         Me.btnCancel.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.Image = Global.ePay.My.Resources.Resources.Close
-        Me.btnCancel.ImageLocation = DevExpress.XtraEditors.ImageLocation.TopCenter
+        Me.btnCancel.ImageOptions.Image = Global.ePay.My.Resources.Resources.Close
+        Me.btnCancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.TopCenter
         Me.btnCancel.Location = New System.Drawing.Point(449, 27)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(27, 32)
@@ -646,10 +645,10 @@ Partial Class FrontFace
         Me.pnlBack.Controls.Add(Me.pnlParm)
         Me.pnlBack.Controls.Add(Me.PanelControl2)
         Me.pnlBack.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pnlBack.Location = New System.Drawing.Point(0, 75)
+        Me.pnlBack.Location = New System.Drawing.Point(0, 74)
         Me.pnlBack.Name = "pnlBack"
         Me.pnlBack.Padding = New System.Windows.Forms.Padding(30, 10, 30, 10)
-        Me.pnlBack.Size = New System.Drawing.Size(506, 322)
+        Me.pnlBack.Size = New System.Drawing.Size(506, 328)
         Me.pnlBack.TabIndex = 18
         '
         'PanelControl2
@@ -661,7 +660,7 @@ Partial Class FrontFace
         Me.PanelControl2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.PanelControl2.Controls.Add(Me.btnProcess)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl2.Location = New System.Drawing.Point(30, 246)
+        Me.PanelControl2.Location = New System.Drawing.Point(30, 252)
         Me.PanelControl2.LookAndFeel.UseDefaultLookAndFeel = False
         Me.PanelControl2.LookAndFeel.UseWindowsXPTheme = True
         Me.PanelControl2.Name = "PanelControl2"
@@ -692,7 +691,7 @@ Partial Class FrontFace
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(247, Byte), Integer), CType(CType(249, Byte), Integer), CType(CType(252, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(506, 480)
+        Me.ClientSize = New System.Drawing.Size(506, 485)
         Me.Controls.Add(Me.pnlBack)
         Me.Controls.Add(Me.PanelControl1)
         Me.Controls.Add(Me.pnlResult)

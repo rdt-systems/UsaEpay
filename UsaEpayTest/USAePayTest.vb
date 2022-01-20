@@ -19,7 +19,19 @@ Public Class USAePayTest
                 SaleType = "cc:refund:adjust"
         End Select
 
-        Dim charge As New ePay.ePayRequest With {.TranCode = SaleType, .Amount = txtAmount.EditValue, .APIKey = txtApikey.EditValue, .ApiPIN = txtPin.EditValue, .GatewayUrl = txtUrl.EditValue, .TranNumber = "01-85695"}
+        Dim charge As New ePay.ePayRequest With {
+            .TranCode = SaleType,
+            .Amount = txtAmount.EditValue,
+            .APIKey = txtApikey.EditValue,
+            .ApiPIN = txtPin.EditValue,
+            .GatewayUrl = txtUrl.EditValue,
+            .TranNumber = "01-85695",
+            .CreditCardNo = "4111111111111111",
+            .ccv2 = "328",
+            .ExpDate = "0524",
+            .NameOnCard = "John Due"
+        }
+
         Dim res = gate.DoCharge(charge)
         Dim reply = res
 
