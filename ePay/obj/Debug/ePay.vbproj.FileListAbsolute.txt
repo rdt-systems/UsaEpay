@@ -92,7 +92,6 @@ F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.vbproj.AssemblyReference.cach
 F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.FrontFace.resources
 F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.Resources.resources
 F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.vbproj.GenerateResource.cache
-F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.dll.licenses
 F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.vbproj.CoreCompileInputs.cache
 F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.vbproj.CopyComplete
 F:\Dropbox\New RDT Inc\UsaEpay\ePay\obj\Debug\ePay.dll

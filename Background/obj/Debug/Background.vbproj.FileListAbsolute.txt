@@ -41,7 +41,6 @@ F:\Dropbox\New RDT Inc\UsaEpay\Background\bin\Debug\de\DevExpress.Pdf.v20.1.Core
 F:\Dropbox\New RDT Inc\UsaEpay\Background\bin\Debug\es\DevExpress.Pdf.v20.1.Core.resources.dll
 F:\Dropbox\New RDT Inc\UsaEpay\Background\bin\Debug\ja\DevExpress.Pdf.v20.1.Core.resources.dll
 F:\Dropbox\New RDT Inc\UsaEpay\Background\bin\Debug\ru\DevExpress.Pdf.v20.1.Core.resources.dll
-F:\Dropbox\New RDT Inc\UsaEpay\Background\obj\Debug\Background.vbproj.AssemblyReference.cache
 F:\Dropbox\New RDT Inc\UsaEpay\Background\obj\Debug\Background.Resources.resources
 F:\Dropbox\New RDT Inc\UsaEpay\Background\obj\Debug\Background.vbproj.GenerateResource.cache
 F:\Dropbox\New RDT Inc\UsaEpay\Background\obj\Debug\Background.vbproj.CoreCompileInputs.cache
