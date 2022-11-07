@@ -97,17 +97,28 @@ Friend Class FrontFace
 
 
     Private Sub txCCNo_KeyDown(sender As Object, e As KeyEventArgs) Handles TxZip.KeyDown, TxNameOnCard.KeyDown, txExpDate.KeyDown, txCvv2.KeyDown, txCCNo.KeyDown, txStreet.KeyDown
+        If ePay.Req Is Nothing Then
+            e.Handled = True
+            Exit Sub
+        End If
         If Not String.IsNullOrEmpty(ePay.Req.MagStrip) Then
+            e.Handled = True
             Exit Sub
         End If
         If e.KeyCode = Keys.F2 Then
+            e.Handled = True
             If locker IsNot Nothing Then
                 If CType(locker, ILocker).HasCardOnFile Then CType(locker, ILocker).IsF2 = True
             End If
         ElseIf e.KeyCode = Keys.Escape Then
+            e.Handled = True
             If btnCancel.Enabled Then btnCancel.PerformClick()
         ElseIf e.KeyCode = Keys.Enter Then
+            e.Handled = True
             If btnProcess.Enabled AndAlso txCCNo.Text.Length > 0 AndAlso txCCNo.Text.Length < 20 Then btnProcess.PerformClick()
+        Else
+            e.Handled = True
+            Exit Sub
         End If
     End Sub
     Private Sub EscapePressed()
@@ -288,18 +299,21 @@ Friend Class FrontFace
     End Enum
 
     Private Sub FrontFace_Load(sender As Object, e As EventArgs) Handles Me.Shown
+        Try
+            ReallyCenterToScreen()
+            SetDeviceStatus()
+            ShowCardpnl("")
+            IsProcessingAlready = False
+            lbAmount.Text = "$" & ePay.Req.Amount
+            If locker IsNot Nothing Then
+                If CType(locker, ILocker).HasCardOnFile Then Me.lbCardOnFile.Text = "Press F2 to Process Card on File" Else Me.lbCardOnFile.Text = ""
+            Else
+                Me.lbCardOnFile.Text = ""
+            End If
+        Catch ex As Exception
+        End Try
         sw.Start()
         CantCancel = False
-        ReallyCenterToScreen()
-        SetDeviceStatus()
-        ShowCardpnl("")
-        IsProcessingAlready = False
-        lbAmount.Text = "$" & ePay.Req.Amount
-        If locker IsNot Nothing Then
-            If CType(locker, ILocker).HasCardOnFile Then Me.lbCardOnFile.Text = "Press F2 to Process Card on File" Else Me.lbCardOnFile.Text = ""
-        Else
-            Me.lbCardOnFile.Text = ""
-        End If
         Application.DoEvents()
     End Sub
 
@@ -324,7 +338,10 @@ Friend Class FrontFace
         ePay.MagString = txCCNo.Text
 
         If ePay.MagString.Where(Function(c) c = "?").Count = 2 Then
-            ParseCard()
+            Try
+                ParseCard()
+            Catch ex As Exception
+            End Try
             SetCaption(ePay.Captions.Processing.ToString)
             Exit Sub
         Else
@@ -344,7 +361,6 @@ Friend Class FrontFace
 
             ePay.ProcessOnlline = True
         Catch ex As Exception
-
         End Try
     End Sub
 
@@ -356,6 +372,7 @@ Friend Class FrontFace
         ePay.Req.ZipCode = TxZip.EditValue
         ePay.Req.NameOnCard = TxNameOnCard.EditValue
         ePay.ProcessOnlline = True
+        IsProcessingAlready = True
     End Sub
 
     Private Sub txCCNo_EditValueChanged(sender As Object, e As EventArgs) Handles txExpDate.EditValueChanged, txCCNo.EditValueChanged

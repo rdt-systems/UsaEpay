@@ -442,10 +442,12 @@ Public Class ePay
         If Res.IsDuplicate = "Y" Then
             Return New ePayResponse With {.ResultCode = "Declined", .ResultMessage = "Duplicate Transaction!"}
         End If
-        Logs.Logger.Verbose("PaymentEngin.CreditCard Results = {@Result.CreditCard}", Result.CreditCard)
+        Logs.Logger.Verbose("PaymentEngin.CreditCard = {@CreditCard}", Result.CreditCard)
         Dim ccDetail = Res.CreditCard
-        If Res.ErrorCode = "99999" Then
-            Return New ePayResponse With {.ResultMessage = Res.Error, .ResultCode = "Canceled By User!"}
+        If Not Res.ErrorCode = Nothing Then
+            If Res.ErrorCode = "99999" OrElse Res.Error.StartsWith("Command timeout") Then
+                Return New ePayResponse With {.ResultMessage = Res.Error, .ResultCode = "Canceled By User!"}
+            End If
         End If
         epayres = New ePayResponse With {.AuthCode = Res.AuthCode,
                                          .RefNum = Res.RefNum,
@@ -522,6 +524,7 @@ Public Class ePay
 
 
     Private Function ChargeCardOnline(req As ePayRequest) As ePayResponse
+        FrontFace.IsProcessingAlready = True
         Dim InputMet As String = ""
         Dim charg As Boolean = False
         Dim cardType As String = ""
@@ -533,60 +536,66 @@ Public Class ePay
             InputMet = "Swiped"
         End If
         If Not req.CreditCardNo Is Nothing Then cardType = GetCardType(IIf(req.CreditCardNo Is Nothing, "", req.CreditCardNo.Substring(0, 1)))
-        usapay = New USAePayAPI.USAePay With {.SourceKey = req.APIKey,
-                                                      .Pin = req.ApiPIN,
-                                                       .GatewayURL = req.GatewayUrl,
-                                                       .Amount = req.Amount,
-                                                       .CardNumber = req.CreditCardNo,
-                                                       .CardExp = req.ExpDate,
-                                                       .Command = req.TranCode,
-                                                       .Invoice = req.TranNumber,
-                                                       .Cvv2 = req.ccv2,
-                                                       .RefNum = req.RefNum,
-                                                       .AvsZip = req.ZipCode,
-                                                       .CardHolder = req.NameOnCard,
-                                                       .MagStripe = req.MagStrip}
-        If Not usapay.MagStripe Is Nothing Then usapay.CardPresent = True
-        Logs.Logger.Verbose("USAePay Request = {@usapay}", usapay)
-        If req.TranCode = "cc:sale" Then
-            charg = usapay.Sale()
-        ElseIf req.TranCode = "Refund" AndAlso Not String.IsNullOrEmpty(req.RefNum) Then
-            charg = usapay.Refund(req.RefNum)
-        ElseIf req.TranCode = "cc:void" AndAlso Not String.IsNullOrEmpty(req.RefNum) Then
-            charg = usapay.Void(req.RefNum)
-        ElseIf req.TranCode = "cc:credit" Then
-            charg = usapay.Credit()
-        End If
+        Try
+            usapay = New USAePayAPI.USAePay With {.SourceKey = req.APIKey,
+                                                                             .Pin = req.ApiPIN,
+                                                                              .GatewayURL = req.GatewayUrl,
+                                                                              .Amount = req.Amount,
+                                                                              .CardNumber = req.CreditCardNo,
+                                                                              .CardExp = req.ExpDate,
+                                                                              .Command = req.TranCode,
+                                                                              .Invoice = req.TranNumber,
+                                                                              .Cvv2 = req.ccv2,
+                                                                              .RefNum = req.RefNum,
+                                                                              .AvsZip = req.ZipCode,
+                                                                              .CardHolder = req.NameOnCard,
+                                                                              .MagStripe = req.MagStrip}
+            If Not usapay.MagStripe Is Nothing Then usapay.CardPresent = True
+            Logs.Logger.Verbose("USAePay Request = {@usapay}", usapay)
+            If req.TranCode = "cc:sale" Then
+                charg = usapay.Sale()
+            ElseIf req.TranCode = "Refund" AndAlso Not String.IsNullOrEmpty(req.RefNum) Then
+                charg = usapay.Refund(req.RefNum)
+            ElseIf req.TranCode = "cc:void" AndAlso Not String.IsNullOrEmpty(req.RefNum) Then
+                charg = usapay.Void(req.RefNum)
+            ElseIf req.TranCode = "cc:credit" Then
+                charg = usapay.Credit()
+            End If
 
-        Do While usapay.AuthCode Is Nothing
+            Do While usapay.AuthCode Is Nothing
 
-        Loop
-        Logs.Logger.Verbose("USAePay Response = {@usapay}", usapay)
+            Loop
+            Logs.Logger.Verbose("USAePay Response = {@usapay}", usapay)
+        Catch ex As Exception
+        End Try
+
         Dim epayres As ePayResponse
-        If usapay.AuthCode Is Nothing Or usapay.AuthCode = "" Then
-            SetCaption(Captions.Errr.ToString)
-            epayres = New ePayResponse With {.ResultCode = "Error"}
-            Return epayres
-        End If
-        setHeading(usapay.Result)
-        setStatus(String.Format("{0} ~ Auth#:{1} ~ {2}", usapay.Result, usapay.AuthCode, IIf(usapay.ErrorMesg Is Nothing, usapay.Result, usapay.ErrorMesg)))
-        epayres = New ePayResponse With {.AuthCode = usapay.AuthCode,
-                                         .RefNum = usapay.ResultRefNum,
-                                         .ApprovedAmount = usapay.AuthAmount,
-                                         .ResultCode = usapay.Result,
-                                         .ResultMessage = IIf(usapay.ErrorMesg Is Nothing, usapay.Result, usapay.ErrorMesg),
-                                         .IsDuplicate = usapay.IsDuplicate,
-                                         .Err = IIf(usapay.ErrorMesg Is Nothing, "", usapay.Result),
-                                         .ErrorMessage = usapay.ErrorMesg,
-                                         .NameOnCard = req.NameOnCard,
-                                         .RemainingBalance = usapay.RemainingBalance,
-                                         .CardNumber = usapay.CardNumber.Substring(0, 4) & IIf(cardType = "AMEX", "XXXXX", "XXXXXX") & usapay.CardNumber.Substring(IIf(cardType = "AMEX", 11, 12), 4),
-                                         .InputMethod = InputMet,
-                                         .CardType = cardType}
-        Logs.Logger.Verbose("ePay Results = {@epayres}", epayres)
+        Try
+            If usapay.AuthCode Is Nothing Or usapay.AuthCode = "" Then
+                SetCaption(Captions.Errr.ToString)
+                epayres = New ePayResponse With {.ResultCode = "Error"}
+                Return epayres
+            End If
+            setHeading(usapay.Result)
+            setStatus(String.Format("{0} ~ Auth#:{1} ~ {2}", usapay.Result, usapay.AuthCode, IIf(usapay.ErrorMesg Is Nothing, usapay.Result, usapay.ErrorMesg)))
+            epayres = New ePayResponse With {.AuthCode = usapay.AuthCode,
+                                             .RefNum = usapay.ResultRefNum,
+                                             .ApprovedAmount = usapay.AuthAmount,
+                                             .ResultCode = usapay.Result,
+                                             .ResultMessage = IIf(usapay.ErrorMesg Is Nothing, usapay.Result, usapay.ErrorMesg),
+                                             .IsDuplicate = usapay.IsDuplicate,
+                                             .Err = IIf(usapay.ErrorMesg Is Nothing, "", usapay.Result),
+                                             .ErrorMessage = usapay.ErrorMesg,
+                                             .NameOnCard = req.NameOnCard,
+                                             .RemainingBalance = usapay.RemainingBalance,
+                                             .CardNumber = usapay.CardNumber.Substring(0, 4) & IIf(cardType = "AMEX", "XXXXX", "XXXXXX") & usapay.CardNumber.Substring(IIf(cardType = "AMEX", 11, 12), 4),
+                                             .InputMethod = InputMet,
+                                             .CardType = cardType}
+            Logs.Logger.Verbose("ePay Results = {@epayres}", epayres)
+        Catch ex As Exception
+            Return New ePayResponse With {.ResultCode = "ERROR", .ResultMessage = ex.Message}
+        End Try
         Return epayres
-
-
     End Function
 
     Public Enum Captions
