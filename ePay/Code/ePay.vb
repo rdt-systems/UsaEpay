@@ -192,9 +192,13 @@ Public Class ePay
 
             While Process1.IsAlive
                 If Not lclResponse Is Nothing Then
-                    response = lclResponse
-                    Process1.Abort()
-                    Exit While
+                    Try
+                        response = lclResponse
+                        Process1.Abort()
+                        Exit While
+                    Catch ex As Exception
+
+                    End Try
                 End If
                 Try
                     ShowMainScreen()
@@ -202,7 +206,7 @@ Public Class ePay
                 Catch ex As Exception
                     Logger.Error(ex, "Error Showing Main Form")
                 End Try
-                If locker1.IsF2 AndAlso response Is Nothing Then
+                If locker1.IsF2 AndAlso Not FrontFace.IsProcessingAlready AndAlso response Is Nothing Then
                     setStatus("processing payment")
                     Application.DoEvents()
                     Logs.Logger.Verbose("Charging Card on File")
@@ -213,7 +217,7 @@ Public Class ePay
                     Catch ex As Exception
                         Logger.Error(ex, "Error Canceling Transaction")
                     End Try
-                ElseIf ePay.ProcessOnlline AndAlso response Is Nothing Then
+                ElseIf ePay.ProcessOnlline AndAlso Not FrontFace.IsProcessingAlready AndAlso response Is Nothing Then
                     setStatus("processing payment")
                     Logs.Logger.Verbose("Swiped or Keyed In")
                     ChargeCardOnline(ePay.Req)
@@ -281,12 +285,6 @@ Public Class ePay
             FucosRegister()
         End Try
     End Function
-
-    Public Shared Function CancelTrans()
-        locker1.IsCanceled = True
-        Return locker1.IsCanceled
-    End Function
-
 
 #End Region
 
@@ -414,6 +412,9 @@ Public Class ePay
                                                                                                                           End If
 
                                                                                                                           If Result IsNot Nothing Then
+                                                                                                                              If Result.ErrorCode = "9999" Then
+                                                                                                                                  Exit Sub
+                                                                                                                              End If
                                                                                                                               If Result.ResultCode.Equals("A") Then
                                                                                                                                   If Result.IsDuplicate = "Y" Then
                                                                                                                                       setHeading(Captions.Declined.ToString)
@@ -425,10 +426,10 @@ Public Class ePay
 
                                                                                                                               Else
                                                                                                                                   setHeading(Result.Result)
-                                                                                                                                  setStatus(Result.Error)
+                                                                                                                                      setStatus(Result.Error)
+                                                                                                                                  End If
+                                                                                                                                  LclResult = Result
                                                                                                                               End If
-                                                                                                                              LclResult = Result
-                                                                                                                          End If
                                                                                                                       End Sub, Sub(status)
                                                                                                                                    setStatus(status)
                                                                                                                                    Logs.Logger.Verbose("Status: " & status)
@@ -448,17 +449,24 @@ Public Class ePay
         Try
             If Res Is Nothing Then
                 lclResponse = New ePayResponse With {.ResultCode = "Error"}
+                Return lclResponse
             End If
             If Res.IsDuplicate = "Y" Then
-                Return New ePayResponse With {.ResultCode = "Declined", .ResultMessage = "Duplicate Transaction!"}
+                lclResponse = New ePayResponse With {.ResultCode = "Declined", .ResultMessage = "Duplicate Transaction!"}
+                Return lclResponse
+            End If
+            If Res.ErrorCode = "99999" Then
+                lclResponse = New ePayResponse With {.ResultCode = "Error", .ResultMessage = Res.ErrorCode & " " & Res.Error}
+                Return lclResponse
             End If
             Logs.Logger.Verbose("PaymentEngin.CreditCard = {@CreditCard}", Res.CreditCard)
             Dim ccDetail = Res.CreditCard
             If Not Res.ErrorCode = Nothing Then
                 If Res.ErrorCode = "99999" OrElse Res.Error.StartsWith("Command timeout") Then
-                    Return New ePayResponse With {.ResultMessage = Res.Error, .ResultCode = "Canceled By User!"}
+                    lclResponse = New ePayResponse With {.ResultMessage = Res.Error, .ResultCode = "Canceled By User!"}
                 End If
             End If
+            If Not lclResponse Is Nothing Then Return lclResponse
             lclResponse = New ePayResponse With {.AuthCode = Res.AuthCode,
                                              .RefNum = Res.RefNum,
                                              .ApprovedAmount = Res.AuthAmount,
@@ -476,7 +484,7 @@ Public Class ePay
             End If
             Logs.Logger.Verbose("ePay Results = {@lclResponse}", lclResponse)
 
-
+            Return lclResponse
         Catch ex As Exception
             Logger.Error(ex, "Error Set Results")
         End Try
@@ -541,14 +549,19 @@ Public Class ePay
         Dim InputMet As String = ""
         Dim charg As Boolean = False
         Dim cardType As String = ""
-        If Not locker1.IsF2 AndAlso String.IsNullOrEmpty(req.MagStrip) Then
-            InputMet = "Keyed In"
-        ElseIf locker1.IsF2 Then
-            InputMet = "Card On File"
-        ElseIf Not String.IsNullOrEmpty(req.MagStrip) AndAlso req.MagStrip.Length > 3 Then
-            InputMet = "Swiped"
-        End If
-        If Not req.CreditCardNo Is Nothing Then cardType = GetCardType(IIf(req.CreditCardNo Is Nothing, "", req.CreditCardNo.Substring(0, 1)))
+        Try
+            If Not locker1.IsF2 AndAlso String.IsNullOrEmpty(req.MagStrip) Then
+                InputMet = "Keyed In"
+            ElseIf locker1.IsF2 Then
+                InputMet = "Card On File"
+            ElseIf Not String.IsNullOrEmpty(req.MagStrip) AndAlso req.MagStrip.Length > 3 Then
+                InputMet = "Swiped"
+            End If
+            If Not req.CreditCardNo Is Nothing Then cardType = GetCardType(IIf(req.CreditCardNo Is Nothing, "", req.CreditCardNo.Substring(0, 1)))
+        Catch ex As Exception
+
+        End Try
+
         Try
             usapay = New USAePayAPI.USAePay With {.SourceKey = req.APIKey,
                                                                              .Pin = req.ApiPIN,
@@ -610,7 +623,7 @@ Public Class ePay
         End Try
     End Sub
 
-    Public Enum Captions
+    Private Enum Captions
         Init
         InputCard
         WaitingPin

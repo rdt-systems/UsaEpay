@@ -125,7 +125,9 @@ Friend Class FrontFace
         SetDescription("Please press the red cancel button on the terminal")
         btnCancel.Enabled = False
         Try
-            ePay.CancelTrans()
+            If locker IsNot Nothing Then
+                CType(locker, ILocker).IsCanceled = True
+            End If
         Catch ex As Exception
         End Try
     End Sub
@@ -201,59 +203,59 @@ Friend Class FrontFace
 
     Private Sub SettingCaption(Value As String)
         Select Case Value
-            Case ePay.Captions.Init.ToString
+            Case Captions.Init.ToString
                 IsProcessingAlready = False
                 ShowMessagePanel("Initilizing Device...", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Ellips
                 btnCancel.Enabled = True
-            Case ePay.Captions.Connected.ToString
+            Case Captions.connected.ToString
                 IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
-            Case ePay.Captions.CantConnect.ToString
+            Case Captions.CantConnect.ToString
                 IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
-            Case ePay.Captions.offline.ToString
+            Case Captions.offline.ToString
                 IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
-            Case ePay.Captions.Succsess.ToString
+            Case Captions.Succsess.ToString
                 IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
-            Case ePay.Captions.InputCard.ToString
+            Case Captions.InputCard.ToString
                 IsProcessingAlready = False
                 ShowCardpnl("")
                 btnCancel.Enabled = True
-            Case ePay.Captions.WaitingPin.ToString
+            Case Captions.WaitingPin.ToString
                 IsProcessingAlready = False
                 ShowMessagePanel("Waiting For Pin", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.calculator
                 btnCancel.Enabled = True
-            Case ePay.Captions.WaitingSignutare.ToString
+            Case Captions.WaitingSignutare.ToString
                 IsProcessingAlready = True
                 ShowMessagePanel("Waiting For Signutare", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Signutare
                 btnCancel.Enabled = False
-            Case ePay.Captions.Approved.ToString
+            Case Captions.Approved.ToString
                 IsProcessingAlready = True
                 ShowMessagePanel("Approved!", True, False, False)
                 btnCancel.Enabled = False
-            Case ePay.Captions.Processing.ToString
+            Case Captions.Processing.ToString
                 IsProcessingAlready = True
                 ShowMessagePanel("Processing...", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.Ellips
                 btnCancel.Enabled = False
-            Case ePay.Captions.Declined.ToString
+            Case Captions.Declined.ToString
                 IsProcessingAlready = True
                 ShowMessagePanel("Payment Declined", False, False, True)
                 btnCancel.Enabled = False
-            Case ePay.Captions.Errr.ToString
+            Case Captions.Errr.ToString
                 IsProcessingAlready = True
                 ShowMessagePanel("Payment Error", False, False, True)
                 btnCancel.Enabled = False
-            Case ePay.Captions.WaitingForDeviceCode.ToString
+            Case Captions.WaitingForDeviceCode.ToString
                 ' IsProcessingAlready = True
                 ShowMessagePanel("Waiting For Code Entry on Terminal", False, True, False)
                 peStatus.Image = Global.ePay.My.Resources.Resources.calculator
@@ -283,12 +285,12 @@ Friend Class FrontFace
         MyBase.Refresh()
         Application.DoEvents()
     End Sub
-    Public Enum Captions
+    Private Enum Captions
         Init
         InputCard
         WaitingPin
         WaitingSignutare
-        Connected
+        connected
         Succsess
         CantConnect
         Approved
@@ -296,6 +298,7 @@ Friend Class FrontFace
         Declined
         WaitingForDeviceCode
         offline
+        Errr
     End Enum
 
     Private Sub FrontFace_Load(sender As Object, e As EventArgs) Handles Me.Shown
@@ -342,7 +345,7 @@ Friend Class FrontFace
                 ParseCard()
             Catch ex As Exception
             End Try
-            SetCaption(ePay.Captions.Processing.ToString)
+            SetCaption(Captions.Processing.ToString)
             Exit Sub
         Else
         End If
@@ -372,7 +375,6 @@ Friend Class FrontFace
         ePay.Req.ZipCode = TxZip.EditValue
         ePay.Req.NameOnCard = TxNameOnCard.EditValue
         ePay.ProcessOnlline = True
-        IsProcessingAlready = True
     End Sub
 
     Private Sub txCCNo_EditValueChanged(sender As Object, e As EventArgs) Handles txExpDate.EditValueChanged, txCCNo.EditValueChanged
